@@ -7,119 +7,790 @@
     "tagline": "AGENTIC DEVELOPMENT"
   },
   "themes": [
-    { "id": "o", "name": "Orchestration", "glyph": "hexagon" },
-    { "id": "x", "name": "Context engineering", "glyph": "square" },
-    { "id": "w", "name": "Workflows", "glyph": "circle" },
-    { "id": "e", "name": "Evals", "glyph": "triangle" },
-    { "id": "q", "name": "Experimentation", "glyph": "diamond" }
+    {
+      "id": "o",
+      "name": "Orchestration",
+      "glyph": "hexagon"
+    },
+    {
+      "id": "x",
+      "name": "Context engineering",
+      "glyph": "square"
+    },
+    {
+      "id": "w",
+      "name": "Workflows",
+      "glyph": "circle"
+    },
+    {
+      "id": "e",
+      "name": "Evals",
+      "glyph": "triangle"
+    },
+    {
+      "id": "q",
+      "name": "Experimentation",
+      "glyph": "diamond"
+    }
   ],
   "notes": [
-    { "id": "s1", "theme": "o", "cat": "ORCHESTRATION", "title": "Subagents as a unit of thought", "date": "2026-07", "stamp": "JUL 26", "ageMonths": 1, "teaser": "Why scope is a gift to a subagent." },
-    { "id": "s2", "theme": "o", "cat": "ORCHESTRATION", "title": "The dispatcher pattern", "date": "2026-06", "stamp": "JUN 26", "ageMonths": 2, "teaser": "The one component I never rewrote." },
-    { "id": "n2", "theme": "o", "cat": "ORCHESTRATION", "title": "Fan-out is a smell", "date": "2026-01", "stamp": "JAN 26", "ageMonths": 7, "teaser": "Ten agents thinking is one agent avoiding a decision." },
-    { "id": "n3", "theme": "o", "cat": "ORCHESTRATION", "title": "Handoffs beat handoff docs", "date": "2025-10", "stamp": "OCT 25", "ageMonths": 10, "teaser": "Context transfers better as conversation than documentation." },
-    { "id": "n1", "theme": "o", "cat": "ORCHESTRATION", "title": "The manager who codes", "date": "2025-09", "stamp": "SEP 25", "ageMonths": 11, "teaser": "Orchestrators should stay dumb; managers should stay ICs." },
-    { "id": "b", "theme": "x", "cat": "CONTEXT", "title": "Context is a budget", "date": "2026-05", "stamp": "MAY 26", "ageMonths": 3, "teaser": "Tokens are money; prompts are lifestyle inflation." },
-    { "id": "k", "theme": "x", "cat": "CONTEXT", "title": "Notes on compaction", "date": "2026-04", "stamp": "APR 26", "ageMonths": 4, "teaser": "Lying to your future self, efficiently." },
-    { "id": "n6", "theme": "x", "cat": "CONTEXT", "title": "Prompt archaeology", "date": "2026-06", "stamp": "JUN 26", "ageMonths": 2, "teaser": "Every system prompt is sediment. Dig carefully." },
-    { "id": "n4", "theme": "x", "cat": "CONTEXT", "title": "The long-context lie", "date": "2025-11", "stamp": "NOV 25", "ageMonths": 9, "teaser": "A big window is not memory. It is a bigger desk." },
-    { "id": "n5", "theme": "x", "cat": "CONTEXT", "title": "Rituals of forgetting", "date": "2025-12", "stamp": "DEC 25", "ageMonths": 8, "teaser": "What agents should be made to forget, on purpose, on schedule." },
-    { "id": "n7", "theme": "x", "cat": "CONTEXT", "title": "Attention is a budget too", "date": "2025-08", "stamp": "AUG 25", "ageMonths": 12, "teaser": "The first context window I learned to manage was mine." },
-    { "id": "p", "theme": "w", "cat": "WORKFLOWS", "title": "Pipelines that argue back", "date": "2026-03", "stamp": "MAR 26", "ageMonths": 5, "teaser": "A pipeline stage whose only job is to object." },
-    { "id": "r", "theme": "w", "cat": "WORKFLOWS", "title": "Cron for cognition", "date": "2026-02", "stamp": "FEB 26", "ageMonths": 6, "teaser": "Scheduled thinking. Standing appointments." },
-    { "id": "n9", "theme": "w", "cat": "WORKFLOWS", "title": "The 2am PR review", "date": "2026-04", "stamp": "APR 26", "ageMonths": 4, "teaser": "What the overnight refactorer taught me about trust." },
-    { "id": "n8", "theme": "w", "cat": "WORKFLOWS", "title": "Ship on Tuesdays", "date": "2025-10", "stamp": "OCT 25", "ageMonths": 10, "teaser": "Cadence is a load-bearing wall." },
-    { "id": "n10", "theme": "w", "cat": "WORKFLOWS", "title": "Agents need standups", "date": "2025-09", "stamp": "SEP 25", "ageMonths": 11, "teaser": "Not for status. For the arguments standups accidentally host." },
-    { "id": "g", "theme": "e", "cat": "EVALS", "title": "Grading the ungraded", "date": "2026-01", "stamp": "JAN 26", "ageMonths": 7, "teaser": "\"Good code\" was never a rubric. It was a mood." },
-    { "id": "n11", "theme": "e", "cat": "EVALS", "title": "Vibes, graded", "date": "2026-05", "stamp": "MAY 26", "ageMonths": 3, "teaser": "Turning taste into assertions, one embarrassment at a time." },
-    { "id": "n12", "theme": "e", "cat": "EVALS", "title": "The rubric wrote back", "date": "2026-02", "stamp": "FEB 26", "ageMonths": 6, "teaser": "Letting the eval critique its own criteria." },
-    { "id": "n13", "theme": "e", "cat": "EVALS", "title": "Regression tests for taste", "date": "2025-11", "stamp": "NOV 25", "ageMonths": 9, "teaser": "When a design gets worse, something should fail." },
-    { "id": "l", "theme": "q", "cat": "META", "title": "Lab notebook, public", "date": "2025-12", "stamp": "DEC 25", "ageMonths": 8, "teaser": "A notebook left wrong on purpose." },
-    { "id": "n14", "theme": "q", "cat": "EXPERIMENTATION", "title": "Blast radius budgeting", "date": "2026-07", "stamp": "JUL 26", "ageMonths": 1, "teaser": "Every experiment gets a crater size before it gets a repo." },
-    { "id": "n15", "theme": "q", "cat": "EXPERIMENTATION", "title": "Failure museum, opening soon", "date": "2026-03", "stamp": "MAR 26", "ageMonths": 5, "teaser": "Curating my wreckage. Admission free, lessons expensive." },
-    { "id": "n16", "theme": "q", "cat": "EXPERIMENTATION", "title": "One-day spikes, one-page reports", "date": "2025-12", "stamp": "DEC 25", "ageMonths": 8, "teaser": "If the spike needs a second day, it is a project wearing a costume." }
+    {
+      "id": "s1",
+      "theme": "o",
+      "cat": "ORCHESTRATION",
+      "title": "Subagents as a unit of thought",
+      "date": "2026-07",
+      "stamp": "JUL 26",
+      "ageMonths": 1,
+      "teaser": "Why scope is a gift to a subagent."
+    },
+    {
+      "id": "s2",
+      "theme": "o",
+      "cat": "ORCHESTRATION",
+      "title": "The dispatcher pattern",
+      "date": "2026-06",
+      "stamp": "JUN 26",
+      "ageMonths": 2,
+      "teaser": "The one component I never rewrote."
+    },
+    {
+      "id": "n2",
+      "theme": "o",
+      "cat": "ORCHESTRATION",
+      "title": "Fan-out is a smell",
+      "date": "2026-01",
+      "stamp": "JAN 26",
+      "ageMonths": 7,
+      "teaser": "Ten agents thinking is one agent avoiding a decision."
+    },
+    {
+      "id": "n3",
+      "theme": "o",
+      "cat": "ORCHESTRATION",
+      "title": "Handoffs beat handoff docs",
+      "date": "2025-10",
+      "stamp": "OCT 25",
+      "ageMonths": 10,
+      "teaser": "Context transfers better as conversation than documentation."
+    },
+    {
+      "id": "n1",
+      "theme": "o",
+      "cat": "ORCHESTRATION",
+      "title": "The manager who codes",
+      "date": "2025-09",
+      "stamp": "SEP 25",
+      "ageMonths": 11,
+      "teaser": "Orchestrators should stay dumb; managers should stay ICs."
+    },
+    {
+      "id": "b",
+      "theme": "x",
+      "cat": "CONTEXT",
+      "title": "Context is a budget",
+      "date": "2026-05",
+      "stamp": "MAY 26",
+      "ageMonths": 3,
+      "teaser": "Tokens are money; prompts are lifestyle inflation."
+    },
+    {
+      "id": "k",
+      "theme": "x",
+      "cat": "CONTEXT",
+      "title": "Notes on compaction",
+      "date": "2026-04",
+      "stamp": "APR 26",
+      "ageMonths": 4,
+      "teaser": "Lying to your future self, efficiently."
+    },
+    {
+      "id": "n6",
+      "theme": "x",
+      "cat": "CONTEXT",
+      "title": "Prompt archaeology",
+      "date": "2026-06",
+      "stamp": "JUN 26",
+      "ageMonths": 2,
+      "teaser": "Every system prompt is sediment. Dig carefully."
+    },
+    {
+      "id": "n4",
+      "theme": "x",
+      "cat": "CONTEXT",
+      "title": "The long-context lie",
+      "date": "2025-11",
+      "stamp": "NOV 25",
+      "ageMonths": 9,
+      "teaser": "A big window is not memory. It is a bigger desk."
+    },
+    {
+      "id": "n5",
+      "theme": "x",
+      "cat": "CONTEXT",
+      "title": "Rituals of forgetting",
+      "date": "2025-12",
+      "stamp": "DEC 25",
+      "ageMonths": 8,
+      "teaser": "What agents should be made to forget, on purpose, on schedule."
+    },
+    {
+      "id": "n7",
+      "theme": "x",
+      "cat": "CONTEXT",
+      "title": "Attention is a budget too",
+      "date": "2025-08",
+      "stamp": "AUG 25",
+      "ageMonths": 12,
+      "teaser": "The first context window I learned to manage was mine."
+    },
+    {
+      "id": "p",
+      "theme": "w",
+      "cat": "WORKFLOWS",
+      "title": "Pipelines that argue back",
+      "date": "2026-03",
+      "stamp": "MAR 26",
+      "ageMonths": 5,
+      "teaser": "A pipeline stage whose only job is to object."
+    },
+    {
+      "id": "r",
+      "theme": "w",
+      "cat": "WORKFLOWS",
+      "title": "Cron for cognition",
+      "date": "2026-02",
+      "stamp": "FEB 26",
+      "ageMonths": 6,
+      "teaser": "Scheduled thinking. Standing appointments."
+    },
+    {
+      "id": "n9",
+      "theme": "w",
+      "cat": "WORKFLOWS",
+      "title": "The 2am PR review",
+      "date": "2026-04",
+      "stamp": "APR 26",
+      "ageMonths": 4,
+      "teaser": "What the overnight refactorer taught me about trust."
+    },
+    {
+      "id": "n8",
+      "theme": "w",
+      "cat": "WORKFLOWS",
+      "title": "Ship on Tuesdays",
+      "date": "2025-10",
+      "stamp": "OCT 25",
+      "ageMonths": 10,
+      "teaser": "Cadence is a load-bearing wall."
+    },
+    {
+      "id": "n10",
+      "theme": "w",
+      "cat": "WORKFLOWS",
+      "title": "Agents need standups",
+      "date": "2025-09",
+      "stamp": "SEP 25",
+      "ageMonths": 11,
+      "teaser": "Not for status. For the arguments standups accidentally host."
+    },
+    {
+      "id": "g",
+      "theme": "e",
+      "cat": "EVALS",
+      "title": "Grading the ungraded",
+      "date": "2026-01",
+      "stamp": "JAN 26",
+      "ageMonths": 7,
+      "teaser": "\"Good code\" was never a rubric. It was a mood."
+    },
+    {
+      "id": "n11",
+      "theme": "e",
+      "cat": "EVALS",
+      "title": "Vibes, graded",
+      "date": "2026-05",
+      "stamp": "MAY 26",
+      "ageMonths": 3,
+      "teaser": "Turning taste into assertions, one embarrassment at a time."
+    },
+    {
+      "id": "n12",
+      "theme": "e",
+      "cat": "EVALS",
+      "title": "The rubric wrote back",
+      "date": "2026-02",
+      "stamp": "FEB 26",
+      "ageMonths": 6,
+      "teaser": "Letting the eval critique its own criteria."
+    },
+    {
+      "id": "n13",
+      "theme": "e",
+      "cat": "EVALS",
+      "title": "Regression tests for taste",
+      "date": "2025-11",
+      "stamp": "NOV 25",
+      "ageMonths": 9,
+      "teaser": "When a design gets worse, something should fail."
+    },
+    {
+      "id": "l",
+      "theme": "q",
+      "cat": "META",
+      "title": "Lab notebook, public",
+      "date": "2025-12",
+      "stamp": "DEC 25",
+      "ageMonths": 8,
+      "teaser": "A notebook left wrong on purpose."
+    },
+    {
+      "id": "n14",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Blast radius budgeting",
+      "date": "2026-07",
+      "stamp": "JUL 26",
+      "ageMonths": 1,
+      "teaser": "Every experiment gets a crater size before it gets a repo."
+    },
+    {
+      "id": "n15",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Failure museum, opening soon",
+      "date": "2026-03",
+      "stamp": "MAR 26",
+      "ageMonths": 5,
+      "teaser": "Curating my wreckage. Admission free, lessons expensive."
+    },
+    {
+      "id": "n16",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "One-day spikes, one-page reports",
+      "date": "2025-12",
+      "stamp": "DEC 25",
+      "ageMonths": 8,
+      "teaser": "If the spike needs a second day, it is a project wearing a costume."
+    }
   ],
   "farIdeas": [
-    { "id": "f1", "title": "Taste as an engineering constraint", "since": "2021", "mass": 2.2, "relatedTo": ["e", "q"], "teaser": "The rubric behind the rubrics. Maybe the only one." },
-    { "id": "f2", "title": "Software is a building", "since": "2019", "mass": 1.8, "relatedTo": ["x", "w"], "teaser": "Brand's shearing layers, applied to codebases that agents now renovate nightly." },
-    { "id": "f3", "title": "The attention economy of one", "since": "2023", "mass": 1.5, "relatedTo": ["x"], "teaser": "Budgeting my own context window, not just the model's." },
-    { "id": "f4", "title": "Programs as theories", "since": "2018", "mass": 2.5, "relatedTo": ["o", "e"], "teaser": "Naur was right: the program is the theory in the team's heads. What happens when the team is agents?" },
-    { "id": "f5", "title": "A notation for thinking", "since": "2020", "mass": 1.9, "relatedTo": ["o", "x"], "teaser": "Somewhere between an org chart, a prompt, and sheet music." },
-    { "id": "f6", "title": "The apprenticeship problem", "since": "2022", "mass": 1.6, "relatedTo": ["e"], "teaser": "If agents do the junior work, where do seniors come from?" }
+    {
+      "id": "f1",
+      "title": "Taste as an engineering constraint",
+      "since": "2021",
+      "mass": 2.2,
+      "relatedTo": [
+        "e",
+        "q"
+      ],
+      "teaser": "The rubric behind the rubrics. Maybe the only one."
+    },
+    {
+      "id": "f2",
+      "title": "Software is a building",
+      "since": "2019",
+      "mass": 1.8,
+      "relatedTo": [
+        "x",
+        "w"
+      ],
+      "teaser": "Brand's shearing layers, applied to codebases that agents now renovate nightly."
+    },
+    {
+      "id": "f3",
+      "title": "The attention economy of one",
+      "since": "2023",
+      "mass": 1.5,
+      "relatedTo": [
+        "x"
+      ],
+      "teaser": "Budgeting my own context window, not just the model's."
+    },
+    {
+      "id": "f4",
+      "title": "Programs as theories",
+      "since": "2018",
+      "mass": 2.5,
+      "relatedTo": [
+        "o",
+        "e"
+      ],
+      "teaser": "Naur was right: the program is the theory in the team's heads. What happens when the team is agents?"
+    },
+    {
+      "id": "f5",
+      "title": "A notation for thinking",
+      "since": "2020",
+      "mass": 1.9,
+      "relatedTo": [
+        "o",
+        "x"
+      ],
+      "teaser": "Somewhere between an org chart, a prompt, and sheet music."
+    },
+    {
+      "id": "f6",
+      "title": "The apprenticeship problem",
+      "since": "2022",
+      "mass": 1.6,
+      "relatedTo": [
+        "e"
+      ],
+      "teaser": "If agents do the junior work, where do seniors come from?"
+    }
   ],
   "suggestions": [
-    { "id": "g1", "title": "Failure museums", "inferred": "2026-08-09", "relatedTo": ["q", "e"], "prompt": "Three FAILED experiments share a shape. A curated collection of instructive failures might be its own genre." },
-    { "id": "g2", "title": "Agent ethnography", "inferred": "2026-08-09", "relatedTo": ["o"], "prompt": "You keep describing agents with workplace sociology. Field notes ON the agents, written like an anthropologist, is unexplored." },
-    { "id": "g3", "title": "Compaction as memoir", "inferred": "2026-08-08", "relatedTo": ["x"], "prompt": "Your compaction notes read like theories of memory. The human-memoir angle is one hop away and unvisited." }
+    {
+      "id": "g1",
+      "title": "Failure museums",
+      "inferred": "2026-08-09",
+      "relatedTo": [
+        "q",
+        "e"
+      ],
+      "prompt": "Three FAILED experiments share a shape. A curated collection of instructive failures might be its own genre."
+    },
+    {
+      "id": "g2",
+      "title": "Agent ethnography",
+      "inferred": "2026-08-09",
+      "relatedTo": [
+        "o"
+      ],
+      "prompt": "You keep describing agents with workplace sociology. Field notes ON the agents, written like an anthropologist, is unexplored."
+    },
+    {
+      "id": "g3",
+      "title": "Compaction as memoir",
+      "inferred": "2026-08-08",
+      "relatedTo": [
+        "x"
+      ],
+      "prompt": "Your compaction notes read like theories of memory. The human-memoir angle is one hop away and unvisited."
+    }
   ],
   "particles": [
-    { "id": "p-0809-1", "date": "2026-08-09", "source": "journal", "title": "The dispatcher stayed dumb. Quality went up.", "affinity": "o", "energy": 0.6 },
-    { "id": "p-0809-2", "date": "2026-08-09", "source": "github", "title": "Ship: brain.json ingest surface (propose / promote / decay)", "affinity": "q", "energy": 0.8 },
-    { "id": "p-0808-1", "date": "2026-08-08", "source": "claude", "title": "Two dark particles keep citing 'taste' — new theme forming?", "affinity": null, "energy": 0.7 },
-    { "id": "p-0807-1", "date": "2026-08-07", "source": "journal", "title": "Attention budgeting felt like money budgeting today", "affinity": "x", "energy": 0.5 },
-    { "id": "p-0807-2", "date": "2026-08-07", "source": "github", "title": "Storybook auditor false-positive on tokens", "affinity": null, "energy": 0.3 },
-    { "id": "p-0806-1", "date": "2026-08-06", "source": "claude", "title": "A crank stage for design reviews too?", "affinity": "q", "energy": 0.9 },
-    { "id": "p-0805-1", "date": "2026-08-05", "source": "journal", "title": "Do evals dream of electric rubrics?", "affinity": "e", "energy": 0.5 },
-    { "id": "p-0805-2", "date": "2026-08-05", "source": "github", "title": "Nightly reader flagged drift in three repos", "affinity": "w", "energy": 0.6 },
-    { "id": "p-0804-1", "date": "2026-08-04", "source": "claude", "title": "Compaction heuristic: keep verdicts, drop the debate", "affinity": "x", "energy": 0.7 },
-    { "id": "p-0804-2", "date": "2026-08-04", "source": "github", "title": "prompt-lint rule: no apologies in system prompts", "affinity": null, "energy": 0.4 },
-    { "id": "p-0803-1", "date": "2026-08-03", "source": "github", "title": "Retry-with-critique loop in the handoff pipeline", "affinity": "w", "energy": 0.8 },
-    { "id": "p-0803-2", "date": "2026-08-03", "source": "journal", "title": "Agents negotiate better with fewer tools", "affinity": "o", "energy": 0.6 },
-    { "id": "p-0728-1", "date": "2026-07-28", "source": "journal", "title": "Wrote the blast-radius memo in one sitting", "affinity": "q", "energy": 0.45 },
-    { "id": "p-0721-1", "date": "2026-07-21", "source": "claude", "title": "An orchestrator that bills its subagents for tokens", "affinity": "o", "energy": 0.5 },
-    { "id": "p-0714-1", "date": "2026-07-14", "source": "github", "title": "Deleted 4k lines of glue. The glue was the bug.", "affinity": "w", "energy": 0.4 },
-    { "id": "p-0630-1", "date": "2026-06-30", "source": "journal", "title": "Half our evals test the mood I was in when I wrote them", "affinity": "e", "energy": 0.35 },
-    { "id": "p-0619-1", "date": "2026-06-19", "source": "claude", "title": "Prompts as load-bearing walls vs curtains", "affinity": "x", "energy": 0.3 },
-    { "id": "p-0605-1", "date": "2026-06-05", "source": "github", "title": "The crank rejected its own config change", "affinity": "w", "energy": 0.3 },
-    { "id": "p-0522-1", "date": "2026-05-22", "source": "journal", "title": "Taste is a rubric you can't write down yet", "affinity": null, "energy": 0.28 },
-    { "id": "p-0508-1", "date": "2026-05-08", "source": "claude", "title": "What if standup notes were embeddings?", "affinity": null, "energy": 0.2 },
-    { "id": "p-0417-1", "date": "2026-04-17", "source": "github", "title": "Overnight refactorer opened its 100th PR", "affinity": "w", "energy": 0.18 },
-    { "id": "p-0402-1", "date": "2026-04-02", "source": "journal", "title": "The junior asked why we still write code", "affinity": null, "energy": 0.25 },
-    { "id": "p-0311-1", "date": "2026-03-11", "source": "claude", "title": "Compaction is grief with a token budget", "affinity": "x", "energy": 0.15 },
-    { "id": "p-0219-1", "date": "2026-02-19", "source": "github", "title": "Prompt-lint caught me apologizing to the linter", "affinity": null, "energy": 0.12 },
-    { "id": "p-0124-1", "date": "2026-01-24", "source": "journal", "title": "Fan-out envy after the conference talk", "affinity": "o", "energy": 0.1 },
-    { "id": "p-1212-1", "date": "2025-12-12", "source": "journal", "title": "The notebook should be a place, not a feed", "affinity": null, "energy": 0.08 },
-    { "id": "p-1101-1", "date": "2025-11-01", "source": "claude", "title": "Memory palaces for models", "affinity": "x", "energy": 0.07 },
-    { "id": "p-0915-1", "date": "2025-09-15", "source": "github", "title": "First green run of the design-to-code pipeline", "affinity": "w", "energy": 0.06 }
+    {
+      "id": "p-0809-1",
+      "date": "2026-08-09",
+      "source": "journal",
+      "title": "The dispatcher stayed dumb. Quality went up.",
+      "affinity": "o",
+      "energy": 0.552
+    },
+    {
+      "id": "p-0809-2",
+      "date": "2026-08-09",
+      "source": "github",
+      "title": "Ship: brain.json ingest surface (propose / promote / decay)",
+      "affinity": "q",
+      "energy": 0.736
+    },
+    {
+      "id": "p-0808-1",
+      "date": "2026-08-08",
+      "source": "claude",
+      "title": "Two dark particles keep citing 'taste' — new theme forming?",
+      "affinity": null,
+      "energy": 0.644
+    },
+    {
+      "id": "p-0807-1",
+      "date": "2026-08-07",
+      "source": "journal",
+      "title": "Attention budgeting felt like money budgeting today",
+      "affinity": "x",
+      "energy": 0.46
+    },
+    {
+      "id": "p-0807-2",
+      "date": "2026-08-07",
+      "source": "github",
+      "title": "Storybook auditor false-positive on tokens",
+      "affinity": null,
+      "energy": 0.276
+    },
+    {
+      "id": "p-0806-1",
+      "date": "2026-08-06",
+      "source": "claude",
+      "title": "A crank stage for design reviews too?",
+      "affinity": "q",
+      "energy": 0.828
+    },
+    {
+      "id": "p-0805-1",
+      "date": "2026-08-05",
+      "source": "journal",
+      "title": "Do evals dream of electric rubrics?",
+      "affinity": "e",
+      "energy": 0.46
+    },
+    {
+      "id": "p-0805-2",
+      "date": "2026-08-05",
+      "source": "github",
+      "title": "Nightly reader flagged drift in three repos",
+      "affinity": "w",
+      "energy": 0.552
+    },
+    {
+      "id": "p-0804-1",
+      "date": "2026-08-04",
+      "source": "claude",
+      "title": "Compaction heuristic: keep verdicts, drop the debate",
+      "affinity": "x",
+      "energy": 0.644
+    },
+    {
+      "id": "p-0804-2",
+      "date": "2026-08-04",
+      "source": "github",
+      "title": "prompt-lint rule: no apologies in system prompts",
+      "affinity": null,
+      "energy": 0.368
+    },
+    {
+      "id": "p-0803-1",
+      "date": "2026-08-03",
+      "source": "github",
+      "title": "Retry-with-critique loop in the handoff pipeline",
+      "affinity": "w",
+      "energy": 0.736
+    },
+    {
+      "id": "p-0803-2",
+      "date": "2026-08-03",
+      "source": "journal",
+      "title": "Agents negotiate better with fewer tools",
+      "affinity": "o",
+      "energy": 0.552
+    },
+    {
+      "id": "p-0728-1",
+      "date": "2026-07-28",
+      "source": "journal",
+      "title": "Wrote the blast-radius memo in one sitting",
+      "affinity": "q",
+      "energy": 0.414
+    },
+    {
+      "id": "p-0721-1",
+      "date": "2026-07-21",
+      "source": "claude",
+      "title": "An orchestrator that bills its subagents for tokens",
+      "affinity": "o",
+      "energy": 0.46
+    },
+    {
+      "id": "p-0714-1",
+      "date": "2026-07-14",
+      "source": "github",
+      "title": "Deleted 4k lines of glue. The glue was the bug.",
+      "affinity": "w",
+      "energy": 0.368
+    },
+    {
+      "id": "p-0630-1",
+      "date": "2026-06-30",
+      "source": "journal",
+      "title": "Half our evals test the mood I was in when I wrote them",
+      "affinity": "e",
+      "energy": 0.322
+    },
+    {
+      "id": "p-0619-1",
+      "date": "2026-06-19",
+      "source": "claude",
+      "title": "Prompts as load-bearing walls vs curtains",
+      "affinity": "x",
+      "energy": 0.276
+    },
+    {
+      "id": "p-0605-1",
+      "date": "2026-06-05",
+      "source": "github",
+      "title": "The crank rejected its own config change",
+      "affinity": "w",
+      "energy": 0.276
+    },
+    {
+      "id": "p-0522-1",
+      "date": "2026-05-22",
+      "source": "journal",
+      "title": "Taste is a rubric you can't write down yet",
+      "affinity": null,
+      "energy": 0.258
+    },
+    {
+      "id": "p-0508-1",
+      "date": "2026-05-08",
+      "source": "claude",
+      "title": "What if standup notes were embeddings?",
+      "affinity": null,
+      "energy": 0.184
+    },
+    {
+      "id": "p-0417-1",
+      "date": "2026-04-17",
+      "source": "github",
+      "title": "Overnight refactorer opened its 100th PR",
+      "affinity": "w",
+      "energy": 0.166
+    },
+    {
+      "id": "p-0402-1",
+      "date": "2026-04-02",
+      "source": "journal",
+      "title": "The junior asked why we still write code",
+      "affinity": null,
+      "energy": 0.23
+    },
+    {
+      "id": "p-0311-1",
+      "date": "2026-03-11",
+      "source": "claude",
+      "title": "Compaction is grief with a token budget",
+      "affinity": "x",
+      "energy": 0.138
+    },
+    {
+      "id": "p-0219-1",
+      "date": "2026-02-19",
+      "source": "github",
+      "title": "Prompt-lint caught me apologizing to the linter",
+      "affinity": null,
+      "energy": 0.11
+    },
+    {
+      "id": "p-0124-1",
+      "date": "2026-01-24",
+      "source": "journal",
+      "title": "Fan-out envy after the conference talk",
+      "affinity": "o",
+      "energy": 0.092
+    },
+    {
+      "id": "p-1212-1",
+      "date": "2025-12-12",
+      "source": "journal",
+      "title": "The notebook should be a place, not a feed",
+      "affinity": null,
+      "energy": 0.074
+    },
+    {
+      "id": "p-1101-1",
+      "date": "2025-11-01",
+      "source": "claude",
+      "title": "Memory palaces for models",
+      "affinity": "x",
+      "energy": 0.064
+    },
+    {
+      "id": "p-0915-1",
+      "date": "2025-09-15",
+      "source": "github",
+      "title": "First green run of the design-to-code pipeline",
+      "affinity": "w",
+      "energy": 0.055
+    }
   ],
   "history": [
-    { "id": "h1", "kind": "education", "title": "B.S. Computer Science", "org": "PLACEHOLDER UNIVERSITY", "start": "2012", "end": "2016", "note": "PLACEHOLDER — replace with real education details." },
-    { "id": "h2", "kind": "role", "title": "Frontend Engineer", "org": "PLACEHOLDER CO", "start": "2016", "end": "2019", "note": "PLACEHOLDER — early era: design systems, component libraries." },
-    { "id": "h3", "kind": "role", "title": "Senior Engineer", "org": "PLACEHOLDER CO 2", "start": "2019", "end": "2023", "note": "PLACEHOLDER — the years the systems thinking formed." },
-    { "id": "h4", "kind": "role", "title": "Director of AI Engineering & Strategy", "org": "Southleft", "start": "2023", "end": null, "note": "Current era. Agents, orchestration, the work this map is made of." }
+    {
+      "id": "h1",
+      "kind": "education",
+      "title": "B.S. Computer Science",
+      "org": "PLACEHOLDER UNIVERSITY",
+      "start": "2012",
+      "end": "2016",
+      "note": "PLACEHOLDER — replace with real education details."
+    },
+    {
+      "id": "h2",
+      "kind": "role",
+      "title": "Frontend Engineer",
+      "org": "PLACEHOLDER CO",
+      "start": "2016",
+      "end": "2019",
+      "note": "PLACEHOLDER — early era: design systems, component libraries."
+    },
+    {
+      "id": "h3",
+      "kind": "role",
+      "title": "Senior Engineer",
+      "org": "PLACEHOLDER CO 2",
+      "start": "2019",
+      "end": "2023",
+      "note": "PLACEHOLDER — the years the systems thinking formed."
+    },
+    {
+      "id": "h4",
+      "kind": "role",
+      "title": "Director of AI Engineering & Strategy",
+      "org": "Southleft",
+      "start": "2023",
+      "end": null,
+      "note": "Current era. Agents, orchestration, the work this map is made of."
+    }
   ],
   "memories": [
-    { "id": "m1", "title": "The whiteboard the night HANDOFF clicked", "date": "2026-03", "stamp": "MAR 26", "ageMonths": 5, "media": "handoff-whiteboard.jpg", "note": "Four hours, two markers dead, one diagram that finally closed the loop. The photo is barely legible. It doesn't need to be." },
-    { "id": "m2", "title": "First green run at 2:14am", "date": "2025-09", "stamp": "SEP 25", "ageMonths": 11, "note": "The pipeline went end to end while the house slept. I sat there and watched the log scroll like weather." },
-    { "id": "m3", "title": "The porch conversation about taste", "date": "2026-06", "stamp": "JUN 26", "ageMonths": 2, "media": "austin-porch.jpg", "note": "J. asked what I'd optimize if compute were free. Nobody said latency. Everybody said taste." }
+    {
+      "id": "m1",
+      "title": "The whiteboard the night HANDOFF clicked",
+      "date": "2026-03",
+      "stamp": "MAR 26",
+      "ageMonths": 5,
+      "media": "handoff-whiteboard.jpg",
+      "note": "Four hours, two markers dead, one diagram that finally closed the loop. The photo is barely legible. It doesn't need to be."
+    },
+    {
+      "id": "m2",
+      "title": "First green run at 2:14am",
+      "date": "2025-09",
+      "stamp": "SEP 25",
+      "ageMonths": 11,
+      "note": "The pipeline went end to end while the house slept. I sat there and watched the log scroll like weather."
+    },
+    {
+      "id": "m3",
+      "title": "The porch conversation about taste",
+      "date": "2026-06",
+      "stamp": "JUN 26",
+      "ageMonths": 2,
+      "media": "austin-porch.jpg",
+      "note": "J. asked what I'd optimize if compute were free. Nobody said latency. Everybody said taste."
+    }
   ],
   "sky": {
     "comets": [
-      { "id": "k1", "title": "Learn Rust properly", "period": "RETURNS YEARLY", "a": 1250, "b": 520, "rot": 0.5, "w": 0.045, "ph": 0 },
-      { "id": "k2", "title": "Rewrite the blog engine", "period": "RETURNS QUARTERLY", "a": 900, "b": 380, "rot": -0.9, "w": 0.065, "ph": 2.6 },
-      { "id": "k3", "title": "Write the book", "period": "RETURNS EVERY DECEMBER", "a": 1500, "b": 640, "rot": 1.4, "w": 0.032, "ph": 4.4 }
+      {
+        "id": "k1",
+        "title": "Learn Rust properly",
+        "period": "RETURNS YEARLY",
+        "a": 1250,
+        "b": 520,
+        "rot": 0.5,
+        "w": 0.045,
+        "ph": 0
+      },
+      {
+        "id": "k2",
+        "title": "Rewrite the blog engine",
+        "period": "RETURNS QUARTERLY",
+        "a": 900,
+        "b": 380,
+        "rot": -0.9,
+        "w": 0.065,
+        "ph": 2.6
+      },
+      {
+        "id": "k3",
+        "title": "Write the book",
+        "period": "RETURNS EVERY DECEMBER",
+        "a": 1500,
+        "b": 640,
+        "rot": 1.4,
+        "w": 0.032,
+        "ph": 4.4
+      }
     ],
     "tensions": [
-      { "id": "t1", "a": "CRAFT", "b": "SPEED", "ang": 2.6, "dist": 880 },
-      { "id": "t2", "a": "SHIP", "b": "CERTAIN", "ang": -0.6, "dist": 1150 },
-      { "id": "t3", "a": "DEPTH", "b": "BREADTH", "ang": 0.9, "dist": 1300 }
+      {
+        "id": "t1",
+        "a": "CRAFT",
+        "b": "SPEED",
+        "ang": 2.6,
+        "dist": 880
+      },
+      {
+        "id": "t2",
+        "a": "SHIP",
+        "b": "CERTAIN",
+        "ang": -0.6,
+        "dist": 1150
+      },
+      {
+        "id": "t3",
+        "a": "DEPTH",
+        "b": "BREADTH",
+        "ang": 0.9,
+        "dist": 1300
+      }
     ],
     "pulsars": [
-      { "id": "u1", "title": "Nightly reader", "blink": 2.2, "ang": 1.9, "dist": 760 },
-      { "id": "u2", "title": "Weekly skeptic", "blink": 6, "ang": -2.5, "dist": 1020 }
+      {
+        "id": "u1",
+        "title": "Nightly reader",
+        "blink": 2.2,
+        "ang": 1.9,
+        "dist": 760
+      },
+      {
+        "id": "u2",
+        "title": "Weekly skeptic",
+        "blink": 6,
+        "ang": -2.5,
+        "dist": 1020
+      }
     ],
     "probes": [
-      { "id": "b1", "q": "Will agents make taste MORE valuable?", "sent": "NOV 25", "ang": 0.35 },
-      { "id": "b2", "q": "What does a senior engineer do all day in 2030?", "sent": "MAR 26", "ang": -1.85 },
-      { "id": "b3", "q": "Is the blog the product, or the byproduct?", "sent": "JUL 26", "ang": 2.2 }
+      {
+        "id": "b1",
+        "q": "Will agents make taste MORE valuable?",
+        "sent": "NOV 25",
+        "ang": 0.35
+      },
+      {
+        "id": "b2",
+        "q": "What does a senior engineer do all day in 2030?",
+        "sent": "MAR 26",
+        "ang": -1.85
+      },
+      {
+        "id": "b3",
+        "q": "Is the blog the product, or the byproduct?",
+        "sent": "JUL 26",
+        "ang": 2.2
+      }
     ],
-    "avoided": { "id": "v1", "ang": 2.95, "dist": 1350 },
+    "avoided": {
+      "id": "v1",
+      "ang": 2.95,
+      "dist": 1350
+    },
     "debris": [
-      { "id": "d1", "title": "Agent pairing with itself", "when": "MAR 2026", "ang": 0.9 },
-      { "id": "d2", "title": "Self-reviewing pull requests", "when": "PARKED", "ang": 2.1 },
-      { "id": "d3", "title": "The wellbeing bot", "when": "2024", "ang": -2.2 },
-      { "id": "d4", "title": "The Slack bot that apologized", "when": "OCT 2025", "ang": -0.7 },
-      { "id": "d5", "title": "48-hour pipeline rewrite", "when": "JAN 2026", "ang": 2.9 }
+      {
+        "id": "d1",
+        "title": "Agent pairing with itself",
+        "when": "MAR 2026",
+        "ang": 0.9
+      },
+      {
+        "id": "d2",
+        "title": "Self-reviewing pull requests",
+        "when": "PARKED",
+        "ang": 2.1
+      },
+      {
+        "id": "d3",
+        "title": "The wellbeing bot",
+        "when": "2024",
+        "ang": -2.2
+      },
+      {
+        "id": "d4",
+        "title": "The Slack bot that apologized",
+        "when": "OCT 2025",
+        "ang": -0.7
+      },
+      {
+        "id": "d5",
+        "title": "48-hour pipeline rewrite",
+        "when": "JAN 2026",
+        "ang": 2.9
+      }
     ]
   }
 }
