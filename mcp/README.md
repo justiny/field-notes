@@ -42,6 +42,7 @@ required for v1; the session path covers most real thinking.
 | `brain_promote` | human approval only | particle → orbiting note, theme mass +1 |
 | `brain_remember` | human only | a memory: whole, undecaying, orbits the self |
 | `brain_chart` | nightly cartographer | ≤ 2 cited suggestions in deep space |
+| `brain_name_theme` | human only | mints a theme from an accretion cluster, adopts its dark particles |
 | `brain_state` | anyone (read-only) | nothing — ids/titles for refs + dedupe |
 
 `decay` is not a tool — entropy is not optional. It runs from cron:
@@ -55,7 +56,9 @@ after 14 days, note ages recomputed so orbits stay honest).
 - **Dedupe**: strong title overlap → merge (energy adds, refs union), not append.
 - **Quarantine**: uncertain `affinity` stays `null`. Agents may not invent themes.
 - **Accretion**: ≥ 3 mutually-similar dark particles → the server reports a
-  cluster; a human names the new theme or rejects it.
+  cluster; a human names the new theme (`brain_name_theme`) or rejects it.
+  Themes are read from `brain.json`, never hardcoded, so a newly named one is
+  usable immediately.
 - **Provenance**: every particle keeps `source` + `date` forever.
 - **Atomicity**: brain.json writes are tmp-then-rename; the site never sees a
   half-written ledger.

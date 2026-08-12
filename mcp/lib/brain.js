@@ -1,7 +1,11 @@
 // lib/brain.js — pure logic, no I/O beyond load/save. Everything testable.
 import { readFileSync, writeFileSync, renameSync } from 'node:fs';
 
-export const THEMES = { o: 'Orchestration', x: 'Context engineering', w: 'Workflows', e: 'Evals', q: 'Experimentation' };
+// Themes come from the ledger, not from a const here: the accretion loop lets a
+// human name a new one, and a hardcoded copy would silently diverge from
+// brain.json the moment that happened.
+export const themesOf = brain =>
+  Object.fromEntries((brain.themes || []).map(t => [t.id, t.name]));
 const RATE_LIMIT = 6;            // proposals per calendar day
 const DECAY = 0.92;              // nightly energy multiplier
 const COLD = 0.05;               // below this a particle renders near-invisible (never deleted)
@@ -37,7 +41,7 @@ export function propose(brain, p, today) {
   if (!p.title || p.title.length > 90) throw new Error('title required, <= 90 chars');
   if (!['github', 'journal', 'claude'].includes(p.source)) throw new Error('source must be github|journal|claude');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(p.date)) throw new Error('date must be YYYY-MM-DD');
-  if (p.affinity != null && !THEMES[p.affinity]) throw new Error('affinity must be a theme id or null');
+  if (p.affinity != null && !themesOf(brain)[p.affinity]) throw new Error('affinity must be a theme id or null');
   if (ACTIVITY_RE.test(p.title.trim())) throw new Error('rejected: activity log, no claim in it (see digest-prompt.md)');
   const todays = (brain.particles || []).filter(x => x.proposedOn === today);
   if (todays.length >= RATE_LIMIT) throw new Error(`rate limit: ${RATE_LIMIT} proposals per day; today is spent`);
@@ -49,9 +53,16 @@ export function propose(brain, p, today) {
       return { merged: x.id, particle: x };
     }
   }
-  const seq = todays.length + 1;
+  // Sequence off ids already claimed for THIS date, not off today's count — a
+  // back-filled date (an expected use) would otherwise reissue an existing id.
+  // Notes are checked too: promote() carries a particle's id across, so a freed
+  // slot in `particles` is not actually free.
+  const prefix = `p-${p.date.slice(5).replace('-', '')}`;
+  const taken = new Set([...(brain.particles || []), ...(brain.notes || [])].map(x => x.id));
+  let seq = 1;
+  while (taken.has(`${prefix}-${seq}`)) seq++;
   const particle = {
-    id: `p-${p.date.slice(5).replace('-', '')}-${seq}`,
+    id: `${prefix}-${seq}`,
     date: p.date, proposedOn: today, source: p.source, title: p.title.trim(),
     affinity: p.affinity ?? null, energy: Math.max(0, Math.min(1, p.energy ?? 0.3)),
     ...(p.refs?.length ? { refs: p.refs } : {})
@@ -63,13 +74,14 @@ export function propose(brain, p, today) {
 
 // ---- promote: human-gated. Mass is granted here and only here ----
 export function promote(brain, id, theme, today, teaser) {
-  if (!THEMES[theme]) throw new Error('unknown theme: ' + theme);
+  const themes = themesOf(brain);
+  if (!themes[theme]) throw new Error('unknown theme: ' + theme);
   const i = (brain.particles || []).findIndex(x => x.id === id);
   if (i < 0) throw new Error('no particle ' + id);
   const p = brain.particles.splice(i, 1)[0];
   const ym = today.slice(0, 7);
   const note = {
-    id: p.id, theme, cat: THEMES[theme].split(' ')[0].toUpperCase(),
+    id: p.id, theme, cat: themes[theme].split(' ')[0].toUpperCase(),
     title: p.title, date: ym, stamp: stampOf(ym), ageMonths: 0,
     teaser: teaser || '', promotedFrom: p.source, sourceDate: p.date, draft: true
   };
@@ -85,7 +97,7 @@ export function decay(brain, today) {
     if (p.energy < COLD) cooled++;
   }
   brain.suggestions = (brain.suggestions || []).filter(s => {
-    const keep = s.engaged || monthsBetween(s.inferred, today) * 30 + dayDiff(s.inferred, today) <= SUGGESTION_TTL_DAYS;
+    const keep = s.engaged || daysBetween(s.inferred, today) <= SUGGESTION_TTL_DAYS;
     if (!keep) expired++;
     return keep;
   });
@@ -94,7 +106,10 @@ export function decay(brain, today) {
   for (const m of brain.memories || []) m.ageMonths = monthsBetween(m.date, today);
   return { cooled, expired };
 }
-const dayDiff = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000) % 30;
+// Real elapsed days. The previous form was `months*30 + (days % 30)`, which made
+// anything charted late in a month expire almost at once: a suggestion inferred
+// on the 31st already scored 30 days on the 1st.
+const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000);
 
 // ---- remember: human-only. Memories are already whole ----
 export function remember(brain, m, today) {
@@ -125,6 +140,28 @@ export function accretionClusters(brain) {
     }
   }
   return clusters; // the server EMITS these; a human names or rejects the theme
+}
+
+// ---- nameTheme: human-gated. The closing move of the accretion loop ----
+// accretionClusters() could report a cluster forever with no way to act on it.
+// This mints the theme and adopts the particles that argued for it.
+export function nameTheme(brain, { id, name, members = [] }) {
+  if (!/^[a-z0-9]{1,3}$/.test(id || '')) throw new Error('theme id must be 1-3 lowercase alphanumeric chars');
+  if (!name || name.length > 40) throw new Error('theme name required, <= 40 chars');
+  brain.themes = brain.themes || [];
+  if (brain.themes.some(t => t.id === id)) throw new Error('theme already exists: ' + id);
+  if (brain.themes.some(t => t.name.toLowerCase() === name.toLowerCase())) throw new Error('a theme is already called that: ' + name);
+
+  const adopted = [];
+  for (const pid of members) {
+    const p = (brain.particles || []).find(x => x.id === pid);
+    if (!p) throw new Error('no particle ' + pid);
+    if (p.affinity) throw new Error(`${pid} already belongs to ${p.affinity}; only dark particles can seed a theme`);
+    adopted.push(p);
+  }
+  brain.themes.push({ id, name });   // the map derives the glyph from note count
+  adopted.forEach(p => { p.affinity = id; });
+  return { theme: { id, name }, adopted: adopted.map(p => p.id) };
 }
 
 // ---- chart: validates + writes cartographer suggestions (the thinking happens in the LLM) ----

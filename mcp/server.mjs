@@ -4,7 +4,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
-import { loadBrain, saveBrain, propose, promote, decay, remember, chart, accretionClusters, THEMES } from './lib/brain.js';
+import { loadBrain, saveBrain, propose, promote, decay, remember, chart, accretionClusters, nameTheme, themesOf } from './lib/brain.js';
 
 const BRAIN = process.env.BRAIN_JSON || new URL('../brain.json', import.meta.url).pathname;
 const today = () => new Date().toISOString().slice(0, 10);
@@ -24,7 +24,9 @@ server.tool('brain_propose',
     title: z.string().max(90).describe('One line, written plainly. A claim, not an activity.'),
     source: z.enum(['github', 'journal', 'claude']),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-    affinity: z.enum(['o', 'x', 'w', 'e', 'q']).nullable().describe('Theme id only if it clearly belongs; null stays dark (respectable)'),
+    // Not a fixed enum: themes can be minted by brain_name_theme, and a stale
+    // enum here would reject them. lib/brain.js validates against the ledger.
+    affinity: z.string().nullable().describe('Theme id (see brain_state) only if it clearly belongs; null stays dark (respectable)'),
     energy: z.number().min(0).max(1).describe('0.3 routine · 0.5 interesting · 0.7 kept returning · 0.9 could not stop. Be stingy above 0.7.'),
     refs: z.array(z.string()).optional().describe('Existing note/particle ids this extends')
   },
@@ -33,7 +35,7 @@ server.tool('brain_propose',
 server.tool('brain_promote',
   'HUMAN-GATED: only call after Justin explicitly approves in chat. Grants mass: particle becomes an orbiting note.',
   {
-    id: z.string(), theme: z.enum(['o', 'x', 'w', 'e', 'q']),
+    id: z.string(), theme: z.string().describe('Theme id — see brain_state'),
     teaser: z.string().max(120).optional().describe('One-line teaser for the map tooltip')
   },
   async ({ id, theme, teaser }) => reply(withBrain(b => promote(b, id, theme, today(), teaser))));
@@ -56,13 +58,22 @@ server.tool('brain_chart',
   },
   async ({ suggestions }) => reply(withBrain(b => chart(b, suggestions, today()))));
 
+server.tool('brain_name_theme',
+  'HUMAN-ONLY: name a new theme from an accretion cluster. Only call after Justin explicitly names it in chat — never infer a theme yourself. Adopts the listed dark particles into it.',
+  {
+    id: z.string().describe('Short id, 1-3 lowercase alphanumeric chars, e.g. "t"'),
+    name: z.string().max(40).describe('Display name, e.g. "Taste"'),
+    members: z.array(z.string()).optional().describe('Dark particle ids that argued for this theme (from brain_state accretion)')
+  },
+  async ({ id, name, members }) => reply(withBrain(b => nameTheme(b, { id, name, members: members || [] }))));
+
 server.tool('brain_state',
   'Read-only: themes, note/particle ids and titles, accretion clusters. Use to cite refs and avoid duplicates before proposing.',
   {},
   async () => {
     const b = loadBrain(BRAIN);
     return reply({
-      themes: THEMES,
+      themes: themesOf(b),
       notes: b.notes.map(n => ({ id: n.id, theme: n.theme, title: n.title })),
       particles: (b.particles || []).map(p => ({ id: p.id, title: p.title, affinity: p.affinity, energy: p.energy })),
       accretion: accretionClusters(b)
