@@ -27,6 +27,20 @@ mcp/
   chart-prompt.md / digest-prompt.md / session-digest.md   agent prompts
 ```
 
+## Run it locally
+
+There is no build step and no dev server to install — the map is a static page
+that fetches `brain.json` at runtime. Any static file server works:
+
+    cd site && python3 -m http.server 8000    # then open http://localhost:8000
+
+It must be *served*, not opened as a `file://` URL: the `fetch('./brain.json')`
+call is subject to CORS and will fail from the filesystem. An internet connection
+is required too — three.js comes from an SRI-pinned CDN importmap and the fonts
+from Google Fonts.
+
+Live at **https://field-notes.pages.dev** (Cloudflare Pages).
+
 ## Fidelity
 
 **High-fidelity, and mostly final code.**
