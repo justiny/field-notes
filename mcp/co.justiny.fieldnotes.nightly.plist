@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Nightly entropy + cartography + publish for Field Notes.
+
+  A LaunchAgent rather than a crontab entry on purpose: it runs inside the
+  user's GUI session, so `claude -p` can reach its keychain credentials. cron
+  runs outside that session and is additionally subject to TCC, which can deny
+  it access to ~/Sites without Full Disk Access granted to /usr/sbin/cron.
+
+  Bonus over cron: if the Mac is asleep at 23:50, launchd runs the job at the
+  next wake. cron would simply skip the night.
+
+  Install:
+    cp mcp/co.justiny.fieldnotes.nightly.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/co.justiny.fieldnotes.nightly.plist
+
+  Check / run once by hand / remove:
+    launchctl print gui/$(id -u)/co.justiny.fieldnotes.nightly
+    launchctl kickstart -p gui/$(id -u)/co.justiny.fieldnotes.nightly
+    launchctl bootout gui/$(id -u)/co.justiny.fieldnotes.nightly
+
+  Copy it in again after editing — launchd reads the installed copy, not this one.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>co.justiny.fieldnotes.nightly</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/justin/Sites/justin-space/mcp/nightly.sh</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>23</integer>
+        <key>Minute</key>
+        <integer>50</integer>
+    </dict>
+
+    <!-- Do not fire on install/login; 23:50 is the only intended trigger. -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/fieldnotes-nightly.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/fieldnotes-nightly.log</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/justin/Sites/justin-space/mcp</string>
+</dict>
+</plist>
