@@ -22,9 +22,22 @@ test('propose rejects activity logs', () => {
   assert.throws(() => propose(b, P({ title: 'Fixed 3 bugs in the dispatcher' }), TODAY), /activity log/);
 });
 
+// The six titles must share almost no tokens, or dedupe merges them and the
+// rate limit is never reached. `tokens()` drops words of <= 2 chars, so
+// "claim 1 / claim 2"-style fixtures all collapse to the same token set.
+const SIX_DISTINCT = [
+  'Dispatchers hoard work when you make them clever',
+  'Compaction is lying to your future self',
+  'Evals turn taste into assertions',
+  'Scope is a gift you give a subagent',
+  'Entropy belongs on a schedule not a whim',
+  'Fan-out often hides an unmade decision',
+];
+
 test('propose enforces the daily rate limit of 6', () => {
   const b = fresh();
-  for (let i = 0; i < 6; i++) propose(b, P({ title: `Distinct claim number ${i} about ${'xyz'[i % 3]}${i}` }), TODAY);
+  for (const title of SIX_DISTINCT) propose(b, P({ title }), TODAY);
+  assert.equal(b.particles.length, 6, 'six distinct claims must not merge');
   assert.throws(() => propose(b, P({ title: 'A seventh, one too many' }), TODAY), /rate limit/);
 });
 

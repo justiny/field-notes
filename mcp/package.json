@@ -8,7 +8,7 @@
     "start": "node server.mjs",
     "decay": "node server.mjs decay",
     "chart": "node server.mjs chart",
-    "test": "node --test test/"
+    "test": "node --test test/*.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
