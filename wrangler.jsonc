@@ -1,0 +1,14 @@
+{
+  // Assets-only Worker: no `main`, no build step. Cloudflare serves site/
+  // directly and the map fetches ./brain.json at runtime, exactly as it does
+  // from `python3 -m http.server` locally.
+  //
+  // Workers rather than Pages because Pages is no longer offered for new
+  // projects in the dashboard, and — unlike a Pages project — a Worker can have
+  // a Git repository connected after it already exists.
+  "name": "field-notes",
+  "compatibility_date": "2026-08-12",
+  "assets": {
+    "directory": "./site"
+  }
+}
