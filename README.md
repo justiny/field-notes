@@ -39,7 +39,9 @@ call is subject to CORS and will fail from the filesystem. An internet connectio
 is required too — three.js comes from an SRI-pinned CDN importmap and the fonts
 from Google Fonts.
 
-Live at **https://field-notes.pages.dev** (Cloudflare Pages).
+Live at **https://field-notes.justin-93c.workers.dev** — a Cloudflare Worker
+serving `site/` as static assets, deployed from this repo on every push to
+`main`. Config lives in `wrangler.jsonc`; there is no build step.
 
 ## Fidelity
 
