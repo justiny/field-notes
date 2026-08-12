@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes v4 — the whole map in 3D</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9"
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;height:100%;background:#121210;overflow:hidden}
+  canvas{display:block}
+  a{color:#82C566}a:hover{color:#E8E4DC}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  #tslider{-webkit-appearance:none;appearance:none;height:4px;background:#3A3A34;border:none;outline:none;border-radius:0;cursor:pointer}
+  #tslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:11px;height:11px;border-radius:50%;background:#E08A3C;border:none}
+  #tslider::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#E08A3C;border:none}
+  #tslider::-moz-range-track{height:4px;background:#3A3A34;border:none}
+</style>
+<style>
+#menu-panel a, #menu-panel button.mi { display:block; width:100%; text-align:left; box-sizing:border-box; background:none; border:0; cursor:pointer; text-decoration:none; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.16em; color:#8B8A80; padding:9px 16px; transition:color .15s, background .15s; }
+#menu-panel a:hover, #menu-panel button.mi:hover { color:#E8E4DC; background:#22221E; }
+#menu-panel a span, #menu-panel button.mi span { color:#5C5B52; letter-spacing:.1em; }
+</style>
+</head>
+<body>
+<div id="cap" style="position:fixed;left:28px;top:24px;z-index:10;font-family:'IBM Plex Mono',monospace;letter-spacing:.16em;color:#8B8A80;font-size:10px;pointer-events:none">
+  <b style="display:block;color:#E8E4DC;font-weight:500;font-size:11px;margin-bottom:4px">JUSTIN YOUNG — FIELD NOTES</b>
+  DIRECTOR OF AI ENGINEERING &amp; STRATEGY | <a href="https://southleft.com" target="_blank" rel="noopener" style="color:#8B8A80;text-decoration:none;border-bottom:1px solid #3A3A34;pointer-events:auto">SOUTHLEFT</a>
+</div>
+<div id="hint" style="position:fixed;left:28px;bottom:24px;z-index:10;font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;color:#5C5B52;font-size:9px;pointer-events:none">
+  DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A NOTE TO READ · DOUBLE-CLICK FOR HOME
+</div>
+<div id="card" style="opacity:0;pointer-events:none;position:fixed;right:28px;top:66px;z-index:10;width:250px;background:#1A1A17;border:1px solid #3A3A34;padding:14px 16px;transition:opacity .3s;box-shadow:4px 4px 0 rgba(0,0,0,0.35)">
+  <div id="card-t" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#82C566"></div>
+  <div id="card-b" style="font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.65;color:#8B8A80;margin-top:8px"></div>
+</div>
+<!-- top-right menu -->
+<div id="menu" style="position:fixed;right:28px;top:24px;z-index:30;text-align:right">
+  <button id="menu-btn" style="background:#1A1A17;border:1px solid #3A3A34;color:#E8E4DC;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;padding:8px 14px;cursor:pointer">MENU &#9662;</button>
+  <div id="menu-panel" style="display:none;margin-top:8px;background:#1A1A17;border:1px solid #3A3A34;padding:6px 0;min-width:230px;text-align:left">
+    <a href="https://www.linkedin.com/in/justinmmyoung/" target="_blank" rel="noopener">LINKEDIN <span>&#8599;</span></a>
+    <a href="https://github.com/justiny" target="_blank" rel="noopener">GITHUB <span>&#8599;</span></a>
+    <a href="https://southleft.com" target="_blank" rel="noopener">WORK · SOUTHLEFT <span>&#8599;</span></a>
+    <a href="mailto:justin@lsvl.co">EMAIL <span>&#8599;</span></a>
+    <div style="height:1px;background:#2A2A26;margin:6px 0"></div>
+    <a href="engine.html">THE ENGINE <span>&#183; HOW THE MAP IS FED</span></a>
+    <button class="mi" id="menu-about">ABOUT <span>&#183; DIVE TO THE SINGULARITY</span></button>
+    <button class="mi" id="menu-rewind">TIMELINE <span>· REWIND TO DAY ONE</span></button>
+    <button class="mi" id="menu-home">RESET VIEW</button>
+    <button class="mi" style="cursor:default;color:#4A4A42" title="Coming soon">SOUND <span>· SOON</span></button>
+  </div>
+</div>
+<!-- essay, floated at the note's location when reading in place -->
+<div id="essay" style="opacity:0;pointer-events:none;position:fixed;z-index:20;width:400px;max-height:70vh;overflow:auto;background:rgba(18,18,16,0.92);border:1px solid #3A3A34;padding:22px 24px;transition:opacity .45s;scrollbar-width:thin">
+  <div id="essay-m" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#E08A3C"></div>
+  <div id="essay-t" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500;color:#E8E4DC;margin-top:8px;line-height:1.25"></div>
+  <div id="essay-b" style="font-family:'Space Grotesk',sans-serif;font-size:13.5px;line-height:1.75;color:#B5B2A8;margin-top:14px;white-space:pre-line"></div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:#5C5B52;margin-top:18px">ESC OR CLICK THE DARK TO RETURN</div>
+</div>
+<!-- time scrubber -->
+<div id="scrub" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:12;display:flex;align-items:center;gap:10px;background:#1A1A17;border:1px solid #3A3A34;padding:7px 12px">
+  <span class="mono" style="font-size:9px;letter-spacing:.14em;color:#5C5B52">AUG 25</span>
+  <input id="tslider" type="range" min="0" max="366" value="366" step="1" style="width:180px">
+  <span id="tlabel" class="mono" style="font-size:9.5px;letter-spacing:.12em;color:#8B8A80;min-width:58px;text-align:center">NOW</span>
+  <span id="tnow" class="mono" title="Return to the present" style="font-size:9.5px;letter-spacing:.12em;color:#82C566;cursor:pointer">&#9654;&#9612;</span>
+</div>
+<!-- minimap -->
+<div id="mapwrap" style="position:fixed;right:28px;bottom:24px;z-index:12;text-align:right">
+  <canvas id="minimap" width="300" height="300" style="width:150px;height:150px;background:rgba(26,26,23,0.85);border:1px solid #3A3A34;cursor:crosshair;touch-action:none" title="Click or drag to travel · double-click for home"></canvas>
+  <div class="mono" style="font-size:8.5px;letter-spacing:.14em;color:#5C5B52;margin-top:5px;width:150px;margin-left:auto;text-align:center;white-space:nowrap;overflow:hidden">CLICK / DRAG · <span style="color:#E08A3C">&#9650;</span> YOU</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const BONE = 0xE8E4DC, GREEN = 0x82C566, GRAY = 0x8B8A80, ORANGE = 0xE08A3C;
+const brain = await (await fetch('./brain.json')).json();
+
+// essays for the notes that earned one; others read from their teaser
+const POSTS = {
+  s1:{m:'JUL 2026 · ORCHESTRATION · 8 MIN', b:'A function hides an implementation. A subagent hides a deliberation. Once I started treating subagents as the unit of thought rather than the unit of work, the architecture diagrams got simpler and the transcripts got weirder.\nThe trick is deciding what a subagent is allowed to not know. Scope is a gift. The narrower the brief, the better the work — which is also true of me, but I try not to dwell on that.'},
+  s2:{m:'JUN 2026 · ORCHESTRATION · 6 MIN', b:'Every multi-agent system I have built eventually grows a dispatcher: one small, boring process whose only job is to decide who thinks next. It is the least glamorous component and the only one I have never rewritten.\nDispatchers should be dumb on purpose. Every time I made one clever, it started hoarding work like a manager who "just finds it faster to do it myself."'},
+  b:{m:'MAY 2026 · CONTEXT · 7 MIN', b:'Tokens are money and most prompts are lifestyle inflation. The moment I started treating context as a budget with line items — instructions, memory, tools, evidence — I stopped asking "what can I add?" and started asking "what is this paying for?"\nThe corollary: anything you cannot justify cutting, you do not understand yet.'},
+  k:{m:'APR 2026 · CONTEXT · 5 MIN', b:'Compaction is the art of lying to your future self efficiently. A summary is a claim about what will matter later, made by someone who does not know later.\nMy current heuristic: compact decisions and their reasons, discard deliberation. Nobody has ever needed the transcript of the argument. They need to know who won and why.'},
+  p:{m:'MAR 2026 · WORKFLOWS · 9 MIN', b:'The design-to-code pipeline I am building at Southleft has a stage whose only job is to object. It reads the plan and files complaints. We call it the crank.\nShipping quality went up not because the crank is right — it is right maybe a third of the time — but because plans written to survive an argument are better plans.'},
+  r:{m:'FEB 2026 · WORKFLOWS · 4 MIN', b:'Some thinking should be scheduled, not summoned. My repos now have standing appointments: a nightly reader that flags drift, a weekly skeptic that re-litigates old decisions.\nIt is unsettling how much of engineering judgment turns out to be a cron job wearing a person.'},
+  g:{m:'JAN 2026 · EVALS · 7 MIN', b:'The hard part of evals is not measurement, it is admitting what you actually care about. "Good code" was never a rubric. It was a mood.\nSo now I write the rubric first and let it embarrass me. Half of my eval work is discovering that my standards, written down, are either trivial or impossible.'},
+  l:{m:'DEC 2025 · META · 3 MIN', b:'This site is a lab notebook that happens to be readable. Entries are dated, wrong in places, and left standing when they age badly — the changelog of thinking exists precisely so I do not have to pretend I always believed what I believe now.'},
+  about:{m:'JUSTIN YOUNG · SOUTHLEFT · THE SINGULARITY', b:'I direct AI Engineering & Strategy at Southleft, where I build systems in which software writes software — and then I write about what went wrong, because that is where the interesting parts live.\nThis is a gravity map of one head. Themes are massive bodies; the space visibly bends around dense thinking. Notes orbit the theme that produced them — new ones close and fast, old ones far and slow. The dark is not empty. It is unsampled.\nYou found the center. Description breaks down here; this is all it says.'}
+};
+
+// ---------- renderer / camera / controls ----------
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x121210);
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.01, 120);
+const HOME_POS = new THREE.Vector3(2.6, 1.7, 4.4), HOME_TGT = new THREE.Vector3(0, 0, 0);
+camera.position.copy(HOME_POS);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.06;
+controls.autoRotate = true; controls.autoRotateSpeed = 0.22;
+controls.minDistance = 0.06; controls.maxDistance = 30;
+addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+['pointerdown','wheel'].forEach(e => renderer.domElement.addEventListener(e, () => { idleT = 0; controls.autoRotate = false; }));
+let idleT = 0;
+
+// ---------- time law ----------
+// month 0 = AUG 2025; NOW = month 12 (day 366 on the slider)
+const EPOCH = new Date(2025, 7, 11);
+const bornM = d => { const [y,m] = d.split('-').map(Number); return (y-2025)*12 + (m-8); };
+let timeT = 12; // months
+const slider = document.getElementById('tslider'), tlabel = document.getElementById('tlabel');
+const setDay = day => {
+  timeT = day/366*12;
+  const now = day >= 366;
+  if (now) { tlabel.textContent = 'NOW'; tlabel.style.color = '#8B8A80'; }
+  else {
+    const d = new Date(EPOCH.getTime() + day*864e5);
+    tlabel.textContent = d.toLocaleDateString('en-US', {day:'numeric', month:'short', year:'2-digit'}).toUpperCase();
+    tlabel.style.color = '#E08A3C';
+  }
+};
+slider.addEventListener('input', () => setDay(+slider.value));
+document.getElementById('tnow').addEventListener('click', () => { slider.value = 366; setDay(366); });
+
+// ---------- the self: membrane + hole ----------
+const group = new THREE.Group(); scene.add(group);
+const THEME_ANG = {}; const RING = 1.6;
+brain.themes.forEach((t, i) => THEME_ANG[t.id] = -Math.PI/2 + i*2*Math.PI/brain.themes.length);
+const liveCount = id => brain.notes.filter(n => n.theme === id && bornM(n.date) <= timeT).length;
+
+const SEGW = 56, SEGH = 26;
+const memGeo = new THREE.SphereGeometry(1, SEGW, SEGH);
+const basePos = memGeo.attributes.position.array.slice();
+const memMat = new THREE.MeshBasicMaterial({ color:BONE, wireframe:true, transparent:true, opacity:0.3 });
+group.add(new THREE.Mesh(memGeo, memMat));
+const RX = 0.62, RY = 0.36;
+function deform(t, counts) {
+  const p = memGeo.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const bx = basePos[i*3], by = basePos[i*3+1], bz = basePos[i*3+2];
+    const th = Math.atan2(bz, bx);
+    const lat = Math.asin(Math.max(-1, Math.min(1, by)));
+    const eq = Math.cos(lat);
+    let r = 1/Math.sqrt((Math.cos(lat)*Math.cos(lat))/(RX*RX) + (Math.sin(lat)*Math.sin(lat))/(RY*RY));
+    for (const t2 of brain.themes) {
+      const mass = 1 + 0.7*counts[t2.id];
+      r += 0.06*mass * Math.exp((Math.cos(th - THEME_ANG[t2.id]) - 1)*3) * (0.25 + 0.75*eq*eq);
+    }
+    r += 0.03*Math.sin(3*th + t*0.35)*eq + 0.02*Math.sin(5*th - t*0.22)*eq + 0.018*Math.sin(8*lat + t*0.28);
+    p.array[i*3] = bx*r; p.array[i*3+1] = by*r; p.array[i*3+2] = bz*r;
+  }
+  p.needsUpdate = true;
+}
+const hole = new THREE.Mesh(new THREE.SphereGeometry(0.3, 48, 32), new THREE.MeshBasicMaterial({ color:0x000000 }));
+hole.scale.set(1, 0.72, 1); group.add(hole);
+
+// ---------- inside the horizon: what gravity captured ----------
+// memories fell in and cannot escape; they ignore the scrubber. At the exact
+// center, the singularity — the one place the map admits someone made it.
+const inner = new THREE.Group(); scene.add(inner);
+const memories = [];
+(brain.memories || []).forEach((mem, i) => {
+  const g = new THREE.CylinderGeometry(0.016, 0.016, 0.004, 4);
+  const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color:ORANGE, wireframe:true, transparent:true, opacity:0.8 }));
+  const a = i*2.1 + 0.6;
+  mesh.userData = { kind:'memory', mem, base:new THREE.Vector3(Math.cos(a)*(0.14 + 0.04*i), (i-1)*0.05, Math.sin(a)*(0.14 + 0.04*i)), ph:i*1.7 };
+  inner.add(mesh); memories.push(mesh);
+});
+// the singularity: a tesseract — a shape rotating through a dimension the map
+// does not have. 16 vertices in 4-space, projected down; it never repeats.
+const singularity = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6), new THREE.MeshBasicMaterial({ transparent:true, opacity:0 }));
+singularity.userData = { kind:'note', note:{ id:'about', title:'The self' }, dive:0.22 };
+const tessV4 = [];
+for (let i = 0; i < 16; i++) tessV4.push([(i&1)*2-1, (i>>1&1)*2-1, (i>>2&1)*2-1, (i>>3&1)*2-1]);
+const tessE = [];
+for (let i = 0; i < 16; i++) for (const b of [1,2,4,8]) if (!(i&b)) tessE.push([i, i|b]);
+const tessGeo = new THREE.BufferGeometry();
+tessGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(tessE.length*6), 3));
+const tessMat = new THREE.LineBasicMaterial({ color:BONE, transparent:true, opacity:0.9, depthTest:false });
+const tesseract = new THREE.LineSegments(tessGeo, tessMat);
+tesseract.renderOrder = 10; // draws over the hole's blackness — a point of structure in the void
+singularity.add(tesseract);
+inner.add(singularity);
+const innerLabels = memories.map(m => makeLabel('', 8.5));
+const singLabel = makeLabel('THE SINGULARITY', 8);
+
+// ---------- labels: screen-projected HTML ----------
+const labels = [];
+function makeLabel(html, size) {
+  const el = document.createElement('div');
+  el.style.cssText = "position:fixed;left:0;top:0;z-index:5;pointer-events:none;font-family:'IBM Plex Mono',monospace;letter-spacing:.16em;color:#8B8A80;white-space:nowrap;transform:translate(-50%,0);font-size:" + (size||9) + "px";
+  el.innerHTML = html;
+  document.body.appendChild(el);
+  return el;
+}
+
+// ---------- theme masses: crystallization law ----------
+// <3 notes = still round (too young for structure); n notes = n-sided form; >=10 rounds back
+const crystalSides = n => (n < 3 || n >= 10) ? 24 : n;
+const themes = [];
+for (const t of brain.themes) {
+  const a = THEME_ANG[t.id];
+  const mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.1, 0.1, 0.06, crystalSides(liveCount(t.id))),
+    new THREE.MeshBasicMaterial({ color:GREEN, wireframe:true, transparent:true, opacity:0.9 })
+  );
+  mesh.position.set(Math.cos(a)*RING, 0, Math.sin(a)*RING);
+  mesh.rotation.y = -a;
+  mesh.userData = { kind:'theme', theme:t, sides:crystalSides(liveCount(t.id)) };
+  group.add(mesh); themes.push(mesh);
+  const lab = makeLabel('', 9);
+  mesh.userData.label = lab;
+  // spoke from membrane toward the mass; thickness law approximated by opacity
+  const lg = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(Math.cos(a)*0.8, 0, Math.sin(a)*0.8),
+    new THREE.Vector3(Math.cos(a)*(RING-0.11), 0, Math.sin(a)*(RING-0.11))
+  ]);
+  mesh.userData.spoke = new THREE.Line(lg, new THREE.LineBasicMaterial({ color:BONE, transparent:true, opacity:0.18 }));
+  group.add(mesh.userData.spoke);
+}
+const ringGeo = new THREE.BufferGeometry().setFromPoints(
+  Array.from({length:121}, (_, i) => { const a = i/120*2*Math.PI; return new THREE.Vector3(Math.cos(a)*RING, 0, Math.sin(a)*RING); })
+);
+group.add(new THREE.Line(ringGeo, new THREE.LineBasicMaterial({ color:GRAY, transparent:true, opacity:0.14 })));
+
+// ---------- notes: full 3D shells around their theme ----------
+// radius = age (0.25 + 0.045/month — the 2D map's 58+11px law, in meters);
+// each note owns a deterministic orbital plane; young orbits run faster
+const hash = s => { let h = 0; for (const c of s) h = (h*31 + c.charCodeAt(0)) >>> 0; return h; };
+const rnd01 = (id, k) => ((hash(id + k) % 1000) / 1000);
+const noteMat = () => new THREE.MeshBasicMaterial({ color:BONE, transparent:true, opacity:0.9 });
+const notes = [];
+for (const n of brain.notes) {
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.020, 10, 8), noteMat());
+  const th = brain.themes.find(t => t.id === n.theme);
+  // orbital plane basis from the note's id — shells, not a disc
+  const incl = Math.acos(2*rnd01(n.id,'i') - 1) * 0.5 - Math.PI*0.25; // spread ±45°
+  const lan = rnd01(n.id,'l') * Math.PI * 2;
+  const e1 = new THREE.Vector3(Math.cos(lan), 0, Math.sin(lan));
+  const e2 = new THREE.Vector3(-Math.sin(lan)*Math.cos(incl), Math.sin(incl), Math.cos(lan)*Math.cos(incl));
+  const tg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+  const tether = new THREE.Line(tg, new THREE.LineBasicMaterial({ color:BONE, transparent:true, opacity:0.4 }));
+  group.add(mesh); group.add(tether);
+  const lab = makeLabel('', 8.5);
+  mesh.userData = { kind:'note', note:n, born:bornM(n.date), e1, e2, ph:rnd01(n.id,'p')*Math.PI*2, tether, tg, label:lab, themeAng:THEME_ANG[n.theme], themeName:th ? th.name : '' };
+  notes.push(mesh);
+}
+
+// ---------- stars + comets ----------
+{
+  const N = 260, pos = new Float32Array(N*3);
+  let s = 7; const rnd = () => ((s = (s*16807) % 2147483647) / 2147483647);
+  for (let i = 0; i < N; i++) {
+    const r = 4 + rnd()*9, a = rnd()*2*Math.PI, y = (rnd()-0.5)*2;
+    const eq = Math.sqrt(1 - y*y*0.7);
+    pos[i*3] = Math.cos(a)*r*eq; pos[i*3+1] = y*r*0.7; pos[i*3+2] = Math.sin(a)*r*eq;
+  }
+  const sg = new THREE.BufferGeometry();
+  sg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  group.add(new THREE.Points(sg, new THREE.PointsMaterial({ color:BONE, size:0.016, transparent:true, opacity:0.5, sizeAttenuation:true })));
+}
+const comets = [];
+(brain.sky && brain.sky.comets || []).forEach((c, i) => {
+  const cfg = { a:2.4 + c.a/600, b:1.3 + c.b/600, tilt:(c.rot||0)*0.4, speed:c.w*1.6, ph:c.ph||0 };
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.022, 12, 8), new THREE.MeshBasicMaterial({ color:BONE, transparent:true, opacity:0.9 }));
+  const TAILN = 26, tpos = new Float32Array(TAILN*3);
+  const tg = new THREE.BufferGeometry(); tg.setAttribute('position', new THREE.BufferAttribute(tpos, 3));
+  const tail = new THREE.Line(tg, new THREE.LineBasicMaterial({ color:BONE, transparent:true, opacity:0.3 }));
+  group.add(head); group.add(tail);
+  comets.push({ head, tpos, tg, ...cfg });
+});
+
+// ---------- nursery: proposed particles from the digest ----------
+// dim, unlabeled, hover-only. Affinity-bearing ones fall toward their well
+// (green; energy = how far they've fallen). Dark ones drift unclaimed (gray).
+// Only human gravity mints a node — these are claims, never activities.
+const bornP = d => (new Date(d + 'T12:00') - EPOCH)/(30.5*864e5);
+const particles = [];
+for (const p of brain.particles) {
+  const green = !!p.affinity;
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.011, 8, 6),
+    new THREE.MeshBasicMaterial({ color: green ? GREEN : GRAY, transparent:true, opacity:0.5 }));
+  // spawn direction from the id; affinity ones biased near their well's bearing
+  const wellA = green ? THEME_ANG[p.affinity] : rnd01(p.id,'a')*Math.PI*2;
+  const sa = wellA + (rnd01(p.id,'s') - 0.5)*(green ? 1.1 : 2.5);
+  const sy = (rnd01(p.id,'y') - 0.5)*1.6;
+  const spawn = new THREE.Vector3(Math.cos(sa)*3.1, sy, Math.sin(sa)*3.1);
+  const well = green
+    ? new THREE.Vector3(Math.cos(wellA)*RING, 0, Math.sin(wellA)*RING)
+    : spawn.clone().multiplyScalar(0.85);
+  mesh.userData = { kind:'particle', p, born:bornP(p.date), spawn, well, ph:rnd01(p.id,'h')*Math.PI*2, green };
+  group.add(mesh); particles.push(mesh);
+}
+
+// ---------- dim law: reading in place ----------
+let dim = 1, dimTarget = 1, focused = null;
+const dimmables = [];
+group.traverse(o => { if (o.material && o.material.transparent) dimmables.push({ o, base:o.material.opacity }); });
+
+// ---------- camera tween ----------
+let tween = null;
+function flyTo(pos, tgt, dur) {
+  tween = { p0:camera.position.clone(), t0:controls.target.clone(), p1:pos.clone(), t1:tgt.clone(), start:performance.now(), dur:dur||1300 };
+  controls.autoRotate = false;
+}
+function goHome() { flyTo(HOME_POS, HOME_TGT, 1400); closeEssay(); }
+
+// ---------- picking ----------
+const ray = new THREE.Raycaster();
+const ptr = new THREE.Vector2();
+const card = document.getElementById('card');
+const essay = document.getElementById('essay');
+let hot = null, savedCam = null;
+function pick(ev) {
+  ptr.x = (ev.clientX/innerWidth)*2 - 1;
+  ptr.y = -(ev.clientY/innerHeight)*2 + 1;
+  ray.setFromCamera(ptr, camera);
+  const hits = ray.intersectObjects(themes.concat(notes.filter(n => n.visible), particles.filter(n => n.visible), memories.filter(n => n.visible), singularity.visible ? [singularity] : []), false);
+  return hits.length ? hits[0].object : null;
+}
+renderer.domElement.addEventListener('pointermove', ev => {
+  if (focused) return;
+  const m = pick(ev);
+  if (m !== hot) {
+    if (hot) hot.userData.hot = false;
+    hot = m;
+    if (hot) hot.userData.hot = true;
+    renderer.domElement.style.cursor = hot ? 'pointer' : '';
+  }
+});
+function openEssay(mesh) {
+  const n = mesh.userData.note;
+  focused = mesh; dimTarget = 0.1;
+  savedCam = { p:camera.position.clone(), t:controls.target.clone() };
+  const wp = new THREE.Vector3(); mesh.getWorldPosition(wp);
+  const dir = camera.position.clone().sub(wp).normalize();
+  flyTo(wp.clone().add(dir.multiplyScalar(mesh.userData.dive || 1.15)), wp, 1500);
+  const post = POSTS[n.id];
+  document.getElementById('essay-m').textContent = post ? post.m : n.stamp + ' · ' + n.cat + ' · FORMING';
+  document.getElementById('essay-t').textContent = n.title;
+  document.getElementById('essay-b').textContent = post ? post.b : n.teaser + '\n\nThis note is still taking shape — promoted from the nursery, essay pending.';
+  essay.style.opacity = 1; essay.style.pointerEvents = 'auto';
+  controls.enabled = false;
+}
+function closeEssay() {
+  if (!focused) return;
+  focused = null; dimTarget = 1;
+  essay.style.opacity = 0; essay.style.pointerEvents = 'none';
+  if (savedCam) { flyTo(savedCam.p, savedCam.t, 1300); savedCam = null; }
+  controls.enabled = true;
+}
+// ---------- menu ----------
+const menuBtn = document.getElementById('menu-btn'), menuPanel = document.getElementById('menu-panel');
+menuBtn.addEventListener('click', ev => { ev.stopPropagation(); menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block'; });
+document.addEventListener('click', ev => { if (!document.getElementById('menu').contains(ev.target)) menuPanel.style.display = 'none'; });
+document.getElementById('menu-about').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); openEssay(singularity); });
+document.getElementById('menu-home').addEventListener('click', () => { menuPanel.style.display = 'none'; goHome(); });
+document.getElementById('menu-rewind').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); slider.value = 0; setDay(0); });
+renderer.domElement.addEventListener('click', ev => {
+  if (focused) { closeEssay(); return; }
+  const m = pick(ev);
+  if (!m) { card.style.opacity = 0; card.style.pointerEvents = 'none'; return; }
+  if (m.userData.kind === 'note') { card.style.opacity = 0; openEssay(m); return; }
+  if (m.userData.kind === 'memory') {
+    const mm2 = m.userData.mem;
+    document.getElementById('card-t').textContent = 'MEMORY · ' + mm2.stamp;
+    document.getElementById('card-t').style.color = '#E08A3C';
+    document.getElementById('card-b').textContent = mm2.title + ' — ' + (mm2.note || '') + ' Captured; it does not obey the scrubber, and it is not leaving.';
+    card.style.opacity = 1; card.style.pointerEvents = 'auto';
+    return;
+  }
+  if (m.userData.kind === 'particle') {
+    const p = m.userData.p;
+    document.getElementById('card-t').textContent = (m.userData.green ? 'PARTICLE · FALLING' : 'PARTICLE · DARK');
+    document.getElementById('card-t').style.color = m.userData.green ? '#82C566' : '#8B8A80';
+    document.getElementById('card-b').textContent = '\u201C' + p.title + '\u201D — proposed ' + p.date + ' from ' + p.source.toUpperCase() + ' · energy ' + p.energy + (m.userData.green ? ' · falling toward ' + brain.themes.find(t2 => t2.id === p.affinity).name.toUpperCase() + '. Promotion mints a note; neglect cools it.' : ' · unclaimed. No well has caught it yet — it may be a new theme forming, or it may cool and drift out.');
+    card.style.opacity = 1; card.style.pointerEvents = 'auto';
+    return;
+  }
+  const t = m.userData.theme, c = liveCount(t.id);
+  document.getElementById('card-t').style.color = '#82C566';
+  document.getElementById('card-t').textContent = t.name.toUpperCase();
+  document.getElementById('card-b').textContent = c + ' notes in orbit · a ' + crystalSides(c) + '-sided form — the glyph crystallizes one side per note. Its mass raises a tide on the membrane; walk the camera around to see its lobe.';
+  card.style.opacity = 1; card.style.pointerEvents = 'auto';
+});
+renderer.domElement.addEventListener('dblclick', goHome);
+// minimap: click or drag to move through the space; double-click for home
+{
+  const mmEl = document.getElementById('minimap');
+  const toWorld = ev => {
+    const r = mmEl.getBoundingClientRect();
+    const x = (ev.clientX - r.left)/r.width*300, y = (ev.clientY - r.top)/r.height*300;
+    const wx = (x - 150)/34, wz = (y - 150)/34;
+    const d = Math.hypot(wx, wz), MAX = 4.2;
+    return d > MAX ? new THREE.Vector3(wx/d*MAX, 0, wz/d*MAX) : new THREE.Vector3(wx, 0, wz);
+  };
+  let mmDrag = false;
+  const moveTo = (pt, glide) => {
+    if (focused) return;
+    if (glide) { flyTo(camera.position.clone().add(pt.clone().sub(controls.target)), pt, 700); }
+    else {
+      camera.position.add(pt.clone().sub(controls.target));
+      controls.target.copy(pt);
+    }
+  };
+  mmEl.addEventListener('pointerdown', ev => { mmDrag = true; mmEl.setPointerCapture(ev.pointerId); moveTo(toWorld(ev), true); idleT = 0; controls.autoRotate = false; });
+  mmEl.addEventListener('pointermove', ev => { if (mmDrag) { tween = null; moveTo(toWorld(ev), false); } });
+  mmEl.addEventListener('pointerup', () => { mmDrag = false; });
+  mmEl.addEventListener('dblclick', goHome);
+}
+addEventListener('keydown', ev => { if (ev.key === 'Escape') closeEssay(); });
+
+// ---------- minimap ----------
+const mm = document.getElementById('minimap').getContext('2d');
+function drawMinimap() {
+  const W = 300, S = 34; // px per meter, top-down XZ
+  mm.clearRect(0, 0, W, W);
+  const X = (x, z) => [W/2 + x*S, W/2 + z*S];
+  mm.strokeStyle = 'rgba(139,138,128,0.25)'; mm.lineWidth = 1;
+  mm.beginPath(); mm.arc(W/2, W/2, RING*S, 0, Math.PI*2); mm.stroke();
+  mm.fillStyle = '#000'; mm.strokeStyle = 'rgba(232,228,220,0.5)';
+  mm.beginPath(); mm.arc(W/2, W/2, 0.3*S, 0, Math.PI*2); mm.fill(); mm.stroke();
+  for (const t of themes) {
+    const [x, y] = X(t.position.x, t.position.z);
+    mm.fillStyle = '#82C566'; mm.fillRect(x-2.5, y-2.5, 5, 5);
+  }
+  mm.fillStyle = 'rgba(232,228,220,0.55)';
+  for (const n of notes) {
+    if (!n.visible) continue;
+    const [x, y] = X(n.position.x, n.position.z);
+    mm.fillRect(x-1, y-1, 2, 2);
+  }
+  // you: position + view direction
+  const [cx, cy] = X(camera.position.x, camera.position.z);
+  const d = new THREE.Vector3(); camera.getWorldDirection(d);
+  const a = Math.atan2(d.z, d.x);
+  mm.save(); mm.translate(Math.max(6, Math.min(W-6, cx)), Math.max(6, Math.min(W-6, cy))); mm.rotate(a + Math.PI/2);
+  mm.fillStyle = '#E08A3C';
+  mm.beginPath(); mm.moveTo(0, -6); mm.lineTo(4.5, 5); mm.lineTo(-4.5, 5); mm.closePath(); mm.fill();
+  mm.restore();
+}
+
+// ---------- main loop ----------
+const t0 = performance.now();
+let lastT = 0;
+let lastCounts = '';
+const v = new THREE.Vector3();
+(function loop() {
+  const t = (performance.now() - t0)/1000;
+  const dt = Math.min(0.05, t - lastT); lastT = t;
+  // counts under the scrubber drive crystallization + membrane tides
+  const counts = {};
+  for (const th of brain.themes) counts[th.id] = liveCount(th.id);
+  deform(t, counts);
+  const ck = JSON.stringify(counts);
+  if (ck !== lastCounts) {
+    lastCounts = ck;
+    for (const m of themes) {
+      const s = crystalSides(counts[m.userData.theme.id]);
+      if (s !== m.userData.sides) {
+        m.userData.sides = s;
+        m.geometry.dispose();
+        m.geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.06, s);
+      }
+    }
+  }
+  // dim toward target (reading in place)
+  dim += (dimTarget - dim) * 0.07;
+  // the horizon: approach and the world redshifts, cross it and the world is gone
+  const dSelf = camera.position.length();
+  const rs = Math.max(0, Math.min(1, (1.6 - dSelf)/1.1));           // redshift 0→1
+  const worldVis = Math.max(0, Math.min(1, (dSelf - 0.38)/0.2));    // 0 inside
+  const inVis = 1 - worldVis;
+  const rsGray = new THREE.Color(GRAY).lerp(new THREE.Color(ORANGE), rs).getStyle();
+  memMat.color.setHex(BONE).lerp(new THREE.Color(ORANGE), rs*0.8);
+  document.getElementById('hint').textContent = inVis > 0.5
+    ? 'YOU ARE INSIDE THE SELF · WHAT FELL IN STAYS · DOUBLE-CLICK TO ESCAPE'
+    : 'DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A NOTE TO READ · DOUBLE-CLICK FOR HOME';
+  for (const d2 of dimmables) d2.o.material.opacity = d2.base * dim * worldVis;
+  // themes: slow spin, hover spin, label + spoke by count
+  for (let i = 0; i < themes.length; i++) {
+    const m = themes[i];
+    m.rotation.y += 0.0012 + i*0.0003 + (m.userData.hot ? 0.02 : 0);
+    m.material.opacity = (m.userData.hot ? 1 : 0.9) * dim * worldVis;
+    m.userData.spoke.material.opacity = (0.08 + 0.03*counts[m.userData.theme.id]) * dim * worldVis;
+  }
+  // notes: orbit their theme on their own plane; radius = age at scrubber time
+  for (const m of notes) {
+    const u = m.userData, ageM = timeT - u.born;
+    const born = ageM >= 0;
+    m.visible = born;
+    u.tether.visible = born;
+    if (born) {
+      const r = 0.25 + 0.045*Math.max(0.15, ageM);
+      const w = 0.10/Math.sqrt(r);
+      // hover pauses this orbit only — the rest of the system keeps running
+      u.slow = (u.slow ?? 1) + (((u.hot || focused === m) ? 0 : 1) - (u.slow ?? 1))*Math.min(1, dt*6);
+      u.ang = (u.ang ?? u.ph) + w*dt*u.slow;
+      const ang = u.ang;
+      const cx = Math.cos(u.themeAng)*RING, cz = Math.sin(u.themeAng)*RING;
+      m.position.set(
+        cx + u.e1.x*Math.cos(ang)*r + u.e2.x*Math.sin(ang)*r,
+        u.e1.y*Math.cos(ang)*r + u.e2.y*Math.sin(ang)*r,
+        cz + u.e1.z*Math.cos(ang)*r + u.e2.z*Math.sin(ang)*r
+      );
+      const tp = u.tg.attributes.position.array;
+      tp[0] = cx; tp[1] = 0; tp[2] = cz;
+      tp[3] = m.position.x; tp[4] = m.position.y; tp[5] = m.position.z;
+      u.tg.attributes.position.needsUpdate = true;
+      // tether light cools with age: fresh notes glow, old thinking dims
+      const fresh = Math.max(0, 1 - ageM/14);
+      const keep = ((focused === m) ? 1 : dim) * worldVis;
+      u.tether.material.opacity = (0.10 + 0.38*fresh) * keep;
+      m.material.opacity = (u.hot ? 1 : 0.55 + 0.4*fresh) * keep;
+      m.material.color.setHex(u.hot ? GREEN : BONE).lerp(new THREE.Color(ORANGE), u.hot ? 0 : rs*0.8);
+    }
+  }
+  // nursery: energy = how far a particle has fallen toward its well; a slow
+  // breathing drift keeps the field alive; unborn under the scrubber
+  for (const m of particles) {
+    const u = m.userData;
+    m.visible = u.born <= timeT;
+    if (!m.visible) continue;
+    const prog = Math.min(0.92, u.p.energy*0.9 + 0.03*Math.sin(t*0.25 + u.ph));
+    m.position.lerpVectors(u.spawn, u.well, u.green ? prog : 0.3 + 0.1*Math.sin(t*0.12 + u.ph));
+    m.position.y += 0.05*Math.sin(t*0.4 + u.ph*2);
+    m.material.opacity = (0.15 + 0.6*u.p.energy) * (u.hot ? 1.6 : 1) * dim * worldVis;
+  }
+  // inside: captured memories drift; the tesseract turns through the 4th axis
+  singularity.visible = rs > 0.01;
+  if (singularity.visible) {
+    const a = t*0.45, b2 = t*0.28, c2 = t*0.19;
+    const ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b2), sb = Math.sin(b2), cc = Math.cos(c2), sc = Math.sin(c2);
+    const S = 0.028, pos = tessGeo.attributes.position.array;
+    const proj = i => {
+      let [x, y, z, w] = tessV4[i];
+      let x1 = x*ca - w*sa, w1 = x*sa + w*ca;            // xw plane
+      let y1 = y*cb - z*sb, z1 = y*sb + z*cb;            // yz plane
+      let z2 = z1*cc - w1*sc, w2 = z1*sc + w1*cc;        // zw plane
+      const k = S/(2.6 - w2);                             // 4D→3D perspective
+      return [x1*k*2.6, y1*k*2.6, z2*k*2.6];
+    };
+    for (let e = 0; e < tessE.length; e++) {
+      const p1 = proj(tessE[e][0]), p2 = proj(tessE[e][1]);
+      pos[e*6] = p1[0]; pos[e*6+1] = p1[1]; pos[e*6+2] = p1[2];
+      pos[e*6+3] = p2[0]; pos[e*6+4] = p2[1]; pos[e*6+5] = p2[2];
+    }
+    tessGeo.attributes.position.needsUpdate = true;
+    // faint through the blackness on approach, full presence once inside
+    const tvis = Math.max(inVis, 0.45*rs);
+    tessMat.opacity = tvis * (0.65 + 0.3*Math.sin(t*1.4)) * (focused === singularity ? 1.2 : 1);
+  }
+  for (let i = 0; i < memories.length; i++) {
+    const m = memories[i], u = m.userData;
+    m.visible = inVis > 0.02;
+    m.position.set(
+      u.base.x + 0.02*Math.sin(t*0.3 + u.ph),
+      u.base.y + 0.015*Math.sin(t*0.45 + u.ph*2),
+      u.base.z + 0.02*Math.cos(t*0.25 + u.ph)
+    );
+    m.rotation.y = t*0.15 + u.ph;
+    m.material.opacity = (u.hot ? 1 : 0.7) * inVis * dim;
+    const lab = innerLabels[i];
+    if (!m.visible) { lab.style.opacity = 0; continue; }
+    m.getWorldPosition(v);
+    const pr = v.clone().project(camera);
+    if (pr.z > 1) { lab.style.opacity = 0; continue; }
+    lab.style.left = ((pr.x + 1)/2*innerWidth) + 'px';
+    lab.style.top = ((1 - pr.y)/2*innerHeight + 10) + 'px';
+    if (!lab.textContent) lab.innerHTML = u.mem.title.toUpperCase() + '<span style="opacity:.5"> · ' + u.mem.stamp + '</span>';
+    lab.style.color = '#E08A3C';
+    lab.style.opacity = (u.hot ? 1 : 0.55) * inVis * dim;
+  }
+  {
+    singularity.getWorldPosition(v);
+    const pr = v.clone().project(camera);
+    if (pr.z > 1 || inVis < 0.02) singLabel.style.opacity = 0;
+    else {
+      singLabel.style.left = ((pr.x + 1)/2*innerWidth) + 'px';
+      singLabel.style.top = ((1 - pr.y)/2*innerHeight + 12) + 'px';
+      singLabel.style.color = '#8B8A80';
+      singLabel.style.opacity = 0.5 * inVis * (focused ? 0 : 1);
+    }
+  }
+  // camera tween
+  if (tween) {
+    let k = (performance.now() - tween.start)/tween.dur;
+    if (k >= 1) { k = 1; }
+    const e = k < 0.5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
+    camera.position.lerpVectors(tween.p0, tween.p1, e);
+    controls.target.lerpVectors(tween.t0, tween.t1, e);
+    if (k === 1) tween = null;
+  }
+  controls.update();
+  // idle: resume the slow drift after 14s of stillness
+  idleT += 1/60;
+  if (idleT > 14 && !focused && !tween) controls.autoRotate = true;
+  // comets
+  for (const c of comets) {
+    const u = c.ph + t*c.speed;
+    c.head.position.set(Math.cos(u)*c.a, Math.sin(u*0.9)*c.tilt, Math.sin(u)*c.b);
+    for (let k = 0; k < c.tpos.length/3; k++) {
+      const uu = u - k*0.045;
+      c.tpos[k*3] = Math.cos(uu)*c.a; c.tpos[k*3+1] = Math.sin(uu*0.9)*c.tilt; c.tpos[k*3+2] = Math.sin(uu)*c.b;
+    }
+    c.tg.attributes.position.needsUpdate = true;
+  }
+  // labels: crisp HTML riding the projection
+  const camDist = camera.position.length();
+  for (const m of themes) {
+    m.getWorldPosition(v);
+    const lab = m.userData.label;
+    const pr = v.clone().project(camera);
+    if (pr.z > 1) { lab.style.opacity = 0; }
+    else {
+      lab.style.left = ((pr.x + 1)/2*innerWidth) + 'px';
+      lab.style.top = ((1 - pr.y)/2*innerHeight + 14) + 'px';
+      lab.innerHTML = m.userData.theme.name.toUpperCase() + '<span style="color:#3A3A34"> · </span>' + counts[m.userData.theme.id];
+      lab.style.opacity = ((v.distanceTo(camera.position) > camDist ? 0.12 : 0.85) * (m.userData.hot ? 1.3 : 1)) * dim * worldVis;
+      lab.style.color = m.userData.hot ? '#82C566' : rsGray;
+    }
+  }
+  for (const m of notes) {
+    const lab = m.userData.label;
+    if (!m.visible) { lab.style.opacity = 0; continue; }
+    m.getWorldPosition(v);
+    const pr = v.clone().project(camera);
+    const dCam = v.distanceTo(camera.position);
+    if (pr.z > 1 || (dCam > 6.5 && !m.userData.hot)) { lab.style.opacity = 0; continue; }
+    lab.style.left = ((pr.x + 1)/2*innerWidth) + 'px';
+    lab.style.top = ((1 - pr.y)/2*innerHeight + 10) + 'px';
+    const n = m.userData.note;
+    if (!lab.textContent) lab.innerHTML = n.title.toUpperCase() + '<span style="color:#3A3A34"> · </span><span style="color:#5C5B52">' + n.stamp + '</span>';
+    const near = Math.max(0, Math.min(1, (6.5 - dCam)/3.5));
+    const keep2 = (focused === m) ? 0 : (focused ? 0 : 1); // labels hide while reading
+    lab.style.opacity = (m.userData.hot ? 1 : 0.28 + 0.5*near) * (v.distanceTo(camera.position) > camDist + 0.4 ? 0.15 : 1) * keep2 * dim * worldVis;
+    lab.style.color = m.userData.hot ? '#82C566' : rsGray;
+  }
+  // essay panel floats at the note's location
+  if (focused) {
+    focused.getWorldPosition(v);
+    const pr = v.clone().project(camera);
+    const px = (pr.x + 1)/2*innerWidth, py = (1 - pr.y)/2*innerHeight;
+    essay.style.left = Math.max(16, Math.min(innerWidth - 416, px + 40)) + 'px';
+    essay.style.top = Math.max(16, Math.min(innerHeight - Math.min(innerHeight*0.7, essay.offsetHeight) - 16, py - 60)) + 'px';
+  }
+  drawMinimap();
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The engine behind the map — Field Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#121210; }
+  a { color:#82C566; text-decoration:none; border-bottom:1px solid #2E3A28; }
+  a:hover { color:#A8DE8E; border-bottom-color:#82C566; }
+  ::selection { background:#2E3A28; }
+</style>
+</head>
+<body>
+<div style="min-height:100vh;background:#121210;color:#B5B2A8;font-family:'Space Grotesk',sans-serif;padding:64px 28px 96px">
+  <div style="max-width:660px;margin:0 auto;display:flex;flex-direction:column;gap:56px">
+    <header style="display:flex;flex-direction:column;gap:14px">
+      <a href="index.html" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#8B8A80;border-bottom:none;align-self:flex-start">&#8592; BACK TO THE MAP</a>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#E08A3C;margin-top:18px">SYSTEM NOTES</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:500;color:#E8E4DC;margin:0;line-height:1.2">The engine behind the map</h1>
+      <p style="font-size:15px;line-height:1.75;margin:0;max-width:560px">Every dot on the map is real. Nothing is scraped, scheduled, or generated to fill space. The map is fed by one MCP server &mdash; <span style="color:#E8E4DC">brain-mcp</span> &mdash; and one file of truth, <a href="brain.json">brain.json</a>. Agents can only propose; mass is earned, never granted by the machine.</p>
+    </header>
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#82C566;font-weight:500;margin:0">01 &middot; CAPTURE AT THE POINT OF THOUGHT</h2>
+      <p style="font-size:14px;line-height:1.8;margin:0">There are no sources to scrape because the place the thinking happens &mdash; Claude Code sessions &mdash; is the capture surface itself. Mid-work, when a claim crystallizes, I say <span style="color:#E8E4DC">&ldquo;particle that&rdquo;</span> and the session agent calls <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#E8E4DC">brain_propose</span>. The cost of capture is saying yes.</p>
+      <p style="font-size:14px;line-height:1.8;margin:0">A nightly cron is the backstop: decay runs, a cartographer agent reads the ledger and may chart at most two suggestions, and the file is committed &mdash; the site rebuilds. Promotion to a full orbiting note only ever happens by human approval, in chat.</p>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#82C566;font-weight:500;margin:0">02 &middot; THE FIVE TOOLS</h2>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border:1px solid #2A2A26;font-size:13px">
+        <div style="padding:12px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E8E4DC">brain_propose</div><div style="padding:12px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">any session agent &middot; appends a particle, max 6 per day</div>
+        <div style="padding:12px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E8E4DC">brain_promote</div><div style="padding:12px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">human approval only &middot; particle becomes an orbiting note</div>
+        <div style="padding:12px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E8E4DC">brain_remember</div><div style="padding:12px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">human only &middot; a memory: whole, undecaying, inside the horizon</div>
+        <div style="padding:12px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E8E4DC">brain_chart</div><div style="padding:12px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">nightly cartographer &middot; at most 2 cited suggestions in deep space</div>
+        <div style="padding:12px 16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E8E4DC">brain_state</div><div style="padding:12px 16px;line-height:1.6">anyone, read-only &middot; ids and titles for reference and dedupe</div>
+      </div>
+      <p style="font-size:14px;line-height:1.8;margin:0;color:#8B8A80">Decay is deliberately not a tool. Entropy is not optional &mdash; it runs from cron: energy cools 8% nightly, unengaged suggestions expire after 14 days, and note ages are recomputed so orbits stay honest.</p>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#82C566;font-weight:500;margin:0">03 &middot; GUARDRAILS &mdash; THERMODYNAMIC, NOT BUREAUCRATIC</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.7">
+        <div><span style="color:#E8E4DC">Rate.</span> Six proposals a day. Scarcity forces editorial judgment upstream.</div>
+        <div><span style="color:#E8E4DC">Substance.</span> Titles that are pure activity (&ldquo;worked on X&rdquo;) are rejected. Claims only, never diary.</div>
+        <div><span style="color:#E8E4DC">Dedupe.</span> Strong title overlap merges &mdash; energy adds, references union &mdash; instead of appending.</div>
+        <div><span style="color:#E8E4DC">Quarantine.</span> Uncertain affinity stays null. Agents may not invent themes; those are the gray drifters.</div>
+        <div><span style="color:#E8E4DC">Accretion.</span> Three mutually similar dark particles surface as a cluster; only a human names the new theme.</div>
+        <div><span style="color:#E8E4DC">Provenance.</span> Every particle keeps its source and date forever.</div>
+      </div>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#82C566;font-weight:500;margin:0">04 &middot; HOW DATA BECOMES PHYSICS</h2>
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:0;border:1px solid #2A2A26;font-size:13px">
+        <div style="padding:11px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#8B8A80">PARTICLE, AFFINITY KNOWN</div><div style="padding:11px 16px;border-bottom:1px solid #2A2A26;line-height:1.6;color:#82C566">green dot falling toward its theme&rsquo;s well</div>
+        <div style="padding:11px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#8B8A80">PARTICLE, AFFINITY NULL</div><div style="padding:11px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">gray dot drifting in the deep field</div>
+        <div style="padding:11px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#8B8A80">ENERGY</div><div style="padding:11px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">opacity &mdash; cooling toward the dark</div>
+        <div style="padding:11px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#8B8A80">PROMOTION</div><div style="padding:11px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">a note enters orbit at radius zero, dashed tether until the essay exists</div>
+        <div style="padding:11px 16px;border-bottom:1px solid #2A2A26;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#8B8A80">AGE</div><div style="padding:11px 16px;border-bottom:1px solid #2A2A26;line-height:1.6">orbit radius &mdash; older thinking drifts outward, tethers dim</div>
+        <div style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#8B8A80">NOTES PER THEME</div><div style="padding:11px 16px;line-height:1.6">the theme&rsquo;s glyph crystallizes &mdash; more sides, thicker spokes</div>
+      </div>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#82C566;font-weight:500;margin:0">05 &middot; LOOK AT IT</h2>
+      <p style="font-size:14px;line-height:1.8;margin:0">The whole thing is small on purpose: a stdio MCP server, one dependency-free logic module where the guardrails live, a test file that is the contract, and a shell script cron calls at 23:50.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em">
+        <a href="brain.json" style="border:1px solid #2A2A26;padding:9px 14px;border-bottom:1px solid #2A2A26">BRAIN.JSON &middot; THE LEDGER</a>
+        <a href="#" style="border:1px solid #2A2A26;padding:9px 14px;border-bottom:1px solid #2A2A26">MCP README</a>
+        <a href="#" style="border:1px solid #2A2A26;padding:9px 14px;border-bottom:1px solid #2A2A26">SERVER.MJS</a>
+        <a href="#" style="border:1px solid #2A2A26;padding:9px 14px;border-bottom:1px solid #2A2A26">LIB/BRAIN.JS &middot; GUARDRAILS</a>
+      </div>
+    </section>
+    <footer style="border-top:1px solid #2A2A26;padding-top:24px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;color:#5C5B52">
+      JUSTIN YOUNG &middot; FIELD NOTES &middot; <a href="index.html" style="color:#8B8A80;border-bottom:none">RETURN TO THE MAP &#8594;</a>
+    </footer>
+  </div>
+</div>
+</body>
+</html>
