@@ -44,6 +44,28 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "The pivotal role stays human. The machine works alongside it, not against it."
+    },
+    {
+      "id": "x1",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Cadence Ear",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "Counts your running cadence by ear, in the browser. Onset detection and autocorrelation on the microphone — no audio is recorded or uploaded.",
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/cadence-ear/"
+    },
+    {
+      "id": "x2",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Reaction–Diffusion",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "Gray-Scott reaction-diffusion running as WebGPU compute shaders. Two numbers decide whether you get coral, dividing cells, or nothing at all.",
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/reaction-diffusion/"
     }
   ],
   "farIdeas": [],
