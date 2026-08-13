@@ -66,6 +66,50 @@
       "ageMonths": 0,
       "teaser": "Gray-Scott reaction-diffusion running as WebGPU compute shaders. Two numbers decide whether you get coral, dividing cells, or nothing at all.",
       "url": "https://real-time-lab.justin-93c.workers.dev/experiments/reaction-diffusion/"
+    },
+    {
+      "id": "x3",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Physarum",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "Half a million agents self-organising into transport networks, simulated on the GPU with WebGPU compute shaders.",
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/physarum/"
+    },
+    {
+      "id": "x4",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Hand Theremin",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "Play a synthesiser with your hands. Vision and audio both run in the browser.",
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/hand-theremin/"
+    },
+    {
+      "id": "x5",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Body Particles",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "Dissolve yourself into a particle swarm. Pose tracking runs entirely in the browser.",
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/body-particles/"
+    },
+    {
+      "id": "x6",
+      "theme": "q",
+      "cat": "EXPERIMENTATION",
+      "title": "Running Form Lab",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "A no-backend browser proof of concept for local running-form analysis.",
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/running-form/"
     }
   ],
   "farIdeas": [],
