@@ -326,6 +326,27 @@ const stars = (() => {
   group.add(pts);
   return pts;
 })();
+// Hover feedback. A 2px point brightening is almost imperceptible on its own,
+// so the star lights to full and a reticle rings it — the same instrument
+// vocabulary as the minimap heading and the sighting card.
+const starBase = stars.geometry.attributes.color.array.slice();
+const reticle = new THREE.LineLoop(
+  new THREE.BufferGeometry().setFromPoints(
+    Array.from({length:32}, (_, i) => { const a = i/32*2*Math.PI; return new THREE.Vector3(Math.cos(a), Math.sin(a), 0); })),
+  new THREE.LineBasicMaterial({ color:BONE, transparent:true, opacity:0.5 })
+);
+reticle.visible = false;
+group.add(reticle);
+let hotStar = -1;
+function setHotStar(i) {
+  if (i === hotStar) return;
+  const c = stars.geometry.attributes.color;
+  if (hotStar >= 0) c.array.set(starBase.subarray(hotStar*3, hotStar*3 + 3), hotStar*3);
+  hotStar = i;
+  if (i >= 0) c.array[i*3] = c.array[i*3+1] = c.array[i*3+2] = 1;
+  c.needsUpdate = true;
+  reticle.visible = i >= 0;
+}
 const comets = [];
 (brain.sky && brain.sky.comets || []).forEach((c, i) => {
   const cfg = { a:2.4 + c.a/600, b:1.3 + c.b/600, tilt:(c.rot||0)*0.4, speed:c.w*1.6, ph:c.ph||0 };
@@ -392,8 +413,11 @@ function pick(ev) {
   return h ? h.object : null;
 }
 renderer.domElement.addEventListener('pointermove', ev => {
-  if (focused) return;
+  if (focused) { setHotStar(-1); return; }
   const m = pick(ev);
+  // outside the identity check: moving between two stars keeps `m` the same
+  // object, so only the index tells you the hovered star changed
+  setHotStar(m === stars ? stars.userData.i : -1);
   if (m !== hot) {
     if (hot) hot.userData.hot = false;
     hot = m;
@@ -404,6 +428,7 @@ renderer.domElement.addEventListener('pointermove', ev => {
 function openEssay(mesh) {
   const n = mesh.userData.note;
   focused = mesh; dimTarget = 0.1;
+  setHotStar(-1);   // a click can open an essay without ever moving the pointer
   savedCam = { p:camera.position.clone(), t:controls.target.clone() };
   const wp = new THREE.Vector3(); mesh.getWorldPosition(wp);
   const dir = camera.position.clone().sub(wp).normalize();
@@ -694,6 +719,14 @@ const v = new THREE.Vector3();
       singLabel.style.color = '#8B8A80';
       singLabel.style.opacity = 0.5 * inVis * (focused ? 0 : 1);
     }
+  }
+  // hover reticle: faces the camera, and scales with distance so a star 20
+  // units out gets the same ring as one at 4 — screen size is the affordance
+  if (hotStar >= 0) {
+    reticle.position.set(starPos[hotStar*3], starPos[hotStar*3+1], starPos[hotStar*3+2]);
+    reticle.quaternion.copy(camera.quaternion);
+    reticle.scale.setScalar(reticle.position.distanceTo(camera.position)*0.009);
+    reticle.material.opacity = (0.42 + 0.16*Math.sin(t*3.2)) * worldVis * dim;
   }
   // camera tween
   if (tween) {
