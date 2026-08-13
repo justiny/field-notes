@@ -389,6 +389,35 @@ let worldVis = 1;   // 0 once inside the horizon; picking reads it to ignore wha
 const dimmables = [];
 group.traverse(o => { if (o.material && o.material.transparent) dimmables.push({ o, base:o.material.opacity }); });
 
+// ---------- age rings ----------
+// Ported from the 2D map, which drew these as screen-space arcs around a
+// hovered theme at 3/6/12 months. Radii come from the same law that places the
+// notes (0.25 + 0.045/month), so a note's age reads straight off which ring it
+// orbits between. Built after the dimmables sweep on purpose: their opacity is
+// driven by the hover fade below, not by the blanket dim pass.
+// Billboarded rather than laid flat, because notes orbit on inclined planes —
+// a camera-facing circle is the silhouette of the sphere of that radius, so
+// "inside the 3 MO ring" stays true from any angle.
+const ageRings = [[3,'3 MO'],[6,'6 MO'],[12,'1 YR']].map(([m, text]) => {
+  const r = 0.25 + 0.045*m;
+  const line = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(
+      Array.from({length:97}, (_, i) => { const a = i/96*2*Math.PI; return new THREE.Vector3(Math.cos(a)*r, Math.sin(a)*r, 0); })),
+    new THREE.LineDashedMaterial({ color:GRAY, transparent:true, opacity:0.3, dashSize:0.014, gapSize:0.035 })
+  );
+  line.computeLineDistances();   // dashes are dead without this
+  return { line, r, label: makeLabel(text, 8.5) };
+});
+const ringGroup = new THREE.Group();
+ageRings.forEach(a => ringGroup.add(a.line));
+ringGroup.visible = false;
+group.add(ringGroup);
+let ringTheme = null, ringA = 0;
+const themeOf = m => !m ? null
+  : m.userData.kind === 'theme' ? m
+  : m.userData.kind === 'note' ? (themes.find(t => t.userData.theme.id === m.userData.note.theme) || null)
+  : null;
+
 // ---------- camera tween ----------
 let tween = null;
 function flyTo(pos, tgt, dur) {
@@ -416,8 +445,11 @@ function pick(ev) {
   return h ? h.object : null;
 }
 renderer.domElement.addEventListener('pointermove', ev => {
-  if (focused) { setHotStar(-1); return; }
+  if (focused) { setHotStar(-1); ringTheme = null; return; }
   const m = pick(ev);
+  // the rings belong to the theme, but a note over its own theme's shells is
+  // exactly when you want to read its age, so a note lights them too
+  ringTheme = themeOf(m);
   // outside the identity check: moving between two stars keeps `m` the same
   // object, so only the index tells you the hovered star changed
   setHotStar(m === stars ? stars.userData.i : -1);
@@ -723,6 +755,23 @@ const v = new THREE.Vector3();
       singLabel.style.opacity = 0.5 * inVis * (focused ? 0 : 1);
     }
   }
+  // age rings: ease in around the hovered theme, same dt*7 fade as the 2D map
+  ringA += ((ringTheme ? 1 : 0) - ringA)*Math.min(1, dt*7);
+  ringGroup.visible = ringA > 0.02 && worldVis > 0.5;
+  if (ringTheme) ringGroup.position.copy(ringTheme.position);
+  if (ringGroup.visible) {
+    ringGroup.quaternion.copy(camera.quaternion);
+    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
+    for (const a of ageRings) {
+      a.line.material.opacity = 0.3*ringA*dim*worldVis;
+      v.copy(ringGroup.position).addScaledVector(up, a.r);   // label rides the top of its ring
+      const pr = v.project(camera);
+      const off = pr.z > 1 ? 0 : 1;
+      a.label.style.left = ((pr.x + 1)/2*innerWidth) + 'px';
+      a.label.style.top = ((1 - pr.y)/2*innerHeight - 14) + 'px';
+      a.label.style.opacity = 0.85*ringA*dim*worldVis*off;
+    }
+  } else for (const a of ageRings) a.label.style.opacity = 0;
   // hover reticle: faces the camera, and scales with distance so a star 20
   // units out gets the same ring as one at 4 — screen size is the affordance
   if (hotStar >= 0) {
