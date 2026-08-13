@@ -176,6 +176,19 @@
         "p-0812-2"
       ],
       "claim": "There's still lots of manual work for humans in software — see Google Tag Manager."
+    },
+    {
+      "id": "p-0813-1",
+      "date": "2026-08-13",
+      "proposedOn": "2026-08-13",
+      "source": "claude",
+      "title": "Managing AI risk starts with human reasoning",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "Understanding how to manage AI risks first starts with understanding human reasoning.",
+      "refs": [
+        "n2"
+      ]
     }
   ],
   "history": [],
@@ -197,6 +210,33 @@
       "note": "A great product is no product at all unless it has a strong marketing foundation. That is what the launch taught me."
     }
   ],
+  "bio": {
+    "heading": "Director of AI Engineering & Strategy at Southleft",
+    "lines": [
+      "I work on agentic development: getting agents to do real engineering, and building the guardrails that make the result worth trusting. This site is one of them — it is fed by an MCP server I use during actual working sessions, not written up afterwards.",
+      "Before that, a philosophy degree and a career as a professional runner. Philosophy is where I learned to distrust a claim that merely sounds right. Running is where I learned that most of the work is the part nobody watches."
+    ],
+    "availability": "Not actively looking, but always open to an interesting problem.",
+    "brands": [],
+    "links": [
+      {
+        "label": "EMAIL",
+        "url": "mailto:justin@lsvl.co"
+      },
+      {
+        "label": "LINKEDIN",
+        "url": "https://www.linkedin.com/in/justinmmyoung/"
+      },
+      {
+        "label": "GITHUB",
+        "url": "https://github.com/justiny"
+      },
+      {
+        "label": "SOUTHLEFT",
+        "url": "https://southleft.com"
+      }
+    ]
+  },
   "sky": {
     "comets": [],
     "field": {

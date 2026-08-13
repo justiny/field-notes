@@ -42,8 +42,9 @@
 </head>
 <body>
 <div id="cap" style="position:fixed;left:28px;top:24px;z-index:10;font-family:'IBM Plex Mono',monospace;letter-spacing:.16em;color:#8B8A80;font-size:10px;pointer-events:none">
-  <b style="display:block;color:#E8E4DC;font-weight:500;font-size:11px;margin-bottom:4px">JUSTIN YOUNG — FIELD NOTES</b>
-  DIRECTOR OF AI ENGINEERING &amp; STRATEGY | <a href="https://southleft.com" target="_blank" rel="noopener" style="color:#8B8A80;text-decoration:none;border-bottom:1px solid #3A3A34;pointer-events:auto">SOUTHLEFT</a>
+  <b style="display:block;color:#E8E4DC;font-weight:500;font-size:11px;margin-bottom:5px">JUSTIN YOUNG — FIELD NOTES</b>
+  <!-- the role and org moved into the bio; this link stands in their place -->
+  <button id="cap-bio" style="pointer-events:auto;background:none;border:0;border-bottom:1px solid #3A3A34;padding:0 0 2px;cursor:pointer;font-family:'IBM Plex Mono',monospace;letter-spacing:.16em;color:#8B8A80;font-size:10px">BIO <span style="color:#5C5B52">&#8599;</span></button>
 </div>
 <!-- max-width stops the hint growing into the centred scrubber: it wraps instead
      of colliding. 228px = half the scrubber (176) plus a 24px gap either side. -->
@@ -64,6 +65,7 @@
     <a href="mailto:justin@lsvl.co">EMAIL <span>&#8599;</span></a>
     <div style="height:1px;background:#2A2A26;margin:6px 0"></div>
     <a href="engine.html">THE ENGINE <span>&#183; HOW THE MAP IS FED</span></a>
+    <button class="mi" id="menu-bio">BIO <span>&#183; WHO IS BEHIND THIS</span></button>
     <button class="mi" id="menu-intro">HOW TO READ THIS <span>&#183; THE LEGEND</span></button>
     <button class="mi" id="menu-about">ABOUT <span>&#183; DIVE TO THE SINGULARITY</span></button>
     <button class="mi" id="menu-rewind">TIMELINE <span>· REWIND TO DAY ONE</span></button>
@@ -105,6 +107,24 @@
   // module below waits on fetch('./brain.json') and would be far too late.
   if (localStorage.getItem('fn.intro') !== 'seen') document.getElementById('intro').style.display = 'flex';
 </script>
+<!-- bio. Chrome is markup; every word of content comes from brain.json via
+     textContent, same rule the essays follow — the ledger is data, not markup. -->
+<div id="bio" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(18,18,16,0.88);align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+  <div style="width:520px;max-width:100%;max-height:100%;overflow:auto;background:#1A1A17;border:1px solid #3A3A34;padding:22px 26px 20px;box-shadow:6px 6px 0 rgba(0,0,0,0.4);font-family:'Space Grotesk',sans-serif">
+    <div class="mono" style="font-size:9.5px;letter-spacing:.2em;color:#E08A3C">JUSTIN YOUNG &middot; BIO</div>
+    <div id="bio-h" style="font-size:19px;font-weight:500;color:#E8E4DC;margin-top:7px;line-height:1.3"></div>
+    <div id="bio-b" style="font-size:13px;line-height:1.65;color:#B5B2A8;margin-top:12px"></div>
+    <div id="bio-brands" style="display:none;border-top:1px solid #2A2A26;padding-top:12px;margin-top:4px">
+      <div class="mono" style="font-size:9px;letter-spacing:.16em;color:#5C5B52">WORKED WITH</div>
+      <div id="bio-brands-l" style="font-size:13px;line-height:1.65;color:#B5B2A8;margin-top:6px"></div>
+    </div>
+    <div id="bio-avail" class="mono" style="font-size:9px;letter-spacing:.14em;line-height:1.8;color:#82C566;border-top:1px solid #2A2A26;padding-top:12px;margin-top:6px"></div>
+    <div id="bio-links" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"></div>
+    <div style="margin-top:16px">
+      <button id="bio-close" class="mono" style="background:none;border:1px solid #3A3A34;color:#8B8A80;font-size:9.5px;letter-spacing:.18em;padding:11px 18px;cursor:pointer">&larr; BACK TO THE MAP</button>
+    </div>
+  </div>
+</div>
 <!-- essay, floated at the note's location when reading in place -->
 <div id="essay" style="opacity:0;pointer-events:none;position:fixed;z-index:20;width:400px;max-height:70vh;overflow:auto;background:rgba(18,18,16,0.92);border:1px solid #3A3A34;padding:22px 24px;transition:opacity .45s;scrollbar-width:thin">
   <div id="essay-m" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#E08A3C"></div>
@@ -506,6 +526,41 @@ const showIntro = on => { intro.style.display = on ? 'flex' : 'none'; if (!on) l
 document.getElementById('intro-go').addEventListener('click', () => showIntro(false));
 intro.addEventListener('click', ev => { if (ev.target === intro) showIntro(false); });
 document.getElementById('menu-intro').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); showIntro(true); });
+
+// ---------- bio ----------
+const bioEl = document.getElementById('bio');
+const showBio = on => { bioEl.style.display = on ? 'flex' : 'none'; };
+{
+  const b = brain.bio || {};
+  document.getElementById('bio-h').textContent = b.heading || '';
+  const body = document.getElementById('bio-b');
+  for (const line of b.lines || []) {
+    const p = document.createElement('p');
+    p.textContent = line;
+    p.style.margin = '0 0 11px';
+    body.appendChild(p);
+  }
+  // the brands block stays hidden until the ledger actually lists some —
+  // an empty "WORKED WITH" heading is worse than no heading
+  if ((b.brands || []).length) {
+    document.getElementById('bio-brands').style.display = 'block';
+    document.getElementById('bio-brands-l').textContent = b.brands.join(' · ');
+  }
+  document.getElementById('bio-avail').textContent = b.availability || '';
+  const links = document.getElementById('bio-links');
+  for (const l of b.links || []) {
+    const a = document.createElement('a');
+    a.href = l.url;
+    if (!l.url.startsWith('mailto:')) { a.target = '_blank'; a.rel = 'noopener'; }
+    a.textContent = l.label + ' ↗';
+    a.style.cssText = "font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#82C566;text-decoration:none;border:1px solid #2A2A26;padding:9px 13px";
+    links.appendChild(a);
+  }
+}
+document.getElementById('bio-close').addEventListener('click', () => showBio(false));
+bioEl.addEventListener('click', ev => { if (ev.target === bioEl) showBio(false); });
+document.getElementById('cap-bio').addEventListener('click', () => { if (focused) closeEssay(); showBio(true); });
+document.getElementById('menu-bio').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); showBio(true); });
 document.getElementById('menu-about').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); openEssay(singularity); });
 document.getElementById('menu-home').addEventListener('click', () => { menuPanel.style.display = 'none'; goHome(); });
 document.getElementById('menu-rewind').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); slider.value = 0; setDay(0); });
@@ -582,6 +637,7 @@ renderer.domElement.addEventListener('dblclick', goHome);
 }
 addEventListener('keydown', ev => {
   if (ev.key !== 'Escape') return;
+  if (bioEl.style.display === 'flex') { showBio(false); return; }
   if (intro.style.display === 'flex') { showIntro(false); return; }
   closeEssay();
 });
