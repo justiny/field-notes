@@ -19,6 +19,9 @@
 </script>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* color-scheme darkens the native scrollbars (intro, essay) — no custom
+     ::-webkit-scrollbar rules needed, and it works in Firefox too. */
+  html{color-scheme:dark}
   html,body{margin:0;height:100%;background:#121210;overflow:hidden}
   canvas{display:block}
   a{color:#82C566}a:hover{color:#E8E4DC}
@@ -32,8 +35,8 @@
 #menu-panel a, #menu-panel button.mi { display:block; width:100%; text-align:left; box-sizing:border-box; background:none; border:0; cursor:pointer; text-decoration:none; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.16em; color:#8B8A80; padding:9px 16px; transition:color .15s, background .15s; }
 #menu-panel a:hover, #menu-panel button.mi:hover { color:#E8E4DC; background:#22221E; }
 #menu-panel a span, #menu-panel button.mi span { color:#5C5B52; letter-spacing:.1em; }
-#intro .k { font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.16em; color:#8B8A80; padding:11px 0 11px 0; border-top:1px solid #2A2A26; white-space:nowrap; }
-#intro .d { font-size:13.5px; line-height:1.65; color:#B5B2A8; padding:10px 0 11px 18px; border-top:1px solid #2A2A26; }
+#intro .k { font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.16em; color:#8B8A80; padding:8px 0; border-top:1px solid #2A2A26; white-space:nowrap; }
+#intro .d { font-size:13px; line-height:1.5; color:#B5B2A8; padding:7px 0 8px 18px; border-top:1px solid #2A2A26; }
 #intro .dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:8px; vertical-align:1px; }
 </style>
 </head>
@@ -70,10 +73,10 @@
 </div>
 <!-- first-visit legend. Shown until dismissed; reopenable from the menu. -->
 <div id="intro" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(18,18,16,0.88);align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
-  <div style="width:560px;max-width:100%;max-height:100%;overflow:auto;background:#1A1A17;border:1px solid #3A3A34;padding:30px 32px 26px;box-shadow:6px 6px 0 rgba(0,0,0,0.4);font-family:'Space Grotesk',sans-serif">
+  <div style="width:560px;max-width:100%;max-height:100%;overflow:auto;background:#1A1A17;border:1px solid #3A3A34;padding:22px 26px 20px;box-shadow:6px 6px 0 rgba(0,0,0,0.4);font-family:'Space Grotesk',sans-serif">
     <div class="mono" style="font-size:9.5px;letter-spacing:.2em;color:#E08A3C">JUSTIN YOUNG &middot; FIELD NOTES</div>
-    <div style="font-size:26px;font-weight:500;color:#E8E4DC;margin-top:10px;line-height:1.2">A map of what I&rsquo;m thinking about, drawn as gravity</div>
-    <p style="font-size:13.5px;line-height:1.75;color:#B5B2A8;margin:12px 0 22px">Nothing here is backfilled. Every dot was captured from a real working session, and the map only gains mass when I say so. Fly around it &mdash; it is the whole thing, and there is no other page.</p>
+    <div style="font-size:21px;font-weight:500;color:#E8E4DC;margin-top:7px;line-height:1.2">A map of what I&rsquo;m thinking about, drawn as gravity</div>
+    <p style="font-size:13px;line-height:1.6;color:#B5B2A8;margin:9px 0 14px">Nothing here is backfilled. Every dot was captured from a real working session, and the map only gains mass when I say so. Fly around it &mdash; it is the whole thing, and there is no other page.</p>
     <div style="display:grid;grid-template-columns:auto 1fr">
       <div class="k"><span class="dot" style="background:#82C566"></span>THEMES</div>
       <div class="d">The green forms on the ring. Each crystallizes one more side per note it holds, and its mass raises a tide on the membrane.</div>
@@ -88,10 +91,10 @@
       <div class="k">TIMELINE</div>
       <div class="d">Drag the scrubber along the bottom to rewind and watch the map assemble itself from day one.</div>
     </div>
-    <div class="mono" style="font-size:9px;letter-spacing:.14em;color:#5C5B52;line-height:1.9;border-top:1px solid #2A2A26;padding-top:16px;margin-top:2px">
+    <div class="mono" style="font-size:9px;letter-spacing:.14em;color:#5C5B52;line-height:1.75;border-top:1px solid #2A2A26;padding-top:12px;margin-top:2px">
       DRAG TO ORBIT &middot; SCROLL TO ZOOM &middot; DOUBLE-CLICK FOR HOME<br>MINIMAP: CLICK OR DRAG TO TRAVEL
     </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:15px;flex-wrap:wrap">
       <button id="intro-go" class="mono" style="background:none;border:1px solid #3A3A34;color:#82C566;font-size:9.5px;letter-spacing:.18em;padding:11px 18px;cursor:pointer">ENTER THE MAP &rarr;</button>
       <span class="mono" style="font-size:8.5px;letter-spacing:.14em;color:#5C5B52">REOPEN ANY TIME &middot; MENU &rsaquo; HOW TO READ THIS</span>
     </div>
