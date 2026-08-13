@@ -217,7 +217,14 @@
       "Before that, a philosophy degree and a career as a professional runner. Philosophy is where I learned to distrust a claim that merely sounds right. Running is where I learned that most of the work is the part nobody watches."
     ],
     "availability": "Not actively looking, but always open to an interesting problem.",
-    "brands": [],
+    "brands": [
+      "Nike",
+      "Pepsi",
+      "Mastodon",
+      "VIA Science",
+      "UPS",
+      "Better"
+    ],
     "links": [
       {
         "label": "EMAIL",

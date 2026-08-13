@@ -544,7 +544,10 @@ const showBio = on => { bioEl.style.display = on ? 'flex' : 'none'; };
   // an empty "WORKED WITH" heading is worse than no heading
   if ((b.brands || []).length) {
     document.getElementById('bio-brands').style.display = 'block';
-    document.getElementById('bio-brands-l').textContent = b.brands.join(' · ');
+    // plain strings in the ledger, but tolerate {label} — that is the shape
+    // `links` uses, so it is the natural thing to type here by mistake
+    document.getElementById('bio-brands-l').textContent =
+      b.brands.map(x => typeof x === 'string' ? x : x.label).join(' · ');
   }
   document.getElementById('bio-avail').textContent = b.availability || '';
   const links = document.getElementById('bio-links');
