@@ -403,7 +403,10 @@ const ageRings = [[3,'3 MO'],[6,'6 MO'],[12,'1 YR']].map(([m, text]) => {
   const line = new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(
       Array.from({length:97}, (_, i) => { const a = i/96*2*Math.PI; return new THREE.Vector3(Math.cos(a)*r, Math.sin(a)*r, 0); })),
-    new THREE.LineDashedMaterial({ color:GRAY, transparent:true, opacity:0.3, dashSize:0.014, gapSize:0.035 })
+    // The 2D map used 0.3 alpha with a [2,5] dash, but that was a 1px canvas
+    // arc. A WebGL line cannot be thickened, so brightness and dash duty are
+    // the only levers — at 0.3 with a 28% duty the ring reads as empty space.
+    new THREE.LineDashedMaterial({ color:GRAY, transparent:true, opacity:0.62, dashSize:0.022, gapSize:0.026 })
   );
   line.computeLineDistances();   // dashes are dead without this
   return { line, r, label: makeLabel(text, 8.5) };
@@ -763,7 +766,7 @@ const v = new THREE.Vector3();
     ringGroup.quaternion.copy(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
     for (const a of ageRings) {
-      a.line.material.opacity = 0.3*ringA*dim*worldVis;
+      a.line.material.opacity = 0.62*ringA*dim*worldVis;
       v.copy(ringGroup.position).addScaledVector(up, a.r);   // label rides the top of its ring
       const pr = v.project(camera);
       const off = pr.z > 1 ? 0 : 1;
