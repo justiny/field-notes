@@ -47,14 +47,36 @@
     }
   ],
   "farIdeas": [],
-  "suggestions": [],
+  "suggestions": [
+    {
+      "id": "gmsr3nbx40",
+      "inferred": "2026-08-13",
+      "title": "What stays human on purpose",
+      "relatedTo": [
+        "n1",
+        "n2",
+        "p-0812-3"
+      ],
+      "prompt": "n1 says writing code is no longer optimal and n2 says AI is not an adversary, but p-0812-3 insists manual work persists in software. All three treat the remaining human work as leftover — the part not yet reached. Nothing on the map argues for work that should stay manual by choice rather than by limitation. A theory of the deliberate residue is unmapped."
+    },
+    {
+      "id": "gmsr3nbx41",
+      "inferred": "2026-08-13",
+      "title": "Optimal measured against what?",
+      "relatedTo": [
+        "n1",
+        "p-0812-1"
+      ],
+      "prompt": "n1 claims code-writing is no longer optimal; p-0812-1 asks whether spec-to-task decomposition is optimal. Both are optimality claims with no stated metric, and the Experimentation theme currently holds no notes or particles. The map keeps asserting better without ever defining the measurement it would take to know."
+    }
+  ],
   "particles": [
     {
       "id": "p-0812-1",
       "date": "2026-08-12",
       "source": "claude",
       "affinity": "d",
-      "energy": 0.7,
+      "energy": 0.644,
       "title": "Is a spec-to-task decomposition optimal?",
       "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
     },
@@ -63,7 +85,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.6,
+      "energy": 0.552,
       "title": "Tooling changes, foundations do not",
       "claim": "Engineering tooling is changing, but the foundations are the same."
     },
@@ -72,7 +94,7 @@
       "date": "2025-12-01",
       "source": "claude",
       "affinity": null,
-      "energy": 0.6,
+      "energy": 0.552,
       "title": "No product without a marketing foundation",
       "claim": "A great product is no product at all unless it has a strong marketing foundation."
     },
@@ -83,7 +105,7 @@
       "source": "claude",
       "title": "Manual work persists in software",
       "affinity": null,
-      "energy": 0.5,
+      "energy": 0.46,
       "refs": [
         "p-0812-2"
       ],
