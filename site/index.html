@@ -32,6 +32,9 @@
 #menu-panel a, #menu-panel button.mi { display:block; width:100%; text-align:left; box-sizing:border-box; background:none; border:0; cursor:pointer; text-decoration:none; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.16em; color:#8B8A80; padding:9px 16px; transition:color .15s, background .15s; }
 #menu-panel a:hover, #menu-panel button.mi:hover { color:#E8E4DC; background:#22221E; }
 #menu-panel a span, #menu-panel button.mi span { color:#5C5B52; letter-spacing:.1em; }
+#intro .k { font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.16em; color:#8B8A80; padding:11px 0 11px 0; border-top:1px solid #2A2A26; white-space:nowrap; }
+#intro .d { font-size:13.5px; line-height:1.65; color:#B5B2A8; padding:10px 0 11px 18px; border-top:1px solid #2A2A26; }
+#intro .dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:8px; vertical-align:1px; }
 </style>
 </head>
 <body>
@@ -58,12 +61,45 @@
     <a href="mailto:justin@lsvl.co">EMAIL <span>&#8599;</span></a>
     <div style="height:1px;background:#2A2A26;margin:6px 0"></div>
     <a href="engine.html">THE ENGINE <span>&#183; HOW THE MAP IS FED</span></a>
+    <button class="mi" id="menu-intro">HOW TO READ THIS <span>&#183; THE LEGEND</span></button>
     <button class="mi" id="menu-about">ABOUT <span>&#183; DIVE TO THE SINGULARITY</span></button>
     <button class="mi" id="menu-rewind">TIMELINE <span>· REWIND TO DAY ONE</span></button>
     <button class="mi" id="menu-home">RESET VIEW</button>
     <button class="mi" style="cursor:default;color:#4A4A42" title="Coming soon">SOUND <span>· SOON</span></button>
   </div>
 </div>
+<!-- first-visit legend. Shown until dismissed; reopenable from the menu. -->
+<div id="intro" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(18,18,16,0.88);align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+  <div style="width:560px;max-width:100%;max-height:100%;overflow:auto;background:#1A1A17;border:1px solid #3A3A34;padding:30px 32px 26px;box-shadow:6px 6px 0 rgba(0,0,0,0.4);font-family:'Space Grotesk',sans-serif">
+    <div class="mono" style="font-size:9.5px;letter-spacing:.2em;color:#E08A3C">JUSTIN YOUNG &middot; FIELD NOTES</div>
+    <div style="font-size:26px;font-weight:500;color:#E8E4DC;margin-top:10px;line-height:1.2">A map of what I&rsquo;m thinking about, drawn as gravity</div>
+    <p style="font-size:13.5px;line-height:1.75;color:#B5B2A8;margin:12px 0 22px">Nothing here is backfilled. Every dot was captured from a real working session, and the map only gains mass when I say so. Fly around it &mdash; it is the whole thing, and there is no other page.</p>
+    <div style="display:grid;grid-template-columns:auto 1fr">
+      <div class="k"><span class="dot" style="background:#82C566"></span>THEMES</div>
+      <div class="d">The green forms on the ring. Each crystallizes one more side per note it holds, and its mass raises a tide on the membrane.</div>
+      <div class="k"><span class="dot" style="background:#E8E4DC"></span>NOTES</div>
+      <div class="d">Orbit the theme that produced them &mdash; close and fast when new, drifting wider and dimmer with age. <span style="color:#E8E4DC">Click one to read it.</span></div>
+      <div class="k"><span class="dot" style="background:#5C5B52"></span>PARTICLES</div>
+      <div class="d">Raw claims, not yet promoted. Green ones are falling toward a theme; gray ones are unclaimed and may cool and drift out.</div>
+      <div class="k"><span class="dot" style="background:#E08A3C"></span>MEMORIES</div>
+      <div class="d">Inside the black horizon at the centre. Dive in to find them &mdash; they ignore time and they are not leaving.</div>
+      <div class="k">TIMELINE</div>
+      <div class="d">Drag the scrubber along the bottom to rewind and watch the map assemble itself from day one.</div>
+    </div>
+    <div class="mono" style="font-size:9px;letter-spacing:.14em;color:#5C5B52;line-height:1.9;border-top:1px solid #2A2A26;padding-top:16px;margin-top:2px">
+      DRAG TO ORBIT &middot; SCROLL TO ZOOM &middot; DOUBLE-CLICK FOR HOME<br>MINIMAP: CLICK OR DRAG TO TRAVEL
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px;flex-wrap:wrap">
+      <button id="intro-go" class="mono" style="background:none;border:1px solid #3A3A34;color:#82C566;font-size:9.5px;letter-spacing:.18em;padding:11px 18px;cursor:pointer">ENTER THE MAP &rarr;</button>
+      <span class="mono" style="font-size:8.5px;letter-spacing:.14em;color:#5C5B52">REOPEN ANY TIME &middot; MENU &rsaquo; HOW TO READ THIS</span>
+    </div>
+  </div>
+</div>
+<script>
+  // Synchronous so a returning visitor never sees a flash of the panel: the
+  // module below waits on fetch('./brain.json') and would be far too late.
+  if (localStorage.getItem('fn.intro') !== 'seen') document.getElementById('intro').style.display = 'flex';
+</script>
 <!-- essay, floated at the note's location when reading in place -->
 <div id="essay" style="opacity:0;pointer-events:none;position:fixed;z-index:20;width:400px;max-height:70vh;overflow:auto;background:rgba(18,18,16,0.92);border:1px solid #3A3A34;padding:22px 24px;transition:opacity .45s;scrollbar-width:thin">
   <div id="essay-m" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#E08A3C"></div>
@@ -379,6 +415,11 @@ function closeEssay() {
 const menuBtn = document.getElementById('menu-btn'), menuPanel = document.getElementById('menu-panel');
 menuBtn.addEventListener('click', ev => { ev.stopPropagation(); menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block'; });
 document.addEventListener('click', ev => { if (!document.getElementById('menu').contains(ev.target)) menuPanel.style.display = 'none'; });
+const intro = document.getElementById('intro');
+const showIntro = on => { intro.style.display = on ? 'flex' : 'none'; if (!on) localStorage.setItem('fn.intro', 'seen'); };
+document.getElementById('intro-go').addEventListener('click', () => showIntro(false));
+intro.addEventListener('click', ev => { if (ev.target === intro) showIntro(false); });
+document.getElementById('menu-intro').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); showIntro(true); });
 document.getElementById('menu-about').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); openEssay(singularity); });
 document.getElementById('menu-home').addEventListener('click', () => { menuPanel.style.display = 'none'; goHome(); });
 document.getElementById('menu-rewind').addEventListener('click', () => { menuPanel.style.display = 'none'; if (focused) closeEssay(); slider.value = 0; setDay(0); });
@@ -435,7 +476,11 @@ renderer.domElement.addEventListener('dblclick', goHome);
   mmEl.addEventListener('pointerup', () => { mmDrag = false; });
   mmEl.addEventListener('dblclick', goHome);
 }
-addEventListener('keydown', ev => { if (ev.key === 'Escape') closeEssay(); });
+addEventListener('keydown', ev => {
+  if (ev.key !== 'Escape') return;
+  if (intro.style.display === 'flex') { showIntro(false); return; }
+  closeEssay();
+});
 
 // ---------- minimap ----------
 const mm = document.getElementById('minimap').getContext('2d');
