@@ -88,19 +88,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const BONE = 0xE8E4DC, GREEN = 0x82C566, GRAY = 0x8B8A80, ORANGE = 0xE08A3C;
 const brain = await (await fetch('./brain.json')).json();
 
-// essays for the notes that earned one; others read from their teaser
-const POSTS = {
-  s1:{m:'JUL 2026 · ORCHESTRATION · 8 MIN', b:'A function hides an implementation. A subagent hides a deliberation. Once I started treating subagents as the unit of thought rather than the unit of work, the architecture diagrams got simpler and the transcripts got weirder.\nThe trick is deciding what a subagent is allowed to not know. Scope is a gift. The narrower the brief, the better the work — which is also true of me, but I try not to dwell on that.'},
-  s2:{m:'JUN 2026 · ORCHESTRATION · 6 MIN', b:'Every multi-agent system I have built eventually grows a dispatcher: one small, boring process whose only job is to decide who thinks next. It is the least glamorous component and the only one I have never rewritten.\nDispatchers should be dumb on purpose. Every time I made one clever, it started hoarding work like a manager who "just finds it faster to do it myself."'},
-  b:{m:'MAY 2026 · CONTEXT · 7 MIN', b:'Tokens are money and most prompts are lifestyle inflation. The moment I started treating context as a budget with line items — instructions, memory, tools, evidence — I stopped asking "what can I add?" and started asking "what is this paying for?"\nThe corollary: anything you cannot justify cutting, you do not understand yet.'},
-  k:{m:'APR 2026 · CONTEXT · 5 MIN', b:'Compaction is the art of lying to your future self efficiently. A summary is a claim about what will matter later, made by someone who does not know later.\nMy current heuristic: compact decisions and their reasons, discard deliberation. Nobody has ever needed the transcript of the argument. They need to know who won and why.'},
-  p:{m:'MAR 2026 · WORKFLOWS · 9 MIN', b:'The design-to-code pipeline I am building at Southleft has a stage whose only job is to object. It reads the plan and files complaints. We call it the crank.\nShipping quality went up not because the crank is right — it is right maybe a third of the time — but because plans written to survive an argument are better plans.'},
-  r:{m:'FEB 2026 · WORKFLOWS · 4 MIN', b:'Some thinking should be scheduled, not summoned. My repos now have standing appointments: a nightly reader that flags drift, a weekly skeptic that re-litigates old decisions.\nIt is unsettling how much of engineering judgment turns out to be a cron job wearing a person.'},
-  g:{m:'JAN 2026 · EVALS · 7 MIN', b:'The hard part of evals is not measurement, it is admitting what you actually care about. "Good code" was never a rubric. It was a mood.\nSo now I write the rubric first and let it embarrass me. Half of my eval work is discovering that my standards, written down, are either trivial or impossible.'},
-  l:{m:'DEC 2025 · META · 3 MIN', b:'This site is a lab notebook that happens to be readable. Entries are dated, wrong in places, and left standing when they age badly — the changelog of thinking exists precisely so I do not have to pretend I always believed what I believe now.'},
-  about:{m:'JUSTIN YOUNG · SOUTHLEFT · THE SINGULARITY', b:'I direct AI Engineering & Strategy at Southleft, where I build systems in which software writes software — and then I write about what went wrong, because that is where the interesting parts live.\nThis is a gravity map of one head. Themes are massive bodies; the space visibly bends around dense thinking. Notes orbit the theme that produced them — new ones close and fast, old ones far and slow. The dark is not empty. It is unsampled.\nYou found the center. Description breaks down here; this is all it says.'}
-};
-
 // ---------- renderer / camera / controls ----------
 const renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setPixelRatio(Math.min(2, devicePixelRatio));
@@ -354,7 +341,9 @@ function openEssay(mesh) {
   const wp = new THREE.Vector3(); mesh.getWorldPosition(wp);
   const dir = camera.position.clone().sub(wp).normalize();
   flyTo(wp.clone().add(dir.multiplyScalar(mesh.userData.dive || 1.15)), wp, 1500);
-  const post = POSTS[n.id];
+  // Essays live on the note in brain.json (`meta` + `body`); the singularity
+  // reads identity.about. One file of truth — nothing prose-shaped is hardcoded.
+  const post = n.id === 'about' ? brain.identity.about : (n.body ? { m: n.meta, b: n.body } : null);
   document.getElementById('essay-m').textContent = post ? post.m : n.stamp + ' · ' + n.cat + ' · FORMING';
   document.getElementById('essay-t').textContent = n.title;
   document.getElementById('essay-b').textContent = post ? post.b : n.teaser + '\n\nThis note is still taking shape — promoted from the nursery, essay pending.';
