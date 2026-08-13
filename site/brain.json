@@ -198,6 +198,19 @@
     }
   ],
   "sky": {
-    "comets": []
+    "comets": [],
+    "field": {
+      "catalogue": "FN",
+      "sightings": [
+        "No galaxy holds this. A galaxy means the matter around you is already bound and turning on one centre — out here, none of it is. The self drifts free.",
+        "The only structure in reach is the ring you can already see. Past it there is no arm, no core, no catalogue. Just volume nobody has looked at.",
+        "This star had no name until you clicked it. That is the whole rule of the place: attention is what grants a thing coordinates.",
+        "Your position is fixed against the horizon because there is nothing else to fix against. The self is the origin by default, not by importance.",
+        "Distance out here is honest — it is how far a thing sits from anything I have actually thought. Most of the sky is very far.",
+        "Sample enough of this dark and the field will start to turn, and then it will be fair to call it a galaxy. It is not one yet.",
+        "The comets are the only things out here running to a schedule. Everything else is waiting.",
+        "From this far out the self is small: a ring, a tide, and a hole you cannot see into. That is the honest scale of one person thinking."
+      ]
+    }
   }
 }

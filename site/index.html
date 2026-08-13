@@ -83,6 +83,8 @@
       <div class="d">Raw claims, not yet promoted. Green ones are falling toward a theme; gray ones are unclaimed and may cool and drift out.</div>
       <div class="k"><span class="dot" style="background:#E08A3C"></span>MEMORIES</div>
       <div class="d">Inside the black horizon at the centre. Dive in to find them &mdash; they ignore time and they are not leaving.</div>
+      <div class="k"><span class="dot" style="background:#8B8A80;width:4px;height:4px;margin-left:1.5px;margin-right:9.5px"></span>STARS</div>
+      <div class="d">Everything I haven&rsquo;t thought about yet. Click one to take a sighting off it and find out where this place actually is.</div>
       <div class="k">TIMELINE</div>
       <div class="d">Drag the scrubber along the bottom to rewind and watch the map assemble itself from day one.</div>
     </div>
@@ -297,18 +299,33 @@ for (const n of brain.notes) {
 }
 
 // ---------- stars + comets ----------
-{
-  const N = 260, pos = new Float32Array(N*3);
+// The dark is not decoration: each of these is something unsampled, and a click
+// takes a sighting off it — the only way to fix where the self actually sits.
+// One Points object rather than N meshes; brightness rides in a vertex colour
+// so the field has depth without a second draw call.
+const STARN = 1400;
+const starPos = new Float32Array(STARN*3);
+const stars = (() => {
+  const col = new Float32Array(STARN*3);
   let s = 7; const rnd = () => ((s = (s*16807) % 2147483647) / 2147483647);
-  for (let i = 0; i < N; i++) {
-    const r = 4 + rnd()*9, a = rnd()*2*Math.PI, y = (rnd()-0.5)*2;
+  for (let i = 0; i < STARN; i++) {
+    const r = 4 + rnd()*18, a = rnd()*2*Math.PI, y = (rnd()-0.5)*2;
     const eq = Math.sqrt(1 - y*y*0.7);
-    pos[i*3] = Math.cos(a)*r*eq; pos[i*3+1] = y*r*0.7; pos[i*3+2] = Math.sin(a)*r*eq;
+    starPos[i*3] = Math.cos(a)*r*eq; starPos[i*3+1] = y*r*0.7; starPos[i*3+2] = Math.sin(a)*r*eq;
+    // Depth comes from brightness, not size: a size-attenuated point that
+    // happens to spawn near the camera draws as a fat grey square, which reads
+    // as a UI glitch rather than a star. Fixed 2px, dimmer the further out.
+    const b = (0.25 + rnd()*rnd()*0.95) * (1 - (r - 4)/18*0.55);
+    col[i*3] = col[i*3+1] = col[i*3+2] = b;
   }
   const sg = new THREE.BufferGeometry();
-  sg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  group.add(new THREE.Points(sg, new THREE.PointsMaterial({ color:BONE, size:0.016, transparent:true, opacity:0.5, sizeAttenuation:true })));
-}
+  sg.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+  sg.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const pts = new THREE.Points(sg, new THREE.PointsMaterial({ color:BONE, vertexColors:true, size:2, transparent:true, opacity:0.72, sizeAttenuation:false }));
+  pts.userData = { kind:'star' };
+  group.add(pts);
+  return pts;
+})();
 const comets = [];
 (brain.sky && brain.sky.comets || []).forEach((c, i) => {
   const cfg = { a:2.4 + c.a/600, b:1.3 + c.b/600, tilt:(c.rot||0)*0.4, speed:c.w*1.6, ph:c.ph||0 };
@@ -344,6 +361,7 @@ for (const p of brain.particles) {
 
 // ---------- dim law: reading in place ----------
 let dim = 1, dimTarget = 1, focused = null;
+let worldVis = 1;   // 0 once inside the horizon; picking reads it to ignore what it can't see
 const dimmables = [];
 group.traverse(o => { if (o.material && o.material.transparent) dimmables.push({ o, base:o.material.opacity }); });
 
@@ -357,6 +375,7 @@ function goHome() { flyTo(HOME_POS, HOME_TGT, 1400); closeEssay(); }
 
 // ---------- picking ----------
 const ray = new THREE.Raycaster();
+ray.params.Points.threshold = 0.14;   // world-space click tolerance on a star
 const ptr = new THREE.Vector2();
 const card = document.getElementById('card');
 const essay = document.getElementById('essay');
@@ -365,8 +384,12 @@ function pick(ev) {
   ptr.x = (ev.clientX/innerWidth)*2 - 1;
   ptr.y = -(ev.clientY/innerHeight)*2 + 1;
   ray.setFromCamera(ptr, camera);
-  const hits = ray.intersectObjects(themes.concat(notes.filter(n => n.visible), particles.filter(n => n.visible), memories.filter(n => n.visible), singularity.visible ? [singularity] : []), false);
-  return hits.length ? hits[0].object : null;
+  const hits = ray.intersectObjects(themes.concat(notes.filter(n => n.visible), particles.filter(n => n.visible), memories.filter(n => n.visible), singularity.visible ? [singularity] : [], worldVis > 0.5 ? [stars] : []), false);
+  // Stars sit at r>=4, so from a wide camera they lie between you and the map.
+  // Anything real beats a star on the same ray, however close the star is.
+  const h = hits.find(x => x.object !== stars) || hits[0];
+  if (h && h.object === stars) stars.userData.i = h.index;
+  return h ? h.object : null;
 }
 renderer.domElement.addEventListener('pointermove', ev => {
   if (focused) return;
@@ -433,6 +456,24 @@ renderer.domElement.addEventListener('click', ev => {
     document.getElementById('card-t').textContent = 'MEMORY · ' + mm2.stamp;
     document.getElementById('card-t').style.color = '#E08A3C';
     document.getElementById('card-b').textContent = mm2.title + ' — ' + (mm2.note || '') + ' Captured; it does not obey the scrubber, and it is not leaving.';
+    card.style.opacity = 1; card.style.pointerEvents = 'auto';
+    return;
+  }
+  if (m.userData.kind === 'star') {
+    // A sighting: the designation is minted on the click, the numbers are read
+    // off the actual point, and the line it returns is one piece of the answer
+    // to "where is this?" — you have to sweep the sky to get the whole of it.
+    const i = m.userData.i, f = (brain.sky && brain.sky.field) || { catalogue:'FN', sightings:[] };
+    const x = starPos[i*3], y = starPos[i*3+1], z = starPos[i*3+2];
+    const ly = Math.round(Math.hypot(x, y, z)*480/10)*10;
+    const bearing = Math.round((Math.atan2(z, x)*180/Math.PI + 360) % 360);
+    document.getElementById('card-t').style.color = '#E8E4DC';
+    document.getElementById('card-t').textContent = 'SIGHTING · ' + f.catalogue + '-' + String(i).padStart(4, '0');
+    document.getElementById('card-b').textContent = ly.toLocaleString() + ' LY out · bearing ' + bearing + '° · '
+      + Math.round(Math.abs(y*480)).toLocaleString() + ' LY ' + (y >= 0 ? 'above' : 'below') + ' the plane. '
+      // hashed, not i % n: sequential indices sit near each other in the sky,
+      // and neighbours handing back the same line makes the field feel small
+      + (f.sightings.length ? f.sightings[hash('star' + i) % f.sightings.length] : '');
     card.style.opacity = 1; card.style.pointerEvents = 'auto';
     return;
   }
@@ -541,7 +582,7 @@ const v = new THREE.Vector3();
   // the horizon: approach and the world redshifts, cross it and the world is gone
   const dSelf = camera.position.length();
   const rs = Math.max(0, Math.min(1, (1.6 - dSelf)/1.1));           // redshift 0→1
-  const worldVis = Math.max(0, Math.min(1, (dSelf - 0.38)/0.2));    // 0 inside
+  worldVis = Math.max(0, Math.min(1, (dSelf - 0.38)/0.2));          // 0 inside
   const inVis = 1 - worldVis;
   const rsGray = new THREE.Color(GRAY).lerp(new THREE.Color(ORANGE), rs).getStyle();
   memMat.color.setHex(BONE).lerp(new THREE.Color(ORANGE), rs*0.8);
