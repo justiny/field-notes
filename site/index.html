@@ -39,8 +39,10 @@
   <b style="display:block;color:#E8E4DC;font-weight:500;font-size:11px;margin-bottom:4px">JUSTIN YOUNG — FIELD NOTES</b>
   DIRECTOR OF AI ENGINEERING &amp; STRATEGY | <a href="https://southleft.com" target="_blank" rel="noopener" style="color:#8B8A80;text-decoration:none;border-bottom:1px solid #3A3A34;pointer-events:auto">SOUTHLEFT</a>
 </div>
-<div id="hint" style="position:fixed;left:28px;bottom:24px;z-index:10;font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;color:#5C5B52;font-size:9px;pointer-events:none">
-  DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A NOTE TO READ · DOUBLE-CLICK FOR HOME
+<!-- max-width stops the hint growing into the centred scrubber: it wraps instead
+     of colliding. 228px = half the scrubber (176) plus a 24px gap either side. -->
+<div id="hint" style="position:fixed;left:28px;bottom:24px;z-index:10;font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;color:#5C5B52;font-size:9px;line-height:1.8;max-width:calc(50vw - 228px);pointer-events:none">
+  DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A NOTE · DOUBLE-CLICK FOR HOME
 </div>
 <div id="card" style="opacity:0;pointer-events:none;position:fixed;right:28px;top:66px;z-index:10;width:250px;background:#1A1A17;border:1px solid #3A3A34;padding:14px 16px;transition:opacity .3s;box-shadow:4px 4px 0 rgba(0,0,0,0.35)">
   <div id="card-t" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#82C566"></div>
@@ -494,8 +496,8 @@ const v = new THREE.Vector3();
   const rsGray = new THREE.Color(GRAY).lerp(new THREE.Color(ORANGE), rs).getStyle();
   memMat.color.setHex(BONE).lerp(new THREE.Color(ORANGE), rs*0.8);
   document.getElementById('hint').textContent = inVis > 0.5
-    ? 'YOU ARE INSIDE THE SELF · WHAT FELL IN STAYS · DOUBLE-CLICK TO ESCAPE'
-    : 'DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A NOTE TO READ · DOUBLE-CLICK FOR HOME';
+    ? 'INSIDE THE SELF · WHAT FELL IN STAYS · DOUBLE-CLICK TO ESCAPE'
+    : 'DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A NOTE · DOUBLE-CLICK FOR HOME';
   for (const d2 of dimmables) d2.o.material.opacity = d2.base * dim * worldVis;
   // themes: slow spin, hover spin, label + spoke by count
   for (let i = 0; i < themes.length; i++) {
