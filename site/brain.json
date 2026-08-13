@@ -18,6 +18,10 @@
     {
       "id": "d",
       "name": "Intelligent Decomposition"
+    },
+    {
+      "id": "q",
+      "name": "Experimentation"
     }
   ],
   "notes": [
@@ -25,11 +29,11 @@
       "id": "n1",
       "theme": "a",
       "cat": "AGENTIC",
-      "title": "Writing code is no longer the most optimal way to build software",
+      "title": "Writing code is no longer optimal",
       "date": "2025-08",
       "stamp": "AUG 25",
       "ageMonths": 12,
-      "teaser": "Changing the mental model of problem-solving came before changing the workflow."
+      "teaser": "Writing code is no longer the most optimal way to build software. The mental model had to change before the workflow could."
     },
     {
       "id": "n2",
@@ -51,7 +55,8 @@
       "source": "claude",
       "affinity": "d",
       "energy": 0.7,
-      "title": "Breaking a spec into tasks — how do we verify the decomposition was optimal?"
+      "title": "Is a spec-to-task decomposition optimal?",
+      "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
     },
     {
       "id": "p-0812-2",
@@ -59,7 +64,8 @@
       "source": "claude",
       "affinity": null,
       "energy": 0.6,
-      "title": "Engineering tooling is changing, but the foundations are the same"
+      "title": "Tooling changes, foundations do not",
+      "claim": "Engineering tooling is changing, but the foundations are the same."
     },
     {
       "id": "p-1201-1",
@@ -67,7 +73,21 @@
       "source": "claude",
       "affinity": null,
       "energy": 0.6,
-      "title": "A great product is no product without a marketing foundation"
+      "title": "No product without a marketing foundation",
+      "claim": "A great product is no product at all unless it has a strong marketing foundation."
+    },
+    {
+      "id": "p-0812-3",
+      "date": "2026-08-12",
+      "proposedOn": "2026-08-13",
+      "source": "claude",
+      "title": "Manual work persists in software",
+      "affinity": null,
+      "energy": 0.5,
+      "refs": [
+        "p-0812-2"
+      ],
+      "claim": "There's still lots of manual work for humans in software — see Google Tag Manager."
     }
   ],
   "history": [],

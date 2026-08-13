@@ -381,7 +381,8 @@ renderer.domElement.addEventListener('click', ev => {
     const p = m.userData.p;
     document.getElementById('card-t').textContent = (m.userData.green ? 'PARTICLE · FALLING' : 'PARTICLE · DARK');
     document.getElementById('card-t').style.color = m.userData.green ? '#82C566' : '#8B8A80';
-    document.getElementById('card-b').textContent = '\u201C' + p.title + '\u201D — proposed ' + p.date + ' from ' + p.source.toUpperCase() + ' · energy ' + p.energy + (m.userData.green ? ' · falling toward ' + brain.themes.find(t2 => t2.id === p.affinity).name.toUpperCase() + '. Promotion mints a note; neglect cools it.' : ' · unclaimed. No well has caught it yet — it may be a new theme forming, or it may cool and drift out.');
+    // map label is a short headline; `claim` carries the full sentence
+    document.getElementById('card-b').textContent = '\u201C' + (p.claim || p.title) + '\u201D — proposed ' + p.date + ' from ' + p.source.toUpperCase() + ' · energy ' + p.energy + (m.userData.green ? ' · falling toward ' + brain.themes.find(t2 => t2.id === p.affinity).name.toUpperCase() + '. Promotion mints a note; neglect cools it.' : ' · unclaimed. No well has caught it yet — it may be a new theme forming, or it may cool and drift out.');
     card.style.opacity = 1; card.style.pointerEvents = 'auto';
     return;
   }

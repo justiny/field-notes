@@ -21,7 +21,8 @@ const server = new McpServer({ name: 'brain-mcp', version: '0.1.0' });
 server.tool('brain_propose',
   'Propose a particle for the gravity map: a CLAIM or TENSION from today, never an activity log. Max 6/day. The only write a digest is allowed.',
   {
-    title: z.string().max(90).describe('One line, written plainly. A claim, not an activity.'),
+    title: z.string().max(60).describe('SHORT headline, <= 60 chars — this is the label on the map. A claim, not an activity.'),
+    claim: z.string().max(280).optional().describe('The full sentence as Justin said it. Shown when the particle is clicked. Use whenever the headline had to drop nuance.'),
     source: z.enum(['github', 'journal', 'claude']),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     // Not a fixed enum: themes can be minted by brain_name_theme, and a stale

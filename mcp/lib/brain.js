@@ -7,6 +7,8 @@ import { readFileSync, writeFileSync, renameSync } from 'node:fs';
 export const themesOf = brain =>
   Object.fromEntries((brain.themes || []).map(t => [t.id, t.name]));
 const RATE_LIMIT = 6;            // proposals per calendar day
+const TITLE_MAX = 60;            // the map label — short enough to read at a glance;
+                                 // the full sentence lives in `claim`, shown on click
 const DECAY = 0.92;              // nightly energy multiplier
 const COLD = 0.05;               // below this a particle renders near-invisible (never deleted)
 const DEDUPE_SIM = 0.7;          // token-overlap threshold for merge
@@ -38,7 +40,8 @@ export const stampOf = ym => STAMP_MO[Number(ym.slice(5, 7)) - 1] + ' ' + ym.sli
 
 // ---- propose: the ONLY write a digest agent is allowed ----
 export function propose(brain, p, today) {
-  if (!p.title || p.title.length > 90) throw new Error('title required, <= 90 chars');
+  if (!p.title || p.title.length > TITLE_MAX) throw new Error(`title required, <= ${TITLE_MAX} chars — put the full sentence in \`claim\``);
+  if (p.claim && p.claim.length > 280) throw new Error('claim <= 280 chars');
   if (!['github', 'journal', 'claude'].includes(p.source)) throw new Error('source must be github|journal|claude');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(p.date)) throw new Error('date must be YYYY-MM-DD');
   if (p.affinity != null && !themesOf(brain)[p.affinity]) throw new Error('affinity must be a theme id or null');
@@ -65,6 +68,7 @@ export function propose(brain, p, today) {
     id: `${prefix}-${seq}`,
     date: p.date, proposedOn: today, source: p.source, title: p.title.trim(),
     affinity: p.affinity ?? null, energy: Math.max(0, Math.min(1, p.energy ?? 0.3)),
+    ...(p.claim ? { claim: p.claim.trim() } : {}),
     ...(p.refs?.length ? { refs: p.refs } : {})
   };
   brain.particles = brain.particles || [];
@@ -83,7 +87,9 @@ export function promote(brain, id, theme, today, teaser) {
   const note = {
     id: p.id, theme, cat: themes[theme].split(' ')[0].toUpperCase(),
     title: p.title, date: ym, stamp: stampOf(ym), ageMonths: 0,
-    teaser: teaser || '', promotedFrom: p.source, sourceDate: p.date, draft: true
+    // a promoted particle's claim becomes the note's teaser unless one is given —
+    // the long form is already written, no reason to make the human retype it
+    teaser: teaser || p.claim || '', promotedFrom: p.source, sourceDate: p.date, draft: true
   };
   brain.notes.push(note);
   return { promoted: note };

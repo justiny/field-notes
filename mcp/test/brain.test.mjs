@@ -111,6 +111,29 @@ test('chart refuses more than two suggestions and duplicate coverage', () => {
   assert.equal(b.suggestions.length, 1);
 });
 
+test('title is capped short; the full sentence goes in claim', () => {
+  const b = fresh();
+  const long = 'There is still a great deal of manual work left for humans in software, see Google Tag Manager';
+  assert.throws(() => propose(b, P({ title: long }), TODAY), /<= 60 chars/);
+
+  const r = propose(b, P({ title: 'Manual work persists in software', claim: long }), TODAY);
+  assert.equal(r.particle.title, 'Manual work persists in software');
+  assert.equal(r.particle.claim, long);
+  assert.throws(() => propose(b, P({ title: 'Fine headline here', claim: 'x'.repeat(281) }), TODAY), /claim <= 280/);
+});
+
+test('promote carries a claim into the note teaser when none is given', () => {
+  const b = fresh();
+  propose(b, P({ title: 'Tooling changes, foundations do not', claim: 'Engineering tooling is changing, but the foundations are the same.' }), TODAY);
+  const r = promote(b, b.particles[0].id, 'o', TODAY);          // no teaser passed
+  assert.equal(r.promoted.teaser, 'Engineering tooling is changing, but the foundations are the same.');
+
+  // an explicit teaser still wins
+  propose(b, P({ title: 'A second distinct headline about evals', claim: 'full sentence' }), TODAY);
+  const r2 = promote(b, b.particles[0].id, 'e', TODAY, 'my own teaser');
+  assert.equal(r2.promoted.teaser, 'my own teaser');
+});
+
 test('propose does not reissue an id when back-filling an older date', () => {
   const b = fresh();
   // two claims already carry the 08-09 prefix, one of them promoted into notes
