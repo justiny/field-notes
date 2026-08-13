@@ -12,37 +12,83 @@
   },
   "themes": [
     {
-      "id": "o",
-      "name": "Orchestration",
-      "glyph": "hexagon"
+      "id": "a",
+      "name": "Agentic Workflows"
     },
     {
-      "id": "x",
-      "name": "Context engineering",
-      "glyph": "square"
-    },
-    {
-      "id": "w",
-      "name": "Workflows",
-      "glyph": "circle"
-    },
-    {
-      "id": "e",
-      "name": "Evals",
-      "glyph": "triangle"
-    },
-    {
-      "id": "q",
-      "name": "Experimentation",
-      "glyph": "diamond"
+      "id": "d",
+      "name": "Intelligent Decomposition"
     }
   ],
-  "notes": [],
+  "notes": [
+    {
+      "id": "n1",
+      "theme": "a",
+      "cat": "AGENTIC",
+      "title": "Writing code is no longer the most optimal way to build software",
+      "date": "2025-08",
+      "stamp": "AUG 25",
+      "ageMonths": 12,
+      "teaser": "Changing the mental model of problem-solving came before changing the workflow."
+    },
+    {
+      "id": "n2",
+      "theme": "a",
+      "cat": "AGENTIC",
+      "title": "AI is not an adversary",
+      "date": "2026-08",
+      "stamp": "AUG 26",
+      "ageMonths": 0,
+      "teaser": "The pivotal role stays human. The machine works alongside it, not against it."
+    }
+  ],
   "farIdeas": [],
   "suggestions": [],
-  "particles": [],
+  "particles": [
+    {
+      "id": "p-0812-1",
+      "date": "2026-08-12",
+      "source": "claude",
+      "affinity": "d",
+      "energy": 0.7,
+      "title": "Breaking a spec into tasks — how do we verify the decomposition was optimal?"
+    },
+    {
+      "id": "p-0812-2",
+      "date": "2026-08-12",
+      "source": "claude",
+      "affinity": null,
+      "energy": 0.6,
+      "title": "Engineering tooling is changing, but the foundations are the same"
+    },
+    {
+      "id": "p-1201-1",
+      "date": "2025-12-01",
+      "source": "claude",
+      "affinity": null,
+      "energy": 0.6,
+      "title": "A great product is no product without a marketing foundation"
+    }
+  ],
   "history": [],
-  "memories": [],
+  "memories": [
+    {
+      "id": "m1",
+      "title": "The moment writing code stopped being the optimal path",
+      "date": "2025-08",
+      "stamp": "AUG 25",
+      "ageMonths": 12,
+      "note": "Realizing that writing code was no longer the most optimal way to build software. It started the change in my mental model of problem-solving and workflows."
+    },
+    {
+      "id": "m2",
+      "title": "Launching Gijima Endurance",
+      "date": "2025-12",
+      "stamp": "DEC 25",
+      "ageMonths": 8,
+      "note": "A great product is no product at all unless it has a strong marketing foundation. That is what the launch taught me."
+    }
+  ],
   "sky": {
     "comets": []
   }
