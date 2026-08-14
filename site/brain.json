@@ -16,10 +16,6 @@
       "name": "Agentic Workflows"
     },
     {
-      "id": "d",
-      "name": "Intelligent Decomposition"
-    },
-    {
       "id": "q",
       "name": "Experimentation"
     }
@@ -33,7 +29,9 @@
       "date": "2025-08",
       "stamp": "AUG 25",
       "ageMonths": 12,
-      "teaser": "Writing code is no longer the most optimal way to build software. The mental model had to change before the workflow could."
+      "teaser": "Writing code is no longer the most optimal way to build software. The mental model had to change before the workflow could.",
+      "meta": "AUG 25 · AGENTIC · FIELD NOTE",
+      "body": "The realization was not that the models got good. It was that writing code had stopped being the unit of work.\n\nFor most of my career the bottleneck was translation: I knew what should exist, and the job was rendering that intent into syntax a machine would accept. That translation step is the part that got cheap. What did not get cheap is deciding what should exist in the first place, and recognising when the thing you got back is subtly wrong.\n\nThe trap is adopting the tools without moving the model. If you keep treating code as the deliverable, you measure the wrong thing — how fast the lines appear — and you conclude it is roughly a wash, because for that metric it nearly is. The gain only shows up once you move up a level and start spending your attention on specification, constraint and verification instead.\n\nI do not think this makes engineering easier. It moves the difficulty to the part that was always harder and was previously hidden by the sheer labour of typing. Plenty of people were never especially good at that part. They are about to find out."
     },
     {
       "id": "n2",
@@ -43,7 +41,9 @@
       "date": "2026-08",
       "stamp": "AUG 26",
       "ageMonths": 0,
-      "teaser": "The pivotal role stays human. The machine works alongside it, not against it."
+      "teaser": "The pivotal role stays human. The machine works alongside it, not against it.",
+      "meta": "AUG 26 · AGENTIC · FIELD NOTE",
+      "body": "The adversarial framing is comfortable because it is a contest, and a contest has a scoreboard. Will it replace me. Can I catch it lying. Both questions feel rigorous and neither one produces a better system.\n\nThey also lead you to build the wrong guardrails. If you think of the model as an opponent, you write checks that inspect its output after the fact — reviewing, grading, catching. That is the most expensive place to intervene and the least reliable, because you are grading prose that was optimised to read well.\n\nThe alternative is to constrain the space it can act in at all. This site is the example I keep pointing at. The agent can propose a particle and nothing else; only I can grant one mass. That rule lives in the server, not in a prompt, so it is not a request the model can talk its way around. There is no adversary in that design. There is a division of labour, and the pivotal judgment stays on my side of it.\n\nI did a philosophy degree before any of this, which was four years of learning to distrust a claim that merely sounds right. It turns out to be the single most transferable skill I have."
     },
     {
       "id": "x1",
@@ -54,7 +54,9 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "Counts your running cadence by ear, in the browser. Onset detection and autocorrelation on the microphone — no audio is recorded or uploaded.",
-      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/cadence-ear/"
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/cadence-ear/",
+      "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
+      "body": "Spectral flux over the microphone marks each footstrike; autocorrelating that envelope gives you steps per minute. That is the whole measurement, and it works well enough on a treadmill and badly on a windy street.\n\nThe part I actually care about is the panel along the bottom. It draws the raw detection function the estimate is built from — the peaks it found, the ones it rejected — and the confidence arc fills in proportionally, so a weak lock visibly looks weak.\n\nThat was not a nice-to-have. I ran professionally for years and I know roughly what my cadence is, which means I am exactly the user who can catch this thing lying. Most people cannot. An instrument that reports a confident wrong number is worse than no instrument, because it launders a bad measurement into a decision. Showing the working is the cheapest honesty available.\n\nNo audio is recorded and none of it leaves the machine — the model is vendored into the page, so it keeps working with the network off.\n\nIt is the same argument as the one I make about agent output, arrived at from the opposite direction. I did not notice that until I had built both."
     },
     {
       "id": "x2",
@@ -65,7 +67,9 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "Gray-Scott reaction-diffusion running as WebGPU compute shaders. Two numbers decide whether you get coral, dividing cells, or nothing at all.",
-      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/reaction-diffusion/"
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/reaction-diffusion/",
+      "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
+      "body": "Gray-Scott, running as WebGPU compute shaders. One chemical is fed in at a steady rate, a second eats it and multiplies. The reaction is quadratic in that second chemical, which is the whole trick: it can only grow where it already is. Coral, mitosis, fingerprints and stripes all fall out of those two lines depending on two numbers.\n\nI built the Atlas view because I got tired of guessing those two numbers. It turns feed and kill into coordinates and renders the entire parameter space at once — and the first honest thing you notice is that almost all of it is dead. The band that produces anything at all is thin, and the band that produces something beautiful is thinner still.\n\nThat is the part I keep thinking about outside the shader. Most of the configuration space of any system is nothing. You do not find the live band by reasoning about it from first principles; you find it by sweeping and looking. I have watched a lot of engineering arguments that were really two people asserting different points in a space neither had sampled.\n\nThe grid is clamped at the edges rather than wrapped. Wrapping tiles more prettily, but it lets a pattern feed on its own reflection, which is a lie about what the rule does."
     },
     {
       "id": "x3",
@@ -76,7 +80,9 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "Half a million agents self-organising into transport networks, simulated on the GPU with WebGPU compute shaders.",
-      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/physarum/"
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/physarum/",
+      "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
+      "body": "Half a million agents. Each one sniffs three points ahead, turns toward the strongest trail, steps forward, and leaves a mark. The trail evaporates a little every frame. That is the entire rule, and it is about four lines of shader.\n\nNobody tells them to build a road network. The transport veins that appear — trunk routes, redundant loops, the way a severed path reroutes within a second — are simply what that loop settles into. There is no planner, no global view, and no representation of the network anywhere in the program. The structure is a residue.\n\nThe hard part was not the behaviour, it was the bookkeeping. Thousands of agents deposit into the same cell in the same step, so the trail is a buffer of fixed-point integers rather than a float texture, because integers are what you can atomically add to. Getting a beautiful emergent system to run at all is mostly an argument about memory contention.\n\nI find this one difficult to leave alone, because I spend my working life authoring decomposition trees for agents by hand, and here is a system that grows a better one out of local rules and decay. I do not yet know what the software version of a pheromone is. That is the interesting part."
     },
     {
       "id": "x4",
@@ -87,7 +93,9 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "Play a synthesiser with your hands. Vision and audio both run in the browser.",
-      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/hand-theremin/"
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/hand-theremin/",
+      "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
+      "body": "Hand landmarks from the webcam drive one Web Audio voice per hand. Horizontal position picks the note, pinching thumb to finger controls loudness, height opens the filter. Vision and synthesis both run in the browser; the camera feed never leaves the machine.\n\nThe design decision worth reporting is that the notes snap to a pentatonic scale. Every interval in that scale is consonant with every other, so it is genuinely difficult to produce something ugly. The first version was chromatic and therefore honest, and nobody played it for more than about ten seconds.\n\nI think that is the more useful finding. The freedom people say they want in an interface is very often the freedom to fail instantly and quit. Removing options made the instrument feel more expressive rather than less, because it moved the failure mode from wrong notes to boring phrases — and being boring is a problem you can hear yourself out of.\n\nThere is a version of this argument about agent tooling that I have not written down properly yet: most of the good guardrails are not restrictions on the model, they are restrictions on the space that make everything inside it work."
     },
     {
       "id": "x5",
@@ -98,7 +106,9 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "Dissolve yourself into a particle swarm. Pose tracking runs entirely in the browser.",
-      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/body-particles/"
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/body-particles/",
+      "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
+      "body": "Pose landmarks become attractors for a few thousand particles. Stand still and the swarm gradually resolves into your silhouette; move quickly and your limbs drag glowing streaks through the field before the particles catch up.\n\nThat lag is the point. Every tracker has latency, and most interfaces spend their effort hiding it — smoothing, predicting, holding the last known good pose so the illusion never breaks. Here the delay is the medium. The smear you see is the tracker's honest response time made visible, and it is a much better debugging instrument than a number in a corner would be, because you feel it rather than read it.\n\nPose estimation runs entirely on-device, with the model vendored into the page. Nothing you point the camera at is transmitted anywhere, which for something that renders your body seemed like the only defensible default.\n\nIt is also the experiment people actually enjoy, which I did not predict. The technically interesting ones are Physarum and the reaction-diffusion atlas. This is the one that makes someone wave their arms around and laugh, and I have stopped pretending that is not a real result."
     },
     {
       "id": "x6",
@@ -109,7 +119,9 @@
       "stamp": "AUG 26",
       "ageMonths": 0,
       "teaser": "A no-backend browser proof of concept for local running-form analysis.",
-      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/running-form/"
+      "url": "https://real-time-lab.justin-93c.workers.dev/experiments/running-form/",
+      "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
+      "body": "The original exhibit, and the reason the lab exists. Load a side-view running clip and it tracks a single runner across the whole video, segments the footage into strides, and measures knee drive, torso lean and hip oscillation. Everything happens on the machine; the video is never uploaded.\n\nThe pose model was the easy part — it is a solved thing you can download. The actual work was deciding which frames count. A runner crossing the frame and coming back is two captures, not one, so travel direction commits with hysteresis and only flips after the opposite sign persists; runs too short to hold enough strides are dropped rather than analysed into noise. Almost all of the difficulty in measurement is segmentation, and almost none of it is the measuring.\n\nThe metrics carry a comment in the source saying they are heuristic and unvalidated, with a checklist of what validating them would take. I ran professionally. I know precisely what an unvalidated gait number is worth to an athlete, which is nothing, and what it is worth to a coach selling a program, which is unfortunately quite a lot.\n\nSo it says so, in the code, where it cannot be quietly dropped from a marketing page. A measurement you have not validated is a hypothesis with a decimal point on it."
     }
   ],
   "farIdeas": [],
@@ -145,7 +157,7 @@
       "id": "p-0812-1",
       "date": "2026-08-12",
       "source": "claude",
-      "affinity": "d",
+      "affinity": null,
       "energy": 0.592,
       "title": "Is a spec-to-task decomposition optimal?",
       "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
