@@ -263,5 +263,13 @@
         "From this far out the self is small: a ring, a tide, and a hole you cannot see into. That is the honest scale of one person thinking."
       ]
     }
+  },
+  "lastRun": {
+    "at": "2026-08-13T23:50:40-06:00",
+    "decay": {
+      "cooled": 0,
+      "expired": 0
+    },
+    "chart": "ok"
   }
 }

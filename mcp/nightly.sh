@@ -25,7 +25,8 @@ command -v node >/dev/null || { echo "nightly: node not on PATH (nvm upgrade? re
 echo "--- nightly $(date '+%F %T') ---"
 
 # 1. entropy: cool the unpromoted, expire stale suggestions, refresh ages
-node server.mjs decay
+DECAY="$(node server.mjs decay)"
+echo "$DECAY"
 
 # 2. cartography: hand the accretion clusters + ledger to Claude; it may call
 #    brain_chart with at most two suggestions (guardrails enforced server-side).
@@ -36,9 +37,22 @@ node server.mjs decay
 #    matter — but it means you cannot dry-run the nightly against a copy by
 #    setting SITE_REPO. Steps 1 and 3 will use the copy; this step will still
 #    write to the live ledger. Re-register the server first, or expect the leak.
+CHART=skipped
 if command -v claude >/dev/null; then
-  claude -p "$(cat chart-prompt.md)" --allowedTools "mcp__brain__brain_state,mcp__brain__brain_chart" || true
+  # was `|| true`, which hid a failing cartographer behind exit 0. Recorded now.
+  if claude -p "$(cat chart-prompt.md)" --allowedTools "mcp__brain__brain_state,mcp__brain__brain_chart"; then
+    CHART=ok
+  else
+    CHART=failed
+    echo "nightly: chart step failed" >&2
+  fi
 fi
+
+# 2b. heartbeat: what the site shows to prove the job is still running. Because
+# this stamp always changes, step 3 now commits every night even when nothing
+# was cooled or charted — that is deliberate, an unchanged ledger is exactly the
+# case where you most want proof the job ran rather than silence.
+node server.mjs stamp "{\"at\":\"$(date -Iseconds)\",\"decay\":$DECAY,\"chart\":\"$CHART\"}"
 
 # 3. publish: the map re-renders from whatever this commit says is true
 cd "$SITE_REPO"

@@ -45,6 +45,8 @@
   <b style="display:block;color:#E8E4DC;font-weight:500;font-size:11px;margin-bottom:5px">JUSTIN YOUNG — FIELD NOTES</b>
   <!-- the role and org moved into the bio; this link stands in their place -->
   <button id="cap-bio" style="pointer-events:auto;background:none;border:0;border-bottom:1px solid #3A3A34;padding:0 0 2px;cursor:pointer;font-family:'IBM Plex Mono',monospace;letter-spacing:.16em;color:#8B8A80;font-size:10px">BIO <span style="color:#5C5B52">&#8599;</span></button>
+  <!-- filled from brain.lastRun; pointer-events for the hover detail -->
+  <div id="cap-run" style="pointer-events:auto;margin-top:7px;font-size:9px;letter-spacing:.14em;color:#5C5B52"></div>
 </div>
 <!-- max-width stops the hint growing into the centred scrubber: it wraps instead
      of colliding. 228px = half the scrubber (176) plus a 24px gap either side. -->
@@ -151,6 +153,19 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const BONE = 0xE8E4DC, GREEN = 0x82C566, GRAY = 0x8B8A80, ORANGE = 0xE08A3C;
 const brain = await (await fetch('./brain.json')).json();
+
+// ---------- nightly heartbeat ----------
+// nightly.sh stamps lastRun on every run, so the date going stale is itself the
+// alarm: the job died, or the Mac never woke. Amber past 36h (one missed night
+// plus slack for a late wake) or if the cartographer failed.
+if (brain.lastRun) {
+  const r = brain.lastRun, el = document.getElementById('cap-run');
+  const hours = (Date.now() - Date.parse(r.at)) / 36e5;
+  const day = new Date(r.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }).toUpperCase();
+  el.textContent = 'UPDATED ' + day + (r.chart === 'failed' ? ' · CHART FAILED' : '');
+  el.style.color = (hours > 36 || r.chart === 'failed') ? '#E08A3C' : '#5C5B52';
+  el.title = `nightly ${r.at}\ncooled ${r.decay?.cooled ?? 0} · expired ${r.decay?.expired ?? 0} · chart ${r.chart}`;
+}
 
 // ---------- renderer / camera / controls ----------
 const renderer = new THREE.WebGLRenderer({ antialias:true });

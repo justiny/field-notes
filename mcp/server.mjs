@@ -15,6 +15,9 @@ const reply = obj => ({ content: [{ type: 'text', text: JSON.stringify(obj, null
 const cmd = process.argv[2];
 if (cmd === 'decay') { console.log(JSON.stringify(withBrain(b => decay(b, today())))); process.exit(0); }
 if (cmd === 'chart') { console.log(JSON.stringify({ accretion: accretionClusters(loadBrain(BRAIN)) })); process.exit(0); }
+// Heartbeat the map renders. Written through saveBrain so the site never reads a
+// half-written ledger, same as every other mutation.
+if (cmd === 'stamp') { withBrain(b => { b.lastRun = JSON.parse(process.argv[3]); }); process.exit(0); }
 
 const server = new McpServer({ name: 'brain-mcp', version: '0.1.0' });
 
