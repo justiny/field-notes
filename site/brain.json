@@ -205,6 +205,76 @@
       "refs": [
         "n2"
       ]
+    },
+    {
+      "id": "p-0517-1",
+      "date": "2026-05-17",
+      "proposedOn": "2026-08-14",
+      "source": "github",
+      "title": "Copy described mechanics the code never implemented",
+      "affinity": null,
+      "energy": 0.7,
+      "claim": "Three surfaces described how scoring worked — verbatim weighted over paraphrase, partials counting for something — and none of it existed. The UI had been written from the intention rather than the implementation, and nobody had checked it back against the code.",
+      "refs": [
+        "p-0813-1"
+      ]
+    },
+    {
+      "id": "p-0804-1",
+      "date": "2026-08-04",
+      "proposedOn": "2026-08-14",
+      "source": "github",
+      "title": "Rate limits keyed before validation are free to mint",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "The limiter bucketed on the raw bearer header before anything had validated it, so one IP could invent tokens and mint unlimited fresh buckets. A guard that runs before identity is established is not a guard, it is decoration with a counter."
+    },
+    {
+      "id": "p-0808-1",
+      "date": "2026-08-08",
+      "proposedOn": "2026-08-14",
+      "source": "github",
+      "title": "Prefer the estimator a single missed event barely moves",
+      "affinity": "q",
+      "energy": 0.6,
+      "claim": "Cadence comes from autocorrelating the onset envelope rather than averaging the gaps between onsets: one missed footfall drags an inter-onset average a long way and barely moves a correlation peak. Robustness beat the more direct measurement.",
+      "refs": [
+        "x1"
+      ]
+    },
+    {
+      "id": "p-0812-4",
+      "date": "2026-08-12",
+      "proposedOn": "2026-08-14",
+      "source": "github",
+      "title": "What a system accepts decides what it is actually about",
+      "affinity": null,
+      "energy": 0.7,
+      "claim": "Ingest refused everything that was not a PDF, which quietly redefined the corpus as the subset of a teacher's material that happened to arrive as a PDF — not her voice memos, not photos of student work, not the things she typed herself."
+    },
+    {
+      "id": "p-0813-2",
+      "date": "2026-08-13",
+      "proposedOn": "2026-08-14",
+      "source": "github",
+      "title": "A draft that admits its guesses beats one reading as cited",
+      "affinity": "a",
+      "energy": 0.7,
+      "claim": "Every drafted item now marks itself sourced, assumed, or an open question, and the draft states the split up front. Eight items invites you to treat all eight as findings; naming how many were guessed tells you where to look first.",
+      "refs": [
+        "n2",
+        "p-0813-1"
+      ]
+    },
+    {
+      "id": "p-0813-3",
+      "date": "2026-08-13",
+      "proposedOn": "2026-08-14",
+      "source": "github",
+      "title": "Chrome that reports an absence is charged to everyone",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "A line reading SUB-AGENTS 0 is paid for by every session that never fanned out, in order to describe the absence of a thing. It renders nothing now. A lot of interface debt is elements that exist only to announce that a case does not apply."
     }
   ],
   "history": [],
