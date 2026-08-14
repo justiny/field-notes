@@ -22,8 +22,9 @@ A particle is a CLAIM or a TENSION, never an activity log.
 
 1. <= 6 proposals. If the day was thin, propose fewer. Zero is honest.
 2. `title` <= 90 chars, written as Justin writes: plain, wry, no hedging.
-3. `affinity`: assign a theme id ONLY if the particle clearly belongs
-   (orchestration=o, context=x, workflows=w, evals=e, experimentation=q).
+3. `affinity`: assign a theme id ONLY if the particle clearly belongs. Call
+   `brain_state` first and use the theme ids it returns — do not work from a
+   list memorised here, it goes stale the moment a theme is named or renamed.
    When unsure, use null. Dark is a respectable place to start.
 4. `energy`: 0.3 routine · 0.5 interesting · 0.7 kept coming back to it ·
    0.9 could not stop thinking about it. Be stingy above 0.7.

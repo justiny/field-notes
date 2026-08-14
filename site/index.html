@@ -90,6 +90,8 @@
       <div class="d">Raw claims, not yet promoted. Green ones are falling toward a theme; gray ones are unclaimed and may cool and drift out.</div>
       <div class="k"><span class="dot" style="background:#E08A3C"></span>MEMORIES</div>
       <div class="d">Inside the black horizon at the centre. Dive in to find them &mdash; they ignore time and they are not leaving.</div>
+      <div class="k"><span class="dot" style="background:#E08A3C"></span>UNCHARTED</div>
+      <div class="d">Orange, out past the particles. Territory the nightly cartographer reasoned its way toward from what is already here, and that I have not visited yet. <span style="color:#E8E4DC">Click one to read the case for going.</span></div>
       <div class="k"><span class="dot" style="background:#8B8A80;width:4px;height:4px;margin-left:1.5px;margin-right:9.5px"></span>STARS</div>
       <div class="d">Everything I haven&rsquo;t thought about yet. Click one to take a sighting off it and find out where this place actually is.</div>
       <div class="k">TIMELINE</div>
@@ -162,9 +164,11 @@ if (brain.lastRun) {
   const r = brain.lastRun, el = document.getElementById('cap-run');
   const hours = (Date.now() - Date.parse(r.at)) / 36e5;
   const day = new Date(r.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }).toUpperCase();
-  el.textContent = 'UPDATED ' + day + (r.chart === 'failed' ? ' · CHART FAILED' : '');
-  el.style.color = (hours > 36 || r.chart === 'failed') ? '#E08A3C' : '#5C5B52';
-  el.title = `nightly ${r.at}\ncooled ${r.decay?.cooled ?? 0} · expired ${r.decay?.expired ?? 0} · chart ${r.chart}`;
+  const failed = [['digest', r.digest], ['chart', r.chart]].filter(([, v]) => v === 'failed');
+  el.textContent = 'UPDATED ' + day + (failed.length ? ' · ' + failed.map(([k]) => k.toUpperCase()).join(' + ') + ' FAILED' : '');
+  el.style.color = (hours > 36 || failed.length) ? '#E08A3C' : '#5C5B52';
+  el.title = `nightly ${r.at}\ncooled ${r.decay?.cooled ?? 0} · expired ${r.decay?.expired ?? 0}`
+    + `\ndigest ${r.digest ?? 'n/a'} · chart ${r.chart}`;
 }
 
 // ---------- renderer / camera / controls ----------
@@ -192,10 +196,15 @@ let idleT = 0;
 // month 0 = AUG 2025; NOW = month 12 (day 366 on the slider)
 const EPOCH = new Date(2025, 7, 11);
 const bornM = d => { const [y,m] = d.split('-').map(Number); return (y-2025)*12 + (m-8); };
-let timeT = 12; // months
+// The scrubber's right-hand end is *now*, not a fixed twelve months. It used to
+// be the constant 12, which quietly meant anything born after 2026-08-12 failed
+// `born <= timeT` and never rendered — the map would have hidden every particle
+// captured from that day forward, getting emptier the longer it ran.
+const NOW_M = Math.max(12, (Date.now() - EPOCH) / (30.5*864e5));
+let timeT = NOW_M; // months
 const slider = document.getElementById('tslider'), tlabel = document.getElementById('tlabel');
 const setDay = day => {
-  timeT = day/366*12;
+  timeT = day/366*NOW_M;
   const now = day >= 366;
   if (now) { tlabel.textContent = 'NOW'; tlabel.style.color = '#8B8A80'; }
   else {
@@ -418,6 +427,28 @@ for (const p of brain.particles) {
   group.add(mesh); particles.push(mesh);
 }
 
+// ---------- charted: the cartographer's suggestions ----------
+// Territory reasoned toward but never visited, so it belongs in the dark with
+// the stars rather than in the nursery — but a charted star is one the
+// cartographer put a name to, so it burns orange and larger than the 1400 it
+// sits among. That contrast is the whole findability budget: no labels, because
+// labels need per-frame placement and these are meant to be come across.
+// Radius 2.9 puts them just beyond where the dark particles settle (0.85*3.1)
+// and still inside the default frame — 3.5 read as "correct" but sat off-screen
+// until you zoomed out, which is the same as not shipping them.
+const charted = [];
+(brain.suggestions || []).forEach((s, i) => {
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.028, 12, 9),
+    new THREE.MeshBasicMaterial({ color: ORANGE, transparent:true, opacity:0.62 }));
+  const a = rnd01(s.id, 'a')*Math.PI*2, y = (rnd01(s.id, 'y') - 0.5)*1.5;
+  mesh.position.set(Math.cos(a)*2.9, y, Math.sin(a)*2.9);
+  // synthesised so openEssay's `body` path renders it as a real read rather
+  // than the nursery's "essay pending" fallback — the prompt IS the essay here
+  const note = { id:'s-' + s.id, title:s.title, meta:'INFERRED ' + s.inferred + ' · UNCHARTED · CITES ' + s.relatedTo.join(', ').toUpperCase(), body:s.prompt };
+  mesh.userData = { kind:'charted', s, note, dive:0.9, born:bornP(s.inferred), ph:rnd01(s.id, 'h')*Math.PI*2, base:mesh.position.clone(), label:makeLabel('', 8.5) };
+  group.add(mesh); charted.push(mesh);
+});
+
 // ---------- dim law: reading in place ----------
 let dim = 1, dimTarget = 1, focused = null;
 let worldVis = 1;   // 0 once inside the horizon; picking reads it to ignore what it can't see
@@ -475,7 +506,7 @@ function pick(ev) {
   ptr.x = (ev.clientX/innerWidth)*2 - 1;
   ptr.y = -(ev.clientY/innerHeight)*2 + 1;
   ray.setFromCamera(ptr, camera);
-  const hits = ray.intersectObjects(themes.concat(notes.filter(n => n.visible), particles.filter(n => n.visible), memories.filter(n => n.visible), singularity.visible ? [singularity] : [], worldVis > 0.5 ? [stars] : []), false);
+  const hits = ray.intersectObjects(themes.concat(notes.filter(n => n.visible), particles.filter(n => n.visible), charted.filter(n => n.visible), memories.filter(n => n.visible), singularity.visible ? [singularity] : [], worldVis > 0.5 ? [stars] : []), false);
   // Stars sit at r>=4, so from a wide camera they lie between you and the map.
   // Anything real beats a star on the same ray, however close the star is.
   const h = hits.find(x => x.object !== stars) || hits[0];
@@ -586,7 +617,7 @@ renderer.domElement.addEventListener('click', ev => {
   if (focused) { closeEssay(); return; }
   const m = pick(ev);
   if (!m) { card.style.opacity = 0; card.style.pointerEvents = 'none'; return; }
-  if (m.userData.kind === 'note') { card.style.opacity = 0; openEssay(m); return; }
+  if (m.userData.kind === 'note' || m.userData.kind === 'charted') { card.style.opacity = 0; openEssay(m); return; }
   if (m.userData.kind === 'memory') {
     const mm2 = m.userData.mem;
     document.getElementById('card-t').textContent = 'MEMORY · ' + mm2.stamp;
@@ -776,6 +807,14 @@ const v = new THREE.Vector3();
     m.position.y += 0.05*Math.sin(t*0.4 + u.ph*2);
     m.material.opacity = (0.15 + 0.6*u.p.energy) * (u.hot ? 1.6 : 1) * dim * worldVis;
   }
+  // charted: a slow pulse so a named star reads as alive against the fixed field
+  for (const m of charted) {
+    const u = m.userData;
+    m.visible = u.born <= timeT;
+    if (!m.visible) continue;
+    m.position.y = u.base.y + 0.03*Math.sin(t*0.22 + u.ph);
+    m.material.opacity = (0.5 + 0.16*Math.sin(t*0.5 + u.ph)) * (u.hot ? 1.8 : 1) * dim * worldVis;
+  }
   // inside: captured memories drift; the tesseract turns through the 4th axis
   singularity.visible = rs > 0.01;
   if (singularity.visible) {
@@ -927,6 +966,24 @@ const v = new THREE.Vector3();
     c.lab.style.opacity = win ? c.op : 0;
     c.lab.style.color = c.m.userData.hot ? '#82C566' : rsGray;
     if (win) placed.push(r);
+  }
+  // charted labels: last to claim screen space, so they yield to themes and
+  // notes rather than overprinting the map's actual mass
+  for (const m of charted) {
+    const lab = m.userData.label;
+    if (!m.visible || focused) { lab.style.opacity = 0; continue; }
+    m.getWorldPosition(v);
+    const pr = v.clone().project(camera);
+    if (pr.z > 1) { lab.style.opacity = 0; continue; }
+    setLabel(lab, 'UNCHARTED<span style="color:#3A3A34"> · </span>' + m.userData.s.title.toUpperCase());
+    const x = (pr.x + 1)/2*innerWidth, y = (1 - pr.y)/2*innerHeight + 10;
+    const r = [x - lab._w/2 - 4, y - 2, x + lab._w/2 + 4, y + lab._h + 2];
+    const clash = placed.some(q => r[0] < q[2] && r[2] > q[0] && r[1] < q[3] && r[3] > q[1]);
+    lab.style.left = x + 'px';
+    lab.style.top = y + 'px';
+    lab.style.color = '#E08A3C';
+    lab.style.opacity = (m.userData.hot || !clash) ? (m.userData.hot ? 1 : 0.5) * dim * worldVis : 0;
+    if (m.userData.hot || !clash) placed.push(r);
   }
   // essay panel floats at the note's location
   if (focused) {

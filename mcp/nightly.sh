@@ -37,6 +37,29 @@ echo "$DECAY"
 #    matter — but it means you cannot dry-run the nightly against a copy by
 #    setting SITE_REPO. Steps 1 and 3 will use the copy; this step will still
 #    write to the live ledger. Re-register the server first, or expect the leak.
+# 1b. capture: the digest lane. Material is gathered here rather than by the
+# agent so the call needs no Bash permission and the input is reproducible.
+# DIGEST_REPOS is scanned one level deep for repos with commits since midnight.
+DIGEST_REPOS="${DIGEST_REPOS:-$HOME/Sites}"
+MATERIAL="$(for g in "$DIGEST_REPOS"/*/.git; do
+  r="$(dirname "$g")"
+  log="$(git -C "$r" log --since=midnight --pretty='%s' 2>/dev/null)" || true
+  [ -n "$log" ] && printf '## %s\n%s\n\n' "$(basename "$r")" "$log"
+done || true)"
+
+DIGEST=skipped
+if [ -n "$MATERIAL" ] && command -v claude >/dev/null; then
+  if claude -p "$(cat digest-prompt.md)
+
+## Today's material
+$MATERIAL" --allowedTools "mcp__brain__brain_state,mcp__brain__brain_propose"; then
+    DIGEST=ok
+  else
+    DIGEST=failed
+    echo "nightly: digest step failed" >&2
+  fi
+fi
+
 CHART=skipped
 if command -v claude >/dev/null; then
   # was `|| true`, which hid a failing cartographer behind exit 0. Recorded now.
@@ -52,7 +75,7 @@ fi
 # this stamp always changes, step 3 now commits every night even when nothing
 # was cooled or charted — that is deliberate, an unchanged ledger is exactly the
 # case where you most want proof the job ran rather than silence.
-node server.mjs stamp "{\"at\":\"$(date -Iseconds)\",\"decay\":$DECAY,\"chart\":\"$CHART\"}"
+node server.mjs stamp "{\"at\":\"$(date -Iseconds)\",\"decay\":$DECAY,\"digest\":\"$DIGEST\",\"chart\":\"$CHART\"}"
 
 # 3. publish: the map re-renders from whatever this commit says is true
 cd "$SITE_REPO"
