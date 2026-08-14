@@ -127,29 +127,26 @@
   "farIdeas": [],
   "suggestions": [
     {
-      "id": "gmssj3a740",
+      "id": "gmstg2api0",
       "inferred": "2026-08-14",
-      "title": "Orchestration without a spec: agents as slime mould",
+      "title": "The body as instrument",
       "relatedTo": [
-        "p-0812-1",
-        "x3",
-        "x2",
-        "n1"
-      ],
-      "prompt": "x3 (Physarum) and x2 (Reaction-Diffusion) are both systems that find good structure with no planner — local rules, gradients, decay. Yet p-0812-1 questions spec-to-task decomposition from inside the hierarchy, asking whether the tree is cut right rather than whether it should be a tree. n1 says writing code is no longer optimal but still assumes work arrives pre-divided. Unexplored: what does agent orchestration look like when the decomposition is grown rather than authored — agents laying and following pheromone on a shared artifact, weak paths decaying?"
-    },
-    {
-      "id": "gmssj3a741",
-      "inferred": "2026-08-14",
-      "title": "Proprioception for the codebase",
-      "relatedTo": [
-        "x6",
         "x1",
         "x4",
-        "n2",
-        "p-0813-1"
+        "x5",
+        "x6"
       ],
-      "prompt": "x6 (Running Form Lab), x1 (Cadence Ear) and x4 (Hand Theremin) share an unstated premise: the fastest way to improve something you do unconsciously is a tight sensor-to-felt-sense loop, not advice after the fact. But n2 and p-0813-1 frame AI collaboration entirely as reasoning and trust — judgment applied before and after, never a live signal during. Unexplored: the proprioceptive equivalent for engineering work — what would a tool feel like if it gave you gait feedback on your own codebase while you moved, rather than a review when you stopped?"
+      "prompt": "Four of six experiments — Cadence Ear (x1), Hand Theremin (x4), Body Particles (x5), Running Form Lab (x6) — use the moving body as the input device, but no note states the premise. What is the claim behind reaching for the body instead of the keyboard every time?"
+    },
+    {
+      "id": "gmstg2apj1",
+      "inferred": "2026-08-14",
+      "title": "When is admitting absence worth its cost?",
+      "relatedTo": [
+        "p-0813-2",
+        "p-0813-3"
+      ],
+      "prompt": "p-0813-2 says a draft that admits its guesses beats one reading as cited; p-0813-3 says chrome that reports an absence is charged to everyone. These pull opposite ways — honesty about what's missing is praised in prose and taxed in interfaces. Where is the line?"
     }
   ],
   "particles": [
@@ -158,7 +155,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.592,
+      "energy": 0.545,
       "title": "Is a spec-to-task decomposition optimal?",
       "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
     },
@@ -167,7 +164,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.508,
+      "energy": 0.467,
       "title": "Tooling changes, foundations do not",
       "claim": "Engineering tooling is changing, but the foundations are the same."
     },
@@ -176,7 +173,7 @@
       "date": "2025-12-01",
       "source": "claude",
       "affinity": null,
-      "energy": 0.508,
+      "energy": 0.467,
       "title": "No product without a marketing foundation",
       "claim": "A great product is no product at all unless it has a strong marketing foundation."
     },
@@ -187,7 +184,7 @@
       "source": "claude",
       "title": "Manual work persists in software",
       "affinity": null,
-      "energy": 0.423,
+      "energy": 0.389,
       "refs": [
         "p-0812-2"
       ],
@@ -200,7 +197,7 @@
       "source": "claude",
       "title": "Managing AI risk starts with human reasoning",
       "affinity": null,
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "Understanding how to manage AI risks first starts with understanding human reasoning.",
       "refs": [
         "n2"
@@ -213,7 +210,7 @@
       "source": "github",
       "title": "Copy described mechanics the code never implemented",
       "affinity": null,
-      "energy": 0.7,
+      "energy": 0.644,
       "claim": "Three surfaces described how scoring worked — verbatim weighted over paraphrase, partials counting for something — and none of it existed. The UI had been written from the intention rather than the implementation, and nobody had checked it back against the code.",
       "refs": [
         "p-0813-1"
@@ -226,7 +223,7 @@
       "source": "github",
       "title": "Rate limits keyed before validation are free to mint",
       "affinity": null,
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "The limiter bucketed on the raw bearer header before anything had validated it, so one IP could invent tokens and mint unlimited fresh buckets. A guard that runs before identity is established is not a guard, it is decoration with a counter."
     },
     {
@@ -236,7 +233,7 @@
       "source": "github",
       "title": "Prefer the estimator a single missed event barely moves",
       "affinity": "q",
-      "energy": 0.6,
+      "energy": 0.552,
       "claim": "Cadence comes from autocorrelating the onset envelope rather than averaging the gaps between onsets: one missed footfall drags an inter-onset average a long way and barely moves a correlation peak. Robustness beat the more direct measurement.",
       "refs": [
         "x1"
@@ -249,7 +246,7 @@
       "source": "github",
       "title": "What a system accepts decides what it is actually about",
       "affinity": null,
-      "energy": 0.7,
+      "energy": 0.644,
       "claim": "Ingest refused everything that was not a PDF, which quietly redefined the corpus as the subset of a teacher's material that happened to arrive as a PDF — not her voice memos, not photos of student work, not the things she typed herself."
     },
     {
@@ -259,7 +256,7 @@
       "source": "github",
       "title": "A draft that admits its guesses beats one reading as cited",
       "affinity": "a",
-      "energy": 0.7,
+      "energy": 0.644,
       "claim": "Every drafted item now marks itself sourced, assumed, or an open question, and the draft states the split up front. Eight items invites you to treat all eight as findings; naming how many were guessed tells you where to look first.",
       "refs": [
         "n2",
@@ -273,7 +270,7 @@
       "source": "github",
       "title": "Chrome that reports an absence is charged to everyone",
       "affinity": null,
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "A line reading SUB-AGENTS 0 is paid for by every session that never fanned out, in order to describe the absence of a thing. It renders nothing now. A lot of interface debt is elements that exist only to announce that a case does not apply."
     }
   ],
@@ -347,11 +344,12 @@
     }
   },
   "lastRun": {
-    "at": "2026-08-13T23:50:40-06:00",
+    "at": "2026-08-14T15:13:55-06:00",
     "decay": {
       "cooled": 0,
       "expired": 0
     },
+    "digest": "ok",
     "chart": "ok"
   }
 }
