@@ -445,7 +445,14 @@ const charted = [];
   // synthesised so openEssay's `body` path renders it as a real read rather
   // than the nursery's "essay pending" fallback — the prompt IS the essay here
   const note = { id:'s-' + s.id, title:s.title, meta:'INFERRED ' + s.inferred + ' · UNCHARTED · CITES ' + s.relatedTo.join(', ').toUpperCase(), body:s.prompt };
-  mesh.userData = { kind:'charted', s, note, dive:0.9, born:bornP(s.inferred), ph:rnd01(s.id, 'h')*Math.PI*2, base:mesh.position.clone(), label:makeLabel('', 8.5) };
+  // These titles are sentences, not the two or three words a note carries, so
+  // they get a ceiling and an ellipsis — the full text is one click away in the
+  // panel, and a 400px label anchored to a 3px dot points at nothing.
+  const lab = makeLabel('', 8.5);
+  lab.style.maxWidth = 'min(320px, 42vw)';
+  lab.style.overflow = 'hidden';
+  lab.style.textOverflow = 'ellipsis';
+  mesh.userData = { kind:'charted', s, note, dive:0.9, born:bornP(s.inferred), ph:rnd01(s.id, 'h')*Math.PI*2, base:mesh.position.clone(), label:lab };
   group.add(mesh); charted.push(mesh);
 });
 
@@ -976,7 +983,13 @@ const v = new THREE.Vector3();
     const pr = v.clone().project(camera);
     if (pr.z > 1) { lab.style.opacity = 0; continue; }
     setLabel(lab, 'UNCHARTED<span style="color:#3A3A34"> · </span>' + m.userData.s.title.toUpperCase());
-    const x = (pr.x + 1)/2*innerWidth, y = (1 - pr.y)/2*innerHeight + 10;
+    // Clamped into the viewport rather than left to run off it: the label is
+    // centred on its anchor, so one sitting near an edge loses half its text to
+    // the window. Nudging it inward keeps the whole line readable and still
+    // adjacent to the dot it names.
+    const half = lab._w/2 + 12;
+    const x = Math.min(Math.max((pr.x + 1)/2*innerWidth, half), innerWidth - half);
+    const y = Math.min((1 - pr.y)/2*innerHeight + 10, innerHeight - lab._h - 12);
     const r = [x - lab._w/2 - 4, y - 2, x + lab._w/2 + 4, y + lab._h + 2];
     const clash = placed.some(q => r[0] < q[2] && r[2] > q[0] && r[1] < q[3] && r[3] > q[1]);
     lab.style.left = x + 'px';
