@@ -115,25 +115,29 @@
   "farIdeas": [],
   "suggestions": [
     {
-      "id": "gmsr3nbx40",
-      "inferred": "2026-08-13",
-      "title": "What stays human on purpose",
+      "id": "gmssj3a740",
+      "inferred": "2026-08-14",
+      "title": "Orchestration without a spec: agents as slime mould",
       "relatedTo": [
-        "n1",
-        "n2",
-        "p-0812-3"
+        "p-0812-1",
+        "x3",
+        "x2",
+        "n1"
       ],
-      "prompt": "n1 says writing code is no longer optimal and n2 says AI is not an adversary, but p-0812-3 insists manual work persists in software. All three treat the remaining human work as leftover — the part not yet reached. Nothing on the map argues for work that should stay manual by choice rather than by limitation. A theory of the deliberate residue is unmapped."
+      "prompt": "x3 (Physarum) and x2 (Reaction-Diffusion) are both systems that find good structure with no planner — local rules, gradients, decay. Yet p-0812-1 questions spec-to-task decomposition from inside the hierarchy, asking whether the tree is cut right rather than whether it should be a tree. n1 says writing code is no longer optimal but still assumes work arrives pre-divided. Unexplored: what does agent orchestration look like when the decomposition is grown rather than authored — agents laying and following pheromone on a shared artifact, weak paths decaying?"
     },
     {
-      "id": "gmsr3nbx41",
-      "inferred": "2026-08-13",
-      "title": "Optimal measured against what?",
+      "id": "gmssj3a741",
+      "inferred": "2026-08-14",
+      "title": "Proprioception for the codebase",
       "relatedTo": [
-        "n1",
-        "p-0812-1"
+        "x6",
+        "x1",
+        "x4",
+        "n2",
+        "p-0813-1"
       ],
-      "prompt": "n1 claims code-writing is no longer optimal; p-0812-1 asks whether spec-to-task decomposition is optimal. Both are optimality claims with no stated metric, and the Experimentation theme currently holds no notes or particles. The map keeps asserting better without ever defining the measurement it would take to know."
+      "prompt": "x6 (Running Form Lab), x1 (Cadence Ear) and x4 (Hand Theremin) share an unstated premise: the fastest way to improve something you do unconsciously is a tight sensor-to-felt-sense loop, not advice after the fact. But n2 and p-0813-1 frame AI collaboration entirely as reasoning and trust — judgment applied before and after, never a live signal during. Unexplored: the proprioceptive equivalent for engineering work — what would a tool feel like if it gave you gait feedback on your own codebase while you moved, rather than a review when you stopped?"
     }
   ],
   "particles": [
@@ -142,7 +146,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": "d",
-      "energy": 0.644,
+      "energy": 0.592,
       "title": "Is a spec-to-task decomposition optimal?",
       "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
     },
@@ -151,7 +155,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.552,
+      "energy": 0.508,
       "title": "Tooling changes, foundations do not",
       "claim": "Engineering tooling is changing, but the foundations are the same."
     },
@@ -160,7 +164,7 @@
       "date": "2025-12-01",
       "source": "claude",
       "affinity": null,
-      "energy": 0.552,
+      "energy": 0.508,
       "title": "No product without a marketing foundation",
       "claim": "A great product is no product at all unless it has a strong marketing foundation."
     },
@@ -171,7 +175,7 @@
       "source": "claude",
       "title": "Manual work persists in software",
       "affinity": null,
-      "energy": 0.46,
+      "energy": 0.423,
       "refs": [
         "p-0812-2"
       ],
@@ -184,7 +188,7 @@
       "source": "claude",
       "title": "Managing AI risk starts with human reasoning",
       "affinity": null,
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "Understanding how to manage AI risks first starts with understanding human reasoning.",
       "refs": [
         "n2"
