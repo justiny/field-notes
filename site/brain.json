@@ -155,7 +155,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.545,
+      "energy": 0.501,
       "title": "Is a spec-to-task decomposition optimal?",
       "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
     },
@@ -164,7 +164,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.467,
+      "energy": 0.43,
       "title": "Tooling changes, foundations do not",
       "claim": "Engineering tooling is changing, but the foundations are the same."
     },
@@ -173,7 +173,7 @@
       "date": "2025-12-01",
       "source": "claude",
       "affinity": null,
-      "energy": 0.467,
+      "energy": 0.43,
       "title": "No product without a marketing foundation",
       "claim": "A great product is no product at all unless it has a strong marketing foundation."
     },
@@ -184,7 +184,7 @@
       "source": "claude",
       "title": "Manual work persists in software",
       "affinity": null,
-      "energy": 0.389,
+      "energy": 0.358,
       "refs": [
         "p-0812-2"
       ],
@@ -197,7 +197,7 @@
       "source": "claude",
       "title": "Managing AI risk starts with human reasoning",
       "affinity": null,
-      "energy": 0.423,
+      "energy": 0.389,
       "claim": "Understanding how to manage AI risks first starts with understanding human reasoning.",
       "refs": [
         "n2"
@@ -210,7 +210,7 @@
       "source": "github",
       "title": "Copy described mechanics the code never implemented",
       "affinity": null,
-      "energy": 0.644,
+      "energy": 0.592,
       "claim": "Three surfaces described how scoring worked — verbatim weighted over paraphrase, partials counting for something — and none of it existed. The UI had been written from the intention rather than the implementation, and nobody had checked it back against the code.",
       "refs": [
         "p-0813-1"
@@ -223,7 +223,7 @@
       "source": "github",
       "title": "Rate limits keyed before validation are free to mint",
       "affinity": null,
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "The limiter bucketed on the raw bearer header before anything had validated it, so one IP could invent tokens and mint unlimited fresh buckets. A guard that runs before identity is established is not a guard, it is decoration with a counter."
     },
     {
@@ -233,7 +233,7 @@
       "source": "github",
       "title": "Prefer the estimator a single missed event barely moves",
       "affinity": "q",
-      "energy": 0.552,
+      "energy": 0.508,
       "claim": "Cadence comes from autocorrelating the onset envelope rather than averaging the gaps between onsets: one missed footfall drags an inter-onset average a long way and barely moves a correlation peak. Robustness beat the more direct measurement.",
       "refs": [
         "x1"
@@ -246,7 +246,7 @@
       "source": "github",
       "title": "What a system accepts decides what it is actually about",
       "affinity": null,
-      "energy": 0.644,
+      "energy": 0.592,
       "claim": "Ingest refused everything that was not a PDF, which quietly redefined the corpus as the subset of a teacher's material that happened to arrive as a PDF — not her voice memos, not photos of student work, not the things she typed herself."
     },
     {
@@ -256,7 +256,7 @@
       "source": "github",
       "title": "A draft that admits its guesses beats one reading as cited",
       "affinity": "a",
-      "energy": 0.644,
+      "energy": 0.592,
       "claim": "Every drafted item now marks itself sourced, assumed, or an open question, and the draft states the split up front. Eight items invites you to treat all eight as findings; naming how many were guessed tells you where to look first.",
       "refs": [
         "n2",
@@ -270,8 +270,84 @@
       "source": "github",
       "title": "Chrome that reports an absence is charged to everyone",
       "affinity": null,
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "A line reading SUB-AGENTS 0 is paid for by every session that never fanned out, in order to describe the absence of a thing. It renders nothing now. A lot of interface debt is elements that exist only to announce that a case does not apply."
+    },
+    {
+      "id": "p-0814-1",
+      "date": "2026-08-14",
+      "proposedOn": "2026-08-15",
+      "source": "claude",
+      "title": "If failure is not visible, it is worthless",
+      "affinity": null,
+      "energy": 0.644,
+      "claim": "If failure is not visible, it is worthless — across the connector sweep the dominant failure mode was never an error but silent success: a green \"healthy\" card over a pipeline that structurally couldn't deliver.",
+      "refs": [
+        "p-0517-1",
+        "p-0813-2"
+      ]
+    },
+    {
+      "id": "p-0814-2",
+      "date": "2026-08-14",
+      "proposedOn": "2026-08-15",
+      "source": "claude",
+      "title": "Manual QA via Heatloop is gated by access, not expertise",
+      "affinity": "a",
+      "energy": 0.506,
+      "claim": "Manual-QA checklists are a validating Heatloop use case, but only for internal teams — environment access, not expertise, is the gating resource.",
+      "refs": [
+        "p-0812-3"
+      ]
+    },
+    {
+      "id": "p-0814-3",
+      "date": "2026-08-14",
+      "proposedOn": "2026-08-15",
+      "source": "github",
+      "title": "Two lanes into one ledger must write the same bytes",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "Manual sync and cron sync now do byte-identical writes. If two paths to the same record can disagree, one of them is lying and you will not find out which until it matters."
+    },
+    {
+      "id": "p-0814-4",
+      "date": "2026-08-14",
+      "proposedOn": "2026-08-15",
+      "source": "github",
+      "title": "Suggesting and doing are different verbs",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "Harvest sync feeds suggestions; Scan does the real work. Keep the lane that guesses separate from the lane that commits, so a bad guess costs a click and not a record.",
+      "refs": [
+        "p-0812-4"
+      ]
+    },
+    {
+      "id": "p-0814-5",
+      "date": "2026-08-14",
+      "proposedOn": "2026-08-15",
+      "source": "github",
+      "title": "Only a dead token gets to ask the human to reconnect",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "Transient refresh failures stopped flagging reauth; dead tokens surface as needs-reconnect, not stale. Telling transient from terminal is the whole job — cry wolf and the real reconnect gets ignored too.",
+      "refs": [
+        "p-0814-1"
+      ]
+    },
+    {
+      "id": "p-0814-6",
+      "date": "2026-08-14",
+      "proposedOn": "2026-08-15",
+      "source": "github",
+      "title": "\"Connected\" means verified, not saved",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "Trello now validates pasted credentials before saying connected; Google panels read the selected workspace, not the server default. A status label that reports what was stored rather than what was checked is copy the code never implemented.",
+      "refs": [
+        "p-0517-1"
+      ]
     }
   ],
   "history": [],
@@ -344,7 +420,7 @@
     }
   },
   "lastRun": {
-    "at": "2026-08-14T15:13:55-06:00",
+    "at": "2026-08-14T23:51:29-06:00",
     "decay": {
       "cooled": 0,
       "expired": 0
