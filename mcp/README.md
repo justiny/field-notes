@@ -56,7 +56,9 @@ after 14 days, note ages recomputed so orbits stay honest).
 - **Dedupe**: strong title overlap → merge (energy adds, refs union), not append.
 - **Quarantine**: uncertain `affinity` stays `null`. Agents may not invent themes.
 - **Accretion**: ≥ 3 mutually-similar dark particles → the server reports a
-  cluster; a human names the new theme (`brain_name_theme`) or rejects it.
+  cluster (and writes it to `brain.accretion` on every save, so the map draws
+  the members gathering); a human names the new theme (`brain_name_theme`) or
+  rejects it.
   Themes are read from `brain.json`, never hardcoded, so a newly named one is
   usable immediately.
 - **Provenance**: every particle keeps `source` + `date` forever.

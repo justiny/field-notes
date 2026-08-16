@@ -88,6 +88,8 @@
       <div class="d">Orbit the theme that produced them &mdash; close and fast when new, drifting wider and dimmer with age. <span style="color:#E8E4DC">Click one to read it.</span></div>
       <div class="k"><span class="dot" style="background:#5C5B52"></span>PARTICLES</div>
       <div class="d">Raw claims, not yet promoted. Green ones are falling toward a theme; gray ones are unclaimed and may cool and drift out.</div>
+      <div class="k"><span class="dot" style="background:#5C5B52;box-shadow:6px 0 0 #5C5B52,3px 5px 0 #5C5B52"></span>ACCRETION</div>
+      <div class="d">Gray particles gathering under a shared label: three or more unclaimed claims that resemble each other more than any theme. A theme wants to be born there &mdash; the map only shows the pull; naming it is mine to do.</div>
       <div class="k"><span class="dot" style="background:#E08A3C"></span>MEMORIES</div>
       <div class="d">Inside the black horizon at the centre. Dive in to find them &mdash; they ignore time and they are not leaving.</div>
       <div class="k"><span class="dot" style="background:#E08A3C"></span>UNCHARTED</div>
@@ -427,6 +429,35 @@ for (const p of brain.particles) {
   group.add(mesh); particles.push(mesh);
 }
 
+// ---------- accretion: dark particles that resemble each other more than any theme ----------
+// The server writes `accretion` on every save (lib/brain.js accretionClusters);
+// the map only shows the pull. Members share a well at the dark radius so they
+// visibly gather, hairlines join them, and one label names the count. Minting
+// the theme is brain_name_theme, human-only, in a session — never here.
+const clusters = [];
+for (const c of (brain.accretion || [])) {
+  const members = c.members.map(id => particles.find(m => m.userData.p.id === id)).filter(Boolean);
+  if (members.length < 2) continue;
+  // circular mean of the members' spawn bearings, so the well sits among them
+  let sx = 0, sz = 0, sy = 0;
+  for (const m of members) { const s = m.userData.spawn; sx += s.x; sz += s.z; sy += s.y; }
+  const ang = Math.atan2(sz, sx), R = 3.1*0.85;
+  const centre = new THREE.Vector3(Math.cos(ang)*R, sy/members.length, Math.sin(ang)*R);
+  members.forEach((m, i) => {
+    const o = i/members.length*Math.PI*2;   // fan out around the centre rather than stacking on it
+    m.userData.well = centre.clone().add(new THREE.Vector3(Math.cos(o)*0.09, (rnd01(m.userData.p.id,'c') - 0.5)*0.08, Math.sin(o)*0.09));
+    m.userData.cluster = c;
+  });
+  // ponytail: complete graph — n(n-1)/2 segments; a hub-and-spoke if clusters ever pass ~8
+  const pairs = [];
+  for (let i = 0; i < members.length; i++) for (let j = i + 1; j < members.length; j++) pairs.push([members[i], members[j]]);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pairs.length*6), 3));
+  const lines = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color:GRAY, transparent:true, opacity:0.22 }));
+  group.add(lines);
+  clusters.push({ c, members, pairs, lines, centre, label: makeLabel('', 8.5) });
+}
+
 // ---------- charted: the cartographer's suggestions ----------
 // Territory reasoned toward but never visited, so it belongs in the dark with
 // the stars rather than in the nursery — but a charted star is one the
@@ -653,10 +684,14 @@ renderer.domElement.addEventListener('click', ev => {
   }
   if (m.userData.kind === 'particle') {
     const p = m.userData.p;
-    document.getElementById('card-t').textContent = (m.userData.green ? 'PARTICLE · FALLING' : 'PARTICLE · DARK');
+    const cl = m.userData.cluster;
+    document.getElementById('card-t').textContent = (m.userData.green ? 'PARTICLE · FALLING' : cl ? 'PARTICLE · ACCRETING' : 'PARTICLE · DARK');
     document.getElementById('card-t').style.color = m.userData.green ? '#82C566' : '#8B8A80';
     // map label is a short headline; `claim` carries the full sentence
-    document.getElementById('card-b').textContent = '\u201C' + (p.claim || p.title) + '\u201D — proposed ' + p.date + ' from ' + p.source.toUpperCase() + ' · energy ' + p.energy + (m.userData.green ? ' · falling toward ' + brain.themes.find(t2 => t2.id === p.affinity).name.toUpperCase() + '. Promotion mints a note; neglect cools it.' : ' · unclaimed. No well has caught it yet — it may be a new theme forming, or it may cool and drift out.');
+    document.getElementById('card-b').textContent = '\u201C' + (p.claim || p.title) + '\u201D — proposed ' + p.date + ' from ' + p.source.toUpperCase() + ' · energy ' + p.energy
+      + (m.userData.green ? ' · falling toward ' + brain.themes.find(t2 => t2.id === p.affinity).name.toUpperCase() + '. Promotion mints a note; neglect cools it.'
+        : cl ? ' · gathering with ' + cl.titles.filter(tt => tt !== p.title).map(tt => '\u201C' + tt + '\u201D').join(', ') + '. These resemble each other more than any theme — a theme wants to be born here. Only I can name it, in a session; the map just shows the pull.'
+        : ' · unclaimed. No well has caught it yet — it may be a new theme forming, or it may cool and drift out.');
     card.style.opacity = 1; card.style.pointerEvents = 'auto';
     return;
   }
@@ -810,9 +845,22 @@ const v = new THREE.Vector3();
     m.visible = u.born <= timeT;
     if (!m.visible) continue;
     const prog = Math.min(0.92, u.p.energy*0.9 + 0.03*Math.sin(t*0.25 + u.ph));
-    m.position.lerpVectors(u.spawn, u.well, u.green ? prog : 0.3 + 0.1*Math.sin(t*0.12 + u.ph));
+    m.position.lerpVectors(u.spawn, u.well, u.green ? prog : u.cluster ? 0.9 + 0.03*Math.sin(t*0.12 + u.ph) : 0.3 + 0.1*Math.sin(t*0.12 + u.ph));
     m.position.y += 0.05*Math.sin(t*0.4 + u.ph*2);
     m.material.opacity = (0.15 + 0.6*u.p.energy) * (u.hot ? 1.6 : 1) * dim * worldVis;
+  }
+  // accretion hairlines ride the members; hidden with any member the scrubber has not yet born
+  for (const cl of clusters) {
+    const pos = cl.lines.geometry.attributes.position.array;
+    let all = true;
+    cl.pairs.forEach(([a, b], i) => {
+      all = all && a.visible && b.visible;
+      pos[i*6] = a.position.x; pos[i*6+1] = a.position.y; pos[i*6+2] = a.position.z;
+      pos[i*6+3] = b.position.x; pos[i*6+4] = b.position.y; pos[i*6+5] = b.position.z;
+    });
+    cl.lines.geometry.attributes.position.needsUpdate = true;
+    cl.lines.visible = all;
+    cl.lines.material.opacity = (cl.members.some(m => m.userData.hot) ? 0.5 : 0.22) * dim * worldVis;
   }
   // charted: a slow pulse so a named star reads as alive against the fixed field
   for (const m of charted) {
@@ -997,6 +1045,26 @@ const v = new THREE.Vector3();
     lab.style.color = '#E08A3C';
     lab.style.opacity = (m.userData.hot || !clash) ? (m.userData.hot ? 1 : 0.5) * dim * worldVis : 0;
     if (m.userData.hot || !clash) placed.push(r);
+  }
+  // accretion labels: gray, at the cluster's centre, yielding like the charted ones
+  for (const cl of clusters) {
+    const lab = cl.label;
+    if (!cl.lines.visible || focused) { lab.style.opacity = 0; continue; }
+    v.copy(cl.centre).applyMatrix4(group.matrixWorld);
+    const pr = v.clone().project(camera);
+    if (pr.z > 1) { lab.style.opacity = 0; continue; }
+    setLabel(lab, 'ACCRETING<span style="color:#3A3A34"> · </span>' + cl.members.length);
+    const half = lab._w/2 + 12;
+    const x = Math.min(Math.max((pr.x + 1)/2*innerWidth, half), innerWidth - half);
+    const y = Math.min((1 - pr.y)/2*innerHeight + 12, innerHeight - lab._h - 12);
+    const r = [x - lab._w/2 - 4, y - 2, x + lab._w/2 + 4, y + lab._h + 2];
+    const clash = placed.some(q => r[0] < q[2] && r[2] > q[0] && r[1] < q[3] && r[3] > q[1]);
+    const hotC = cl.members.some(m => m.userData.hot);
+    lab.style.left = x + 'px';
+    lab.style.top = y + 'px';
+    lab.style.color = rsGray;
+    lab.style.opacity = (hotC || !clash) ? (hotC ? 1 : 0.6) * dim * worldVis : 0;
+    if (hotC || !clash) placed.push(r);
   }
   // essay panel floats at the note's location
   if (focused) {

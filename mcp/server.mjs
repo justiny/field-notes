@@ -7,8 +7,13 @@ import { z } from 'zod';
 import { loadBrain, saveBrain, propose, promote, decay, remember, chart, accretionClusters, nameTheme, themesOf } from './lib/brain.js';
 
 const BRAIN = process.env.BRAIN_JSON || new URL('../brain.json', import.meta.url).pathname;
-const today = () => new Date().toISOString().slice(0, 10);
-const withBrain = fn => { const b = loadBrain(BRAIN); const out = fn(b); saveBrain(BRAIN, b); return out; };
+// Local calendar date, not UTC: the rate limit keys off this, and the nightly
+// runs at 23:50 local. In UTC that landed on the *next* day together with any
+// evening proposals, spending a morning's six before it began.
+const today = () => new Date().toLocaleDateString('en-CA');
+// Every write refreshes `accretion` in the ledger: the map is a pure function of
+// brain.json, so the clusters the server can see must be in the file to render.
+const withBrain = fn => { const b = loadBrain(BRAIN); const out = fn(b); b.accretion = accretionClusters(b); saveBrain(BRAIN, b); return out; };
 const reply = obj => ({ content: [{ type: 'text', text: JSON.stringify(obj, null, 2) }] });
 
 // -- maintenance CLI (cron path, no MCP handshake) --
