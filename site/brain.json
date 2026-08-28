@@ -127,32 +127,32 @@
   "farIdeas": [],
   "suggestions": [
     {
-      "id": "gmtb3u22m0",
-      "inferred": "2026-08-26",
-      "title": "When does propose become do?",
+      "id": "gmtcjaudm0",
+      "inferred": "2026-08-27",
+      "title": "Emergence as the coordination model: slime mold, not org chart",
       "relatedTo": [
-        "p-0814-4",
-        "p-0826-3",
-        "p-0824-4",
-        "p-0821-1",
-        "p-0826-1",
-        "p-0826-2"
+        "x3",
+        "x2",
+        "x5",
+        "p-0820-1",
+        "p-0820-2",
+        "p-0821-1"
       ],
-      "prompt": "Six particles hold the same line: the agent drafts, the human launches (p-0814-4 'Suggesting and doing are different verbs', p-0826-3 'Dispatch drafts; it never launches', p-0824-4 'A starter week is a proposal, not a write', p-0821-1 'Deterministic acts stay out of the model's net'). Meanwhile p-0826-1 and p-0826-2 build the machinery for labeling how proven a thing is. Nothing on the map says what the label has to read before the launch verb transfers. The boundary is asserted everywhere and its transfer condition is stated nowhere — that is the unexplored region."
+      "prompt": "The Experimentation notes keep reaching for self-organizing physical systems — Physarum (x3), Reaction–Diffusion (x2), Body Particles (x5): local rules, no controller, global pattern. Meanwhile the Agentic particles describe multi-agent structure in top-down terms — agents hiring agents (p-0820-1), discussions branching and merging like code (p-0820-2), deterministic acts fenced off from the model (p-0821-1). Nothing on the map asks whether agent coordination should be designed the way the experiments are: cheap local rules, gradients, and let the path emerge. The gravity map itself (energy, mass, accretion) is already this metaphor applied to ideas; it has not been applied to the agents. Is the org-chart model of agents (hire, dispatch, report) a stopgap the Physarum work is quietly arguing against?"
     },
     {
-      "id": "gmtb3u22m1",
-      "inferred": "2026-08-26",
-      "title": "Coaching a body and coaching an agent is one instrument problem",
+      "id": "gmtcjaudm1",
+      "inferred": "2026-08-27",
+      "title": "The human's grant of mass is the one verdict nobody derives",
       "relatedTo": [
-        "x1",
-        "x6",
-        "p-0818-1",
-        "p-0818-2",
-        "p-0822-3",
-        "p-0815-1"
+        "p-0827-1",
+        "p-0826-1",
+        "p-0827-3",
+        "p-0826-3",
+        "p-0814-4",
+        "p-0824-5"
       ],
-      "prompt": "The Experimentation notes (x1 Cadence Ear, x6 Running Form Lab) instrument a runner; the q-affinity particles instrument a spec pipeline (p-0815-1 'grade the shaper's beliefs', p-0822-3 'one decomp-eval is an anecdote; the cross-spec tally is data'). The same two rules appear in both: p-0818-1 'prove the instrument sees same before it claims changed' and p-0818-2 'record first, fix estimators later'. The two themes share an unstated premise — feedback on a process is only as good as the estimator's honesty about noise — and no note bridges them. The bridge is the continent."
+      "prompt": "p-0827-1 says a verdict is derived from evidence, never declared; p-0826-1 says it names its epistemic status; p-0827-3 says an override without rationale is a decision, not accepted risk. Every one of these is aimed at the agent side of the line. The other side — dispatch drafts, it never launches (p-0826-3); suggesting and doing are different verbs (p-0814-4); the human alone promotes and remembers — is treated as the trusted terminus. But promotion is exactly a declared verdict with no cited evidence, and p-0824-5 (removing a tool is a decision; write it down) already admits human decisions need a paper trail. The probes keep asking what makes a verdict legitimate; no note answers it for the human's own. What would it mean for the human's grant of mass to carry the same epistemic label the agent's draft is required to carry?"
     }
   ],
   "particles": [
@@ -161,7 +161,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.17,
+      "energy": 0.156,
       "title": "Is a spec-to-task decomposition optimal?",
       "claim": "Breaking a spec into a set of tasks — how do we verify that this decomposition was optimal?"
     },
@@ -170,7 +170,7 @@
       "date": "2026-08-12",
       "source": "claude",
       "affinity": null,
-      "energy": 0.144,
+      "energy": 0.132,
       "title": "Tooling changes, foundations do not",
       "claim": "Engineering tooling is changing, but the foundations are the same."
     },
@@ -179,7 +179,7 @@
       "date": "2025-12-01",
       "source": "claude",
       "affinity": null,
-      "energy": 0.144,
+      "energy": 0.132,
       "title": "No product without a marketing foundation",
       "claim": "A great product is no product at all unless it has a strong marketing foundation."
     },
@@ -190,7 +190,7 @@
       "source": "claude",
       "title": "Manual work persists in software",
       "affinity": null,
-      "energy": 0.121,
+      "energy": 0.111,
       "refs": [
         "p-0812-2"
       ],
@@ -203,7 +203,7 @@
       "source": "claude",
       "title": "Managing AI risk starts with human reasoning",
       "affinity": null,
-      "energy": 0.132,
+      "energy": 0.121,
       "claim": "Understanding how to manage AI risks first starts with understanding human reasoning.",
       "refs": [
         "n2"
@@ -216,7 +216,7 @@
       "source": "github",
       "title": "Copy described mechanics the code never implemented",
       "affinity": null,
-      "energy": 0.201,
+      "energy": 0.185,
       "claim": "Three surfaces described how scoring worked — verbatim weighted over paraphrase, partials counting for something — and none of it existed. The UI had been written from the intention rather than the implementation, and nobody had checked it back against the code.",
       "refs": [
         "p-0813-1"
@@ -229,7 +229,7 @@
       "source": "github",
       "title": "Rate limits keyed before validation are free to mint",
       "affinity": null,
-      "energy": 0.143,
+      "energy": 0.132,
       "claim": "The limiter bucketed on the raw bearer header before anything had validated it, so one IP could invent tokens and mint unlimited fresh buckets. A guard that runs before identity is established is not a guard, it is decoration with a counter."
     },
     {
@@ -239,7 +239,7 @@
       "source": "github",
       "title": "Prefer the estimator a single missed event barely moves",
       "affinity": "q",
-      "energy": 0.171,
+      "energy": 0.157,
       "claim": "Cadence comes from autocorrelating the onset envelope rather than averaging the gaps between onsets: one missed footfall drags an inter-onset average a long way and barely moves a correlation peak. Robustness beat the more direct measurement.",
       "refs": [
         "x1"
@@ -252,7 +252,7 @@
       "source": "github",
       "title": "What a system accepts decides what it is actually about",
       "affinity": null,
-      "energy": 0.201,
+      "energy": 0.185,
       "claim": "Ingest refused everything that was not a PDF, which quietly redefined the corpus as the subset of a teacher's material that happened to arrive as a PDF — not her voice memos, not photos of student work, not the things she typed herself."
     },
     {
@@ -262,7 +262,7 @@
       "source": "github",
       "title": "A draft that admits its guesses beats one reading as cited",
       "affinity": "a",
-      "energy": 0.201,
+      "energy": 0.185,
       "claim": "Every drafted item now marks itself sourced, assumed, or an open question, and the draft states the split up front. Eight items invites you to treat all eight as findings; naming how many were guessed tells you where to look first.",
       "refs": [
         "n2",
@@ -276,7 +276,7 @@
       "source": "github",
       "title": "Chrome that reports an absence is charged to everyone",
       "affinity": null,
-      "energy": 0.143,
+      "energy": 0.132,
       "claim": "A line reading SUB-AGENTS 0 is paid for by every session that never fanned out, in order to describe the absence of a thing. It renders nothing now. A lot of interface debt is elements that exist only to announce that a case does not apply."
     },
     {
@@ -286,7 +286,7 @@
       "source": "claude",
       "title": "If failure is not visible, it is worthless",
       "affinity": null,
-      "energy": 0.218,
+      "energy": 0.201,
       "claim": "If failure is not visible, it is worthless — across the connector sweep the dominant failure mode was never an error but silent success: a green \"healthy\" card over a pipeline that structurally couldn't deliver.",
       "refs": [
         "p-0517-1",
@@ -300,7 +300,7 @@
       "source": "claude",
       "title": "Manual QA via Heatloop is gated by access, not expertise",
       "affinity": "a",
-      "energy": 0.17,
+      "energy": 0.156,
       "claim": "Manual-QA checklists are a validating Heatloop use case, but only for internal teams — environment access, not expertise, is the gating resource.",
       "refs": [
         "p-0812-3"
@@ -313,7 +313,7 @@
       "source": "github",
       "title": "Two lanes into one ledger must write the same bytes",
       "affinity": null,
-      "energy": 0.169,
+      "energy": 0.155,
       "claim": "Manual sync and cron sync now do byte-identical writes. If two paths to the same record can disagree, one of them is lying and you will not find out which until it matters."
     },
     {
@@ -323,7 +323,7 @@
       "source": "github",
       "title": "Suggesting and doing are different verbs",
       "affinity": null,
-      "energy": 0.169,
+      "energy": 0.155,
       "claim": "Harvest sync feeds suggestions; Scan does the real work. Keep the lane that guesses separate from the lane that commits, so a bad guess costs a click and not a record.",
       "refs": [
         "p-0812-4"
@@ -336,7 +336,7 @@
       "source": "github",
       "title": "Only a dead token gets to ask the human to reconnect",
       "affinity": null,
-      "energy": 0.169,
+      "energy": 0.155,
       "claim": "Transient refresh failures stopped flagging reauth; dead tokens surface as needs-reconnect, not stale. Telling transient from terminal is the whole job — cry wolf and the real reconnect gets ignored too.",
       "refs": [
         "p-0814-1"
@@ -349,7 +349,7 @@
       "source": "github",
       "title": "\"Connected\" means verified, not saved",
       "affinity": null,
-      "energy": 0.169,
+      "energy": 0.155,
       "claim": "Trello now validates pasted credentials before saying connected; Google panels read the selected workspace, not the server default. A status label that reports what was stored rather than what was checked is copy the code never implemented.",
       "refs": [
         "p-0517-1"
@@ -362,7 +362,7 @@
       "source": "claude",
       "title": "Decomp-eval: grade the shaper's beliefs, not the spec",
       "affinity": "q",
-      "energy": 0.202,
+      "energy": 0.186,
       "claim": "decomp-eval: you can't benchmark a \"correct\" decomposition, but you can record what the shaper believed (preconditions, task count, risk, confidence) at shape time and grade which beliefs survived contact with reality — the miss taxonomy is what makes MM shape better.",
       "refs": [
         "p-0812-1",
@@ -376,7 +376,7 @@
       "source": "claude",
       "title": "\"Works\" is absolute; \"better\" needs a sibling",
       "affinity": null,
-      "energy": 0.185,
+      "energy": 0.17,
       "claim": "A verify verdict tells you a spec works. It can never tell you it was the better decomposition — \"better\" needs a sibling to compare against; the cheap sibling is a hindsight line, the honest one is a rare paired-worktree run of two shapings.",
       "refs": [
         "p-0815-1",
@@ -390,7 +390,7 @@
       "source": "github",
       "title": "Tile state is a capability, not a literal",
       "affinity": null,
-      "energy": 0.184,
+      "energy": 0.169,
       "claim": "The Overview stopped hardcoding what each tile says; a tile's state is what the team can actually do, read from real projections, and a degraded state is a primitive, not an apology string.",
       "refs": [
         "p-0517-1",
@@ -404,7 +404,7 @@
       "source": "github",
       "title": "Loading isn't emptiness",
       "affinity": null,
-      "energy": 0.184,
+      "energy": 0.169,
       "claim": "A rail that shows \"nothing here\" while it is still fetching is lying twice: it reports an absence it hasn't confirmed, and it charges the wait to the user as a verdict.",
       "refs": [
         "p-0813-3",
@@ -418,7 +418,7 @@
       "source": "github",
       "title": "Titles collide; key on the alias",
       "affinity": null,
-      "energy": 0.148,
+      "energy": 0.136,
       "claim": "Two work items can share a title and mean different things; a manual link keyed on the title silently points at whichever one won. Identity is the alias, and the search has to disambiguate before the human clicks.",
       "refs": [
         "p-0814-3"
@@ -431,7 +431,7 @@
       "source": "github",
       "title": "One lane owner, both lanes running",
       "affinity": null,
-      "energy": 0.148,
+      "energy": 0.136,
       "claim": "Two sync lanes can both run, but only one may own the ledger; the guard is against orphaning, not against concurrency. Say what degraded costs instead of crying wolf.",
       "refs": [
         "p-0814-3",
@@ -445,7 +445,7 @@
       "source": "claude",
       "title": "Owning the frame outlasts owning the lane",
       "affinity": null,
-      "energy": 0.26,
+      "energy": 0.239,
       "claim": "When roles get redrawn late, ownership of a design lane can be reassigned in a Slack message; ownership of the frame everyone's work has to fit inside can't — the architecture is the design decision that persists.",
       "refs": [
         "p-0815-6"
@@ -458,7 +458,7 @@
       "source": "claude",
       "title": "Prove the instrument sees \"same\" before it claims \"changed\"",
       "affinity": "q",
-      "energy": 0.33,
+      "energy": 0.304,
       "claim": "Before asking whether Running Lab can detect an athlete changing, prove that it can detect an athlete staying the same. Test-retest noise is measured first; every longitudinal claim is gated on it.",
       "refs": [
         "x6",
@@ -472,7 +472,7 @@
       "source": "claude",
       "title": "Record first, fix estimators later",
       "affinity": "q",
-      "energy": 0.236,
+      "energy": 0.217,
       "claim": "Retained per-frame landmarks and source video make the analysis pipeline re-runnable, so only the recording protocol has to be right before collecting data; every estimator can be improved afterwards without invalidating the dataset.",
       "refs": [
         "x6",
@@ -486,7 +486,7 @@
       "source": "github",
       "title": "The loading state is the layout",
       "affinity": null,
-      "energy": 0.279,
+      "energy": 0.257,
       "claim": "Four shimmer slots render up front at the real card's anatomy, and each finished widget fills its slot in place — so the filled card lands on the same bones the viewer watched assemble.",
       "refs": [
         "p-0815-4",
@@ -500,7 +500,7 @@
       "source": "github",
       "title": "Patch, don't repaint: settled cards keep their DOM",
       "affinity": null,
-      "energy": 0.279,
+      "energy": 0.257,
       "claim": "The streaming paint renders the shell once; settled widgets keep their DOM and only the widget being written swaps — no shimmer restarts, no grid reflow every tick.",
       "refs": [
         "p-0819-1"
@@ -513,7 +513,7 @@
       "source": "github",
       "title": "Cards land once, complete; the shimmer carries progress",
       "affinity": null,
-      "energy": 0.279,
+      "energy": 0.257,
       "claim": "Hold back the still-streaming widget — cards land once, complete, instead of flickering through partial states; the trailing shimmer is the in-progress signal.",
       "refs": [
         "p-0819-2",
@@ -527,7 +527,7 @@
       "source": "github",
       "title": "Streaming and strict schemas don't mix; repair instead",
       "affinity": "a",
-      "energy": 0.335,
+      "energy": 0.308,
       "claim": "The API rejects our json_schema when stream: true ('Schema is too complex', or a hung 524). The output shape now rides in the system prompt and the client's final parse falls back to a repair parser that cuts at the balanced brace.",
       "refs": [
         "p-0813-2"
@@ -540,7 +540,7 @@
       "source": "github",
       "title": "A stream must prove it's alive before it says anything",
       "affinity": null,
-      "energy": 0.279,
+      "energy": 0.257,
       "claim": "Edge buffering eats quiet streams: send an immediate ready ping, identity encoding, a 2KB padding preamble — and let the timeout guard silence, not total time, so the toast can name where the silence was.",
       "refs": [
         "p-0814-1"
@@ -553,7 +553,7 @@
       "source": "github",
       "title": "Demo-safe: drop the option that always fails",
       "affinity": null,
-      "energy": 0.167,
+      "energy": 0.154,
       "claim": "The 'fast' model option always 429s for this org, so it's gone — and raw provider errors never reach the chrome; upstream failures get short friendly copy, capped at 90 chars.",
       "refs": [
         "p-0813-3",
@@ -567,7 +567,7 @@
       "source": "claude",
       "title": "Agents should be able to hire other agents",
       "affinity": "a",
-      "energy": 0.303,
+      "energy": 0.279,
       "claim": "Agents should eventually be able to hire other agents.",
       "refs": [
         "n1"
@@ -580,7 +580,7 @@
       "source": "claude",
       "title": "Discussions should branch and merge like code",
       "affinity": "a",
-      "energy": 0.364,
+      "energy": 0.335,
       "claim": "Investigating one section of a spec should be a branched side-discussion — captured, actionable, non-disruptive — with the chance to merge its conclusion back into the main flow.",
       "refs": [
         "p-0820-1"
@@ -593,7 +593,7 @@
       "source": "github",
       "title": "Deterministic acts stay out of the model's net",
       "affinity": "a",
-      "energy": 0.358,
+      "energy": 0.329,
       "claim": "Pin and say are the bar's own deterministic acts — they land widgets — so they stay out of the live-AI net; with Live AI on, Pin had fallen into it and stopped assembling a view.",
       "refs": [
         "p-0814-4"
@@ -606,7 +606,7 @@
       "source": "github",
       "title": "An answer is not a page; it lands as a widget and stays",
       "affinity": null,
-      "energy": 0.358,
+      "energy": 0.329,
       "claim": "An answer is not a page and not a strip under the bar — it lands as a widget on the view you are on, where it stays; widgets are data keyed to a view, since the stage repaints on every move.",
       "refs": [
         "p-0819-2"
@@ -619,7 +619,7 @@
       "source": "github",
       "title": "Rename the surface, keep the id",
       "affinity": null,
-      "energy": 0.287,
+      "energy": 0.264,
       "claim": "Lenses became views and Shipments became Tracking, but the internal ids stay (my-lenses.js, lens=shipments) so old links keep working — the word users see and the key the code uses are different things.",
       "refs": [
         "p-0815-5"
@@ -632,7 +632,7 @@
       "source": "github",
       "title": "A live example, not a caption",
       "affinity": null,
-      "energy": 0.287,
+      "energy": 0.264,
       "claim": "The demo view stops explaining itself: the answer speaks to Colette about shipping coffee instead of narrating what UPS did and offering to be removed. Show the thing working on a real problem; don't annotate it.",
       "refs": [
         "p-0813-3"
@@ -645,7 +645,7 @@
       "source": "github",
       "title": "Fewer modes: the dispatcher lost CODE/PLAN",
       "affinity": "a",
-      "energy": 0.215,
+      "energy": 0.198,
       "claim": "Removed the CODE/PLAN dispatch mode from Monday Morning — one less switch for the human to set before the agent decides what the work actually is.",
       "refs": [
         "p-0812-1"
@@ -658,7 +658,7 @@
       "source": "github",
       "title": "Done work folds; it doesn't vanish",
       "affinity": null,
-      "energy": 0.389,
+      "energy": 0.358,
       "claim": "Finished specs, settled phases, shipped milestones all collapse into a Done foot with a count — still there, still countable, just out of the way of the live work.",
       "refs": [
         "p-0819-2"
@@ -671,7 +671,7 @@
       "source": "github",
       "title": "Verbs draw on hover; counts explain themselves on hover",
       "affinity": null,
-      "energy": 0.234,
+      "energy": 0.215,
       "claim": "Row actions stay invisible until focus or hover, and a bare count carries its own explanation in the tooltip — chrome earns its pixels only when someone reaches for it.",
       "refs": [
         "p-0813-3"
@@ -684,7 +684,7 @@
       "source": "github",
       "title": "One decomp-eval is an anecdote; the cross-spec tally is data",
       "affinity": "q",
-      "energy": 0.389,
+      "energy": 0.358,
       "claim": "A single spec's decomposition eval tells you about that spec. Only the tally across specs tells you whether the shaper's beliefs are systematically off.",
       "refs": [
         "p-0815-1",
@@ -698,7 +698,7 @@
       "source": "github",
       "title": "Shrink the block, keep the vocabulary",
       "affinity": "q",
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "The recheck block got smaller but predicted:/preconditions: stayed — the guard test pins the words because the frozen-predicted rule is load-bearing, not decoration.",
       "refs": [
         "p-0815-1",
@@ -712,7 +712,7 @@
       "source": "github",
       "title": "Preconditions expire when upstream lands; recheck them",
       "affinity": "a",
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "A dependent spec's preconditions were true when written; the moment its parent completes they are guesses again. Completion should trigger a recheck of every dependent, not a green light.",
       "refs": [
         "p-0815-1",
@@ -726,7 +726,7 @@
       "source": "github",
       "title": "In the storm, suggestions stand down",
       "affinity": null,
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "When things are going wrong the catalog stops selling: the three gold suggestions stand down, the verdict reassures, the band says holding. Upsell has a weather condition.",
       "refs": [
         "p-0821-2",
@@ -740,7 +740,7 @@
       "source": "github",
       "title": "A starter week is a proposal, not a write",
       "affinity": null,
-      "energy": 0.276,
+      "energy": 0.254,
       "claim": "Four starter weeks are offered and previewed before any is added — the system suggests a plan; the human commits it.",
       "refs": [
         "p-0814-4"
@@ -753,7 +753,7 @@
       "source": "github",
       "title": "Removing a tool is a decision; write it down",
       "affinity": null,
-      "energy": 0.276,
+      "energy": 0.254,
       "claim": "Serena came out by choice, and the choice went into CLAUDE.md so the next session doesn't reinstall it as a fix.",
       "refs": [
         "p-0812-2"
@@ -766,7 +766,7 @@
       "source": "github",
       "title": "A verdict names its epistemic status",
       "affinity": "a",
-      "energy": 0.7,
+      "energy": 0.644,
       "claim": "The review gate's verdict says how it knows: derived, and marked unproven where it is. A verdict that hides its status reads as more certain than the code behind it.",
       "refs": [
         "p-0813-2",
@@ -780,7 +780,7 @@
       "source": "github",
       "title": "Unproven ships labeled, with a spec to prove it",
       "affinity": "a",
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "Three specs landed today each naming what they couldn't prove (staged rows, drift/reconcile, artifact restore/compose) and routing it to a follow-up spec by name. The unproven part is inventory, not a secret.",
       "refs": [
         "p-0813-2",
@@ -794,7 +794,7 @@
       "source": "github",
       "title": "Dispatch drafts; it never launches",
       "affinity": "a",
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "The prompt bar's Dispatch produces a draft and stops. Launching an agent is a separate, deliberate act the human takes.",
       "refs": [
         "p-0814-4",
@@ -808,7 +808,7 @@
       "source": "github",
       "title": "Selection is the answer",
       "affinity": null,
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "In the agent card's thread, picking an option is the reply. No confirm step, no second field; the choice itself is the message back to the agent.",
       "refs": [
         "p-0821-2"
@@ -821,7 +821,7 @@
       "source": "github",
       "title": "The report is the read; the transcript is the appendix",
       "affinity": "a",
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "Reading panes demoted the session transcript below the report. What an agent concluded is what you read; how it got there is there if you need it.",
       "refs": [
         "p-0822-1"
@@ -834,10 +834,96 @@
       "source": "github",
       "title": "Overlays mount inside the skin or they lose it",
       "affinity": null,
-      "energy": 0.3,
+      "energy": 0.276,
       "claim": "The first-run takeover mounted outside [data-mm-board] came up transparent in the wrong font. Tokens and theme only reach what lives inside the gate; an overlay is not exempt.",
       "refs": [
         "p-0817-1"
+      ]
+    },
+    {
+      "id": "p-0827-1",
+      "date": "2026-08-27",
+      "proposedOn": "2026-08-27",
+      "source": "github",
+      "title": "A verdict is derived from evidence, never declared",
+      "affinity": "a",
+      "energy": 0.7,
+      "claim": "The evaluate phase derives the verdict from run_checks, findings, adversarial rows and the cited scorecard; the run file is never overwritten, and a citation outside the diff drops to insufficient_evidence.",
+      "refs": [
+        "p-0826-1",
+        "p-0814-1",
+        "p-0821-1"
+      ]
+    },
+    {
+      "id": "p-0827-2",
+      "date": "2026-08-27",
+      "proposedOn": "2026-08-27",
+      "source": "github",
+      "title": "A green spec can still miss its objective",
+      "affinity": "q",
+      "energy": 0.7,
+      "claim": "NS-1: every task verified, hypothesis contradicted, objective insufficient. Hypotheses and objective live in frontmatter and feed spec status; a spec with no falsifier can only ever be green.",
+      "refs": [
+        "p-0815-1",
+        "p-0822-3",
+        "p-0826-1"
+      ]
+    },
+    {
+      "id": "p-0827-3",
+      "date": "2026-08-27",
+      "proposedOn": "2026-08-27",
+      "source": "github",
+      "title": "Override without rationale is a decision, not accepted risk",
+      "affinity": "a",
+      "energy": 0.5,
+      "claim": "A manual status override with no reason is reported as a decision someone made, never laundered into accepted residual risk. Only a later, rationale-bearing decision closes a defeater.",
+      "refs": [
+        "p-0824-5",
+        "p-0826-1"
+      ]
+    },
+    {
+      "id": "p-0827-4",
+      "date": "2026-08-27",
+      "proposedOn": "2026-08-27",
+      "source": "github",
+      "title": "One builder derives the projection; readers only read",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "decisions.json is built one way (lock, atomic rename, byte-stable) and Rust reads it — missing means empty, malformed means error — it never derives its own. Two derivations would drift the way two writers do.",
+      "refs": [
+        "p-0814-3",
+        "p-0821-1"
+      ]
+    },
+    {
+      "id": "p-0827-5",
+      "date": "2026-08-27",
+      "proposedOn": "2026-08-27",
+      "source": "github",
+      "title": "The claim does not get to pick its own tip",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "Reconcile: candidates come from the verdict's base..head, the tip is a spec-named branch, else a merge parent, else head-only; a head already on main never adopts a descendant branch. Drift is claimed minus observed, and a failed diff is an error, never a clean.",
+      "refs": [
+        "p-0818-1",
+        "p-0826-1"
+      ]
+    },
+    {
+      "id": "p-0827-6",
+      "date": "2026-08-27",
+      "proposedOn": "2026-08-27",
+      "source": "github",
+      "title": "The cutover is a deletion, not a migration",
+      "affinity": null,
+      "energy": 0.5,
+      "claim": "BoardLive became the root by deleting the old shell — ~80k lines across six groups, each grep-confirmed dead first — rather than porting it. What the cutover missed (the context hook, onboarding replay) surfaced as verify findings, not as leftovers.",
+      "refs": [
+        "p-0824-1",
+        "p-0821-3"
       ]
     }
   ],
@@ -911,7 +997,7 @@
     }
   },
   "lastRun": {
-    "at": "2026-08-26T23:51:11-06:00",
+    "at": "2026-08-27T23:51:58-06:00",
     "decay": {
       "cooled": 0,
       "expired": 0
