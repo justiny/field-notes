@@ -4,6 +4,16 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# The Mac is usually asleep at 23:50; launchd then fires this at the next wake,
+# and that wake is brief — twice (08-17, 08-19) the machine went back to sleep
+# mid `claude -p` ("Your computer went to sleep mid-response"), so the chart
+# step died and the site showed CHART FAILED. Hold a power assertion for the
+# life of the script. -i blocks idle sleep; -s also holds through lid-closed on
+# AC and is ignored on battery.
+if [ -z "${NIGHTLY_CAFFEINATED:-}" ] && command -v caffeinate >/dev/null; then
+  NIGHTLY_CAFFEINATED=1 exec caffeinate -is "$0" "$@"
+fi
+
 SITE_REPO="${SITE_REPO:-$(cd .. && pwd)}"
 BRAIN_REL="site/brain.json"                       # the map fetches ./brain.json from site/
 export BRAIN_JSON="${BRAIN_JSON:-$SITE_REPO/$BRAIN_REL}"
@@ -40,16 +50,26 @@ echo "$DECAY"
 # 1b. capture: the digest lane. Material is gathered here rather than by the
 # agent so the call needs no Bash permission and the input is reproducible.
 # DIGEST_REPOS is scanned one level deep for repos with commits since midnight.
-DIGEST_REPOS="${DIGEST_REPOS:-$HOME/Sites}"
+DIGEST_REPOS="${DIGEST_REPOS:-$HOME/Sites/active}"
 MATERIAL="$(for g in "$DIGEST_REPOS"/*/.git; do
   r="$(dirname "$g")"
   log="$(git -C "$r" log --since=midnight --pretty='%s' 2>/dev/null)" || true
   [ -n "$log" ] && printf '## %s\n%s\n\n' "$(basename "$r")" "$log"
 done || true)"
 
+# claude -p once, retrying once on failure. A wake-up-then-doze still happens
+# occasionally even under caffeinate; both steps are safe to re-run (propose
+# dedupes, chart replaces un-engaged suggestions), so a second attempt is cheap.
+run_claude() {
+  claude -p "$@" && return 0
+  echo "nightly: claude call failed, retrying once in 30s" >&2
+  sleep 30
+  claude -p "$@"
+}
+
 DIGEST=skipped
 if [ -n "$MATERIAL" ] && command -v claude >/dev/null; then
-  if claude -p "$(cat digest-prompt.md)
+  if run_claude "$(cat digest-prompt.md)
 
 ## Today's material
 $MATERIAL" --allowedTools "mcp__brain__brain_state,mcp__brain__brain_propose"; then
@@ -63,7 +83,7 @@ fi
 CHART=skipped
 if command -v claude >/dev/null; then
   # was `|| true`, which hid a failing cartographer behind exit 0. Recorded now.
-  if claude -p "$(cat chart-prompt.md)" --allowedTools "mcp__brain__brain_state,mcp__brain__brain_chart"; then
+  if run_claude "$(cat chart-prompt.md)" --allowedTools "mcp__brain__brain_state,mcp__brain__brain_chart"; then
     CHART=ok
   else
     CHART=failed
