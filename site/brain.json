@@ -127,22 +127,34 @@
   "farIdeas": [],
   "suggestions": [
     {
-      "id": "gmvkycre60",
-      "inferred": "2026-10-23",
-      "title": "Chosen silence vs. happened silence: a grammar of absence",
+      "id": "gmw0ukkgb0",
+      "inferred": "2026-11-03",
+      "title": "Coordination without a dispatcher: what Physarum would do with a merge queue",
       "relatedTo": [
-        "p-0906-4",
-        "p-0828-5",
-        "p-0913-3",
-        "p-0918-2",
-        "p-0926-2",
-        "p-0920-1",
-        "p-0918-6",
-        "p-0824-3",
-        "p-1011-1",
-        "p-0813-3"
+        "x3",
+        "x2",
+        "p-0820-1",
+        "p-0928-4",
+        "p-0924-2",
+        "p-0815-6",
+        "p-0827-4"
       ],
-      "prompt": "Half the ledger treats nothing-shown as a defect: p-0906-4 (a silent refusal is a bug), p-0828-5 (a queue nobody drains is a silent no-op), p-0913-3 and p-0918-2 (silent skips). The other half treats nothing-shown as the correct output: p-0926-2 (success clears itself), p-0920-1 (suggestions arrive on request), p-0918-6 (an always-printed caveat is decoration), p-0824-3 (in the storm, suggestions stand down), p-1011-1 (restraint is a test case), p-0813-3 (chrome reporting an absence is charged to everyone). No note states the rule that separates the two. The unstated premise seems to be provenance: a silence is fine when the system can show it chose it, and a bug when it merely happened. What would it mean for an absence to carry its own receipt, so a reader can tell restraint from a dropped event without opening the transcript?"
+      "prompt": "The agentic particles repeatedly settle on a single central owner: one session gate for the app (p-0928-4), merges landing one at a time (p-0924-2), one lane owner (p-0815-6), one builder deriving the projection (p-0827-4). Meanwhile the Experimentation notes keep building systems where order emerges from no centre at all: Physarum path reinforcement (x3) and reaction–diffusion (x2). p-0820-1 (agents hiring agents) reaches toward decentralization but never asks the question. Unexplored region: are there agent-orchestration problems, such as work routing, conflict avoidance, or which spec runs next, where reinforcement-and-decay beats a central gate? Where does that break?"
+    },
+    {
+      "id": "gmw0ukkgb1",
+      "inferred": "2026-11-03",
+      "title": "If AI is not an adversary, what is every gate guarding against?",
+      "relatedTo": [
+        "n2",
+        "p-0821-1",
+        "p-1008-3",
+        "p-0924-1",
+        "p-0907-2",
+        "p-0901-1",
+        "p-0913-1"
+      ],
+      "prompt": "Note n2 says AI is not an adversary. Yet dozens of particles build guardrails that treat model output as untrusted. Deterministic acts stay out of the model's net (p-0821-1). The verifier refuses a caller's run id (p-1008-3). Only a human writes Done (p-0924-1). The local model runs shadow-only (p-0907-2). A new gate earns authority per partition (p-0901-1, p-0913-1). The notes never reconcile these two positions. Is the threat model error rather than malice? Is it accountability, meaning a human must own the verdict? Is it calibration? Each answer would design the gates differently. Naming the premise would say which gates can relax once a model's measured false-positive rate is known, and which can never relax."
     }
   ],
   "particles": [
@@ -3334,7 +3346,7 @@
     }
   },
   "lastRun": {
-    "at": "2026-11-03T00:07:13-07:00",
+    "at": "2026-11-03T08:33:25-07:00",
     "decay": {
       "cooled": 168,
       "expired": 0
