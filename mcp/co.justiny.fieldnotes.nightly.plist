@@ -29,7 +29,7 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/justin/Sites/justin-space/mcp/nightly.sh</string>
+        <string>/Users/justin/Sites/active/justin-space/mcp/nightly.sh</string>
     </array>
 
     <key>StartCalendarInterval</key>
@@ -50,6 +50,6 @@
     <string>/tmp/fieldnotes-nightly.log</string>
 
     <key>WorkingDirectory</key>
-    <string>/Users/justin/Sites/justin-space/mcp</string>
+    <string>/Users/justin/Sites/active/justin-space/mcp</string>
 </dict>
 </plist>
