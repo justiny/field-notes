@@ -127,33 +127,32 @@
   "farIdeas": [],
   "suggestions": [
     {
-      "id": "gmwbrfoom0",
-      "inferred": "2026-11-10",
+      "id": "gmwd8xfej0",
+      "inferred": "2026-11-12",
+      "title": "When does a gate retire?",
+      "relatedTo": [
+        "n2",
+        "p-0913-1",
+        "p-0924-1",
+        "p-1008-3",
+        "p-0827-5",
+        "p-0901-1"
+      ],
+      "prompt": "n2 says AI is not an adversary, yet the ledger's densest region builds adversary-grade checks: the claim does not pick its own tip (p-0827-5), the verifier refuses a caller's run id (p-1008-3), only a human writes Done (p-0924-1). Gates have an on-ramp — shadow first (p-0901-1), authority earned per partition (p-0913-1) — but nothing describes the off-ramp: what evidence lets an agent earn authority, or lets a gate be removed. Unexplored: trust as something that accrues to the agent, not only to the check."
+    },
+    {
+      "id": "gmwd8xfej1",
+      "inferred": "2026-11-12",
       "title": "Coordination without a dispatcher",
       "relatedTo": [
         "x3",
         "x2",
         "p-0820-1",
-        "p-0820-2",
-        "p-0928-4",
-        "p-0924-2"
+        "p-0821-5",
+        "p-0924-2",
+        "p-0928-4"
       ],
-      "prompt": "x3 (Physarum) and x2 (Reaction–Diffusion) are both studies of structure that emerges from local rules with no central planner. Every orchestration particle goes the other way: one session gate (p-0928-4), merges one at a time (p-0924-2), a single queue. Only p-0820-1 (agents hire agents) and p-0820-2 (discussions branch and merge) lean toward the decentralized side, and neither asks the question outright: could agents coordinate the way slime mold does, by leaving and reading traces in a shared medium, rather than being dispatched? The experiments and the workflow notes have never been pointed at each other."
-    },
-    {
-      "id": "gmwbrfoom1",
-      "inferred": "2026-11-10",
-      "title": "Human attention is the unit of cost",
-      "relatedTo": [
-        "n1",
-        "p-0902-2",
-        "p-0926-1",
-        "p-0924-1",
-        "p-0911-2",
-        "p-0826-5",
-        "p-0917-5"
-      ],
-      "prompt": "n1 says writing code is no longer the optimal use of a person, but no note says what is. The particles keep answering sideways: the inbox is one row per thing that needs a person (p-0902-2), a failure reaches a human only after retry and a fixer (p-0926-1), only a human writes Done (p-0924-1), the human ratifies the predicate (p-0911-2), the report is the read (p-0826-5), every session owes a lede (p-0917-5). The shared unstated premise is that human attention is the scarce budget every design decision spends or saves. Nothing on the map states that premise, prices it, or asks how you would measure whether a workflow spends it well."
+      "prompt": "The probes x3 (Physarum) and x2 (Reaction-Diffusion) both study order that arises from local rules with no supervisor. Every agentic particle assumes the opposite shape: one dispatcher (p-0821-5), one session gate (p-0928-4), merges landing one at a time through a queue (p-0924-2). p-0820-1 (agents hiring agents) points outward from the centre but stops at hierarchy. The question the probes ask and the notes never answer: could agents coordinate by trails left in the shared ledger — stigmergy — instead of by a central queue?"
     }
   ],
   "particles": [
@@ -1613,7 +1612,7 @@
       "source": "github",
       "title": "The NS-1 split was capability, not tools",
       "affinity": "q",
-      "energy": 0.007,
+      "energy": 0.006,
       "claim": "Tools-off Claude still finds the gap 5/5 at NS-1 scale. The 0/20 vs 5/5 split between model families was never about tool access; it was the model.",
       "refs": [
         "p-0906-1"
@@ -1684,7 +1683,7 @@
       "source": "github",
       "title": "Neither rules nor layout is the lever; one fact is, partly",
       "affinity": "q",
-      "energy": 0.007,
+      "energy": 0.006,
       "claim": "The wrong-approval floor is not the persona's rules. Both arms approve the defect 10/10 at NS-1 scale; the caller census under R1 changes nothing (15/20). One derived fact moves the model off the ceiling, 20/20 to 13/20, and not far enough.",
       "refs": [
         "p-0906-1",
@@ -1699,7 +1698,7 @@
       "source": "github",
       "title": "A \"revisit when\" clause is a falsifier or it is decoration",
       "affinity": "q",
-      "energy": 0.011,
+      "energy": 0.01,
       "claim": "Every Revisit-when clause in the brief either got a checker script that can fire, or a written note saying why it cannot be checked. Prose that nothing can contradict is not a commitment.",
       "refs": [
         "p-0829-2",
@@ -1713,7 +1712,7 @@
       "source": "github",
       "title": "The model drafts the predicate; a human ratifies it",
       "affinity": "a",
-      "energy": 0.011,
+      "energy": 0.01,
       "claim": "Falsifier predicates are model-drafted but only run once RATIFICATION.md exists; the runner enforces the gate. Same shape as the brain: agents propose, the human grants mass.",
       "refs": [
         "p-0901-1",
@@ -1727,7 +1726,7 @@
       "source": "github",
       "title": "The nightly watcher reads only; it never edits .mm",
       "affinity": "a",
-      "energy": 0.007,
+      "energy": 0.006,
       "claim": "The falsifier runner is read-only, no sudo, never touches .mm. It files a report through the evaluation-reports lane and lets a person act on it. The instrument that detects drift must not be able to cause it.",
       "refs": [
         "p-0905-4",
@@ -1741,7 +1740,7 @@
       "source": "github",
       "title": "Prove the falsifiers fire on the drifts you already suffered",
       "affinity": "q",
-      "energy": 0.007,
+      "energy": 0.006,
       "claim": "The Sep 3 drift audit was recovered from the Spark box and turned into nine test fixtures. The falsifier set is trusted only because it catches all nine known drifts, not because the checks look right.",
       "refs": [
         "p-0818-1",
@@ -1769,7 +1768,7 @@
       "source": "github",
       "title": "A shadow check earns authority per partition, not per run",
       "affinity": "a",
-      "energy": 0.013,
+      "energy": 0.012,
       "claim": "Boundary checks (brief→roadmap, spec→brief, diff→spec) run in the standing watcher as partitioned judgment kinds, fail-open, each accumulating toward its own ≥100-per-partition exit threshold before any of them may rule.",
       "refs": [
         "p-0901-1",
@@ -1784,7 +1783,7 @@
       "source": "github",
       "title": "A gate publishes its false-positive rate or it has none",
       "affinity": "q",
-      "energy": 0.009,
+      "energy": 0.008,
       "claim": "Per-check FPR is measured and published as a BOUNDARY-RESULTS artifact; a threshold in a decision doc means nothing until the measured rate sits next to it.",
       "refs": [
         "p-0911-4",
@@ -1798,7 +1797,7 @@
       "source": "github",
       "title": "A declared check the runner can't collect is a silent skip",
       "affinity": "a",
-      "energy": 0.009,
+      "energy": 0.008,
       "claim": "Two executable checks (R3, R7) were declared but not pytest-collectable, so they never ran and nothing said so. Wrapping them as collectable tests turned an invisible skip into a real pass/fail.",
       "refs": [
         "p-0828-1",
@@ -1812,7 +1811,7 @@
       "source": "github",
       "title": "Green means the production run, not the build",
       "affinity": null,
-      "energy": 0.009,
+      "energy": 0.008,
       "claim": "Deploy verification is scripted against the live site after merge: asset count, Lighthouse, font check. The build passing says nothing about what shipped.",
       "refs": [
         "p-0830-6"
@@ -1825,7 +1824,7 @@
       "source": "github",
       "title": "Redefine matches on the slug; the title is free to move",
       "affinity": null,
-      "energy": 0.009,
+      "energy": 0.008,
       "claim": "Accepting a roadmap redefine moves slug-matched milestones into their proposed phase. Matching on title would have orphaned every milestone the redefine renamed.",
       "refs": [
         "p-0830-1",
@@ -1840,7 +1839,7 @@
       "source": "github",
       "title": "A ruling can be a deferral, with its exit left open",
       "affinity": "a",
-      "energy": 0.009,
+      "energy": 0.008,
       "claim": "First-authority ruling 0025 was drafted as a deferral: it adopts the 150/4 figure, requires per-archetype evaluability first, and leaves the Phase 4 exit open rather than pretend to decide.",
       "refs": [
         "p-0901-6",
@@ -1854,7 +1853,7 @@
       "source": "github",
       "title": "A defeater names its consequence, not its category",
       "affinity": "a",
-      "energy": 0.011,
+      "energy": 0.01,
       "claim": "Plain-language defeater UI: a concern reads as what happens if it stands, the chip is the verb that closes it. Category labels went away.",
       "refs": [
         "p-0907-3",
@@ -1869,7 +1868,7 @@
       "source": "github",
       "title": "An opt-in meter shipped and was pulled the same week",
       "affinity": null,
-      "energy": 0.011,
+      "energy": 0.01,
       "claim": "The Claude-usage % readout went into the footer behind a setting, then came out with the setting. Opt-in did not make it free.",
       "refs": [
         "p-0813-3",
@@ -1883,7 +1882,7 @@
       "source": "github",
       "title": "Every AI coding task starts with a brief",
       "affinity": "a",
-      "energy": 0.011,
+      "energy": 0.01,
       "claim": "Blog post: the brief is the unit of work, not the prompt. Dispatch drafts a brief; the session only starts once it exists.",
       "refs": [
         "p-0826-3",
@@ -1898,7 +1897,7 @@
       "source": "github",
       "title": "Delivery is best-effort; the report already exists",
       "affinity": null,
-      "energy": 0.011,
+      "energy": 0.01,
       "claim": "Nightly: a post-report delivery failure is a warning, not a failure. Queued reports get retried by a 10-minute timer instead of failing the run that produced them.",
       "refs": [
         "p-0828-5",
@@ -1941,7 +1940,7 @@
       "source": "github",
       "title": "Dirty is a merge state, not a warning on one",
       "affinity": "a",
-      "energy": 0.013,
+      "energy": 0.012,
       "claim": "Uncommitted work in a worktree is its own merge state alongside unpushed and clean. The row says which, and the quick action commits then lands instead of pretending the tree is ready.",
       "refs": [
         "p-0915-6",
@@ -1955,7 +1954,7 @@
       "source": "github",
       "title": "Rename the label; the phase enum stays put",
       "affinity": null,
-      "energy": 0.007,
+      "energy": 0.006,
       "claim": "\"In flight\" became \"Active\" and \"Unattached\" became \"Loose\" through a PhaseLabel mapping. The display words moved; the underlying phase and its predicate did not.",
       "refs": [
         "p-0911-5",
@@ -1970,7 +1969,7 @@
       "source": "github",
       "title": "A verb lists its consequence, not just its name",
       "affinity": "a",
-      "energy": 0.013,
+      "energy": 0.012,
       "claim": "The reconcile card's verbs became an option list where each choice states in plain language what happens if you pick it. A bare button label is not enough when the outcomes differ in cost.",
       "refs": [
         "p-0907-4",
@@ -1985,7 +1984,7 @@
       "source": "github",
       "title": "A declined push shows on the card, and says \"push\"",
       "affinity": "a",
-      "energy": 0.013,
+      "energy": 0.012,
       "claim": "When the user declines a push, the inbox card now says so instead of going quiet. \"Land on main\" was renamed \"push to main\" because the verb should name the git act it performs.",
       "refs": [
         "p-0906-4",
@@ -1999,7 +1998,7 @@
       "source": "github",
       "title": "Every spawned session owes a layperson lede",
       "affinity": "a",
-      "energy": 0.013,
+      "energy": 0.012,
       "claim": "The layperson-summary contract now ships with every app-spawned session, so the board's agent card always has a plain-language first line derived from the work, not a template.",
       "refs": [
         "p-0907-4",
@@ -2014,7 +2013,7 @@
       "source": "github",
       "title": "A flagged card offers the fix, not the flag",
       "affinity": "a",
-      "energy": 0.013,
+      "energy": 0.012,
       "claim": "The hero's flagged card became a Choose-milestone entry with pick-existing, add-new, and review-suggestion paths. Telling the user something is unattached is worthless without the verbs that attach it.",
       "refs": [
         "p-0829-4",
@@ -2029,7 +2028,7 @@
       "source": "github",
       "title": "Curation is a mode, not arrows on a row",
       "affinity": "a",
-      "energy": 0.019,
+      "energy": 0.017,
       "claim": "The roadmap row lost its reorder arrows; milestone curation moved into a takeover pane that owns add, detach, archive and reorder together. Editing a plan is a mode you enter, not a control you sprinkle on every row.",
       "refs": [
         "p-0905-3"
@@ -2042,7 +2041,7 @@
       "source": "github",
       "title": "A test named off the check target is a silent skip",
       "affinity": "a",
-      "energy": 0.019,
+      "energy": 0.017,
       "claim": "The detach tests had to be renamed to match the R2 check target, and the Curate contract ids had to be registered before the gate could see them. A declared check whose collector finds nothing passes quietly.",
       "refs": [
         "p-0913-3",
@@ -2056,7 +2055,7 @@
       "source": "github",
       "title": "An id that reaches the filesystem is a path",
       "affinity": null,
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "stamp_parent took a parent id and turned it into a file write, so it needed a traversal guard. Same lesson as note names: the moment an identifier is joined to a directory, it is untrusted path input.",
       "refs": [
         "p-0905-5"
@@ -2069,7 +2068,7 @@
       "source": "github",
       "title": "Advice is computed on open, never stored",
       "affinity": "a",
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "Curate's recommendations are derived when the pane opens rather than persisted with the milestone. Stored advice goes stale silently; computed advice cannot disagree with the state it was read from.",
       "refs": [
         "p-0824-2",
@@ -2083,7 +2082,7 @@
       "source": "github",
       "title": "The whole row is the target; buttons carve out of it",
       "affinity": null,
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "Ranked rows got a full-row click target and inbox rows got an expand toggle, which only works if the nested controls stop propagation. Widening the hit area is the easy half; the isolation is the part that breaks.",
       "refs": [
         "p-0904-5",
@@ -2097,7 +2096,7 @@
       "source": "github",
       "title": "A caveat printed on every report is decoration",
       "affinity": null,
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "The standing caveat line came off the report detail header and its assertions came out of the tests. A warning that appears on every run carries no information; the rows have to carry it.",
       "refs": [
         "p-0907-4",
@@ -2111,7 +2110,7 @@
       "source": "github",
       "title": "Suggestions arrive on request, not on open",
       "affinity": "a",
-      "energy": 0.019,
+      "energy": 0.017,
       "claim": "Curate dropped the attach/detach text fields and stopped computing suggestions when the panel opens. Two days after \"advice is computed on open\", the advice now waits to be asked for.",
       "refs": [
         "p-0918-4",
@@ -2126,7 +2125,7 @@
       "source": "github",
       "title": "Capacity counts live sessions, not parked directories",
       "affinity": "a",
-      "energy": 0.016,
+      "energy": 0.015,
       "claim": "The worktree ceiling was counting directories on disk. A parked worktree is not load; only a live session is. One configured cap now applies on every spawn path.",
       "refs": [
         "p-0915-6",
@@ -2140,7 +2139,7 @@
       "source": "github",
       "title": "A failed tool result says isError, not prose",
       "affinity": "a",
-      "energy": 0.016,
+      "energy": 0.015,
       "claim": "An MCP tool that fails but returns a normal-looking result has told the agent it succeeded. Failure goes in the isError flag, where the caller cannot read past it.",
       "refs": [
         "p-0814-1",
@@ -2155,7 +2154,7 @@
       "source": "github",
       "title": "A free-text ask is a brief, not a bare scaffold",
       "affinity": "a",
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "Dispatch was turning typed asks into empty scaffolds and losing the words. What the person typed is the brief; record it as one.",
       "refs": [
         "p-0915-3",
@@ -2170,7 +2169,7 @@
       "source": "github",
       "title": "Motion goes through tokens; the gate allows exactly those",
       "affinity": null,
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "The drawer animation first got past the board gate by removing the rule. The fix was the other way round: motion is expressed in tokens, and the gate permits those and nothing else.",
       "refs": [
         "p-0826-6"
@@ -2183,7 +2182,7 @@
       "source": "github",
       "title": "Generate the schema from the validator; never keep two",
       "affinity": "a",
-      "energy": 0.016,
+      "energy": 0.015,
       "claim": "Tool schemas hand-written next to their zod validators drift. Generate the JSON Schema from the validator so the contract the agent reads is the one the server enforces.",
       "refs": [
         "p-0827-4",
@@ -2197,7 +2196,7 @@
       "source": "github",
       "title": "Re-dispatch supersedes the question it was waiting on",
       "affinity": "a",
-      "energy": 0.016,
+      "energy": 0.015,
       "claim": "When a spec is dispatched again, the session's pending question is cleared. A question asked of the old run is stale, and leaving it up asks a person to answer something nobody is waiting on.",
       "refs": [
         "p-0902-2"
@@ -2210,7 +2209,7 @@
       "source": "github",
       "title": "Docs get rewritten against the code, not the old docs",
       "affinity": null,
-      "energy": 0.019,
+      "energy": 0.017,
       "claim": "Home, Getting Started, Features, Desktop and Integrations were all audited and rewritten against what the code actually does. Editing the old docs just preserves their fiction.",
       "refs": [
         "p-0517-1"
@@ -2223,7 +2222,7 @@
       "source": "github",
       "title": "Onboarding and the board draw from one row builder",
       "affinity": "a",
-      "energy": 0.016,
+      "energy": 0.015,
       "claim": "The stage-model rows were factored out of workflowRows so the onboarding connect screen renders the same rows as the app, through a pure adapter. Onboarding that forks the real UI drifts from it.",
       "refs": [
         "p-0904-2"
@@ -2236,7 +2235,7 @@
       "source": "github",
       "title": "A trading agent observes before it's allowed to trade",
       "affinity": "a",
-      "energy": 0.019,
+      "energy": 0.017,
       "claim": "The mean-reversion agent starts with a first-run audit, $35 of equity, and a scheduled OBSERVE scan. It earns the right to act the same way a new gate does: watching first, on stakes it can afford to lose.",
       "refs": [
         "p-0901-1"
@@ -2249,7 +2248,7 @@
       "source": "github",
       "title": "A row click and its pill fire once, not twice",
       "affinity": null,
-      "energy": 0.012,
+      "energy": 0.011,
       "claim": "When the whole row dispatches on mousedown, the pill inside it needs a guard. Otherwise one click sends two dispatches.",
       "refs": [
         "p-0918-5"
@@ -2262,7 +2261,7 @@
       "source": "github",
       "title": "Done but unmerged stays on the board until it lands",
       "affinity": "a",
-      "energy": 0.021,
+      "energy": 0.019,
       "claim": "Every task checked doesn't mean the work left the worktree. The spec keeps its card with a \"merge & clean up\" verb, and merge waits until every task is actually done.",
       "refs": [
         "p-0822-1",
@@ -2276,7 +2275,7 @@
       "source": "github",
       "title": "All tasks done while still running reads FINISHING UP",
       "affinity": "a",
-      "energy": 0.021,
+      "energy": 0.019,
       "claim": "A checked-off task list with a live session, or sub-agents still working, is neither done nor in progress. It gets its own pill.",
       "refs": [
         "p-0901-3",
@@ -2290,7 +2289,7 @@
       "source": "github",
       "title": "Archiving a spec retires its sessions too",
       "affinity": "a",
-      "energy": 0.021,
+      "energy": 0.019,
       "claim": "An archived spec's finished sessions don't keep asking for attention in the Inbox. Archive is a decision about the whole thing, not just the card.",
       "refs": [
         "p-0902-2"
@@ -2303,7 +2302,7 @@
       "source": "github",
       "title": "A placeholder value is not a set value",
       "affinity": null,
-      "energy": 0.021,
+      "energy": 0.019,
       "claim": "The doctor used to call an env var \"set\" when it still held the example placeholder. Present isn't configured; it reports PLACEHOLDER now.",
       "refs": [
         "p-0814-6"
@@ -2316,7 +2315,7 @@
       "source": "github",
       "title": "A merge the remote hasn't seen is not a ship",
       "affinity": "a",
-      "energy": 0.029,
+      "energy": 0.027,
       "claim": "The card says \"merged · not pushed\" until the remote agrees. Push state has three values, not two: yes, no, and unknown.",
       "refs": [
         "p-0917-4",
@@ -2330,7 +2329,7 @@
       "source": "claude",
       "title": "The agent may reach Verify; only a human writes Done",
       "affinity": "a",
-      "energy": 0.025,
+      "energy": 0.023,
       "claim": "Lasso separates fixed from verified with two timestamps, not a status enum. An agent resolve can only land in Verify, and the human-only Done is enforced at CLI, server, and data layers. The agent never learns the API: it edits markdown in its own repo and the CLI translates.",
       "refs": [
         "p-0827-1",
@@ -2345,7 +2344,7 @@
       "source": "github",
       "title": "Merges land one at a time; a conflict pauses the queue",
       "affinity": "a",
-      "energy": 0.031,
+      "energy": 0.029,
       "claim": "The merge sweeper is a sequential queue: conflict goes to resolve then re-lands, a blocker halts the drain with retry, and the board reports the summary once. Parallel merges into main were never the goal.",
       "refs": [
         "p-0923-5",
@@ -2360,7 +2359,7 @@
       "source": "github",
       "title": "Stop is offered at every stage except mid-push",
       "affinity": "a",
-      "energy": 0.023,
+      "energy": 0.021,
       "claim": "Auto-Spec can be stopped at any stoppable stage, but never while pushing. The one moment the remote is being written is the one moment the human's verb is withheld.",
       "refs": [
         "p-0917-4",
@@ -2375,7 +2374,7 @@
       "source": "github",
       "title": "Every element on the card earns its place, or it's a modal",
       "affinity": null,
-      "energy": 0.031,
+      "energy": 0.029,
       "claim": "Spec card strip-down: the summary, the why, the diff, the verdict row all moved behind a details modal. The card face keeps only what a scan needs; the chat verb is gone entirely.",
       "refs": [
         "p-0830-4",
@@ -2390,7 +2389,7 @@
       "source": "github",
       "title": "An ask's title opens its thread; it never jumps to the card",
       "affinity": "a",
-      "energy": 0.023,
+      "energy": 0.021,
       "claim": "In the Inbox, clicking an ask's title opens its thread in place. Jumping to the spec card loses the question the person came to answer.",
       "refs": [
         "p-0902-2",
@@ -2404,7 +2403,7 @@
       "source": "github",
       "title": "A percentage max-height never resolves; cap in vh",
       "affinity": null,
-      "energy": 0.014,
+      "energy": 0.013,
       "claim": "In the session takeover the ask capped at a percentage max-height that never resolved, so nothing scrolled. Cap at 55vh and give the transcript a 160px floor; then both panes scroll.",
       "refs": [
         "p-0905-3",
@@ -2418,7 +2417,7 @@
       "source": "github",
       "title": "A trivial diff earns a light check, labeled as one",
       "affinity": "a",
-      "energy": 0.029,
+      "energy": 0.027,
       "claim": "Verification scales with risk: a style-only diff gets a light check, which still reads the spec's critical requirements, and the board says \"light-checked\" rather than passing it off as verified.",
       "refs": [
         "p-0826-1",
@@ -2433,7 +2432,7 @@
       "source": "github",
       "title": "Land the tree as it is now, not as it was listed",
       "affinity": "a",
-      "energy": 0.025,
+      "energy": 0.023,
       "claim": "Between the list read and the land, a worktree can turn dirty or get pruned. Dirty gets committed; pruned mid-land means it already landed, not os error 2.",
       "refs": [
         "p-0824-2",
@@ -2448,7 +2447,7 @@
       "source": "github",
       "title": "A count uses the predicate of the thing it counts",
       "affinity": null,
-      "energy": 0.025,
+      "energy": 0.023,
       "claim": "The merge sweeper's ready count drifted from the cards until it used each card's own merge predicate. A tally with its own rule is a second opinion nobody asked for.",
       "refs": [
         "p-0911-5",
@@ -2462,7 +2461,7 @@
       "source": "github",
       "title": "Landed is persisted; a live worktree still outranks it",
       "affinity": "a",
-      "energy": 0.02,
+      "energy": 0.018,
       "claim": "The session-less card reads landed_sha from disk so a shipped spec still shows MERGED, but when a live worktree exists, its state wins over the stored record.",
       "refs": [
         "p-0923-1",
@@ -2476,7 +2475,7 @@
       "source": "github",
       "title": "Busy ends when the card shows it, not when the call returns",
       "affinity": null,
-      "energy": 0.02,
+      "energy": 0.018,
       "claim": "The start/shape pill stays busy until the card visibly shows the launch, capped at 15s. A returned promise isn't evidence the user can see.",
       "refs": [
         "p-0901-4"
@@ -2489,7 +2488,7 @@
       "source": "github",
       "title": "Finish waits until the session stops running",
       "affinity": "a",
-      "energy": 0.015,
+      "energy": 0.014,
       "claim": "canFinish is gated on the session not running; while it runs, the verb on offer is Stop. The boundary is pinned by session state, not by task checkboxes.",
       "refs": [
         "p-0924-3",
@@ -2503,7 +2502,7 @@
       "source": "github",
       "title": "A failure reaches a human only after retry and a fixer",
       "affinity": "a",
-      "energy": 0.037,
+      "energy": 0.034,
       "claim": "The merge push resolves itself: flakes get retried, real failures go to a fix agent, and only what genuinely needs a person gets surfaced.",
       "refs": [
         "p-0917-4",
@@ -2518,7 +2517,7 @@
       "source": "github",
       "title": "Success clears itself; only failure asks to be dismissed",
       "affinity": "a",
-      "energy": 0.027,
+      "energy": 0.025,
       "claim": "A clean push auto-clears the run and retires the push verb. A stale \"push\" offered after pushed is true is a lie the card tells.",
       "refs": [
         "p-0917-4",
@@ -2532,7 +2531,7 @@
       "source": "github",
       "title": "A gate is answered where the session is watched",
       "affinity": "a",
-      "energy": 0.027,
+      "energy": 0.025,
       "claim": "Approve and stop live in the session takeover's head, not back on the board. If you're watching it, you can rule on it.",
       "refs": [
         "p-0905-3",
@@ -2546,7 +2545,7 @@
       "source": "github",
       "title": "Two surfaces, one verb function, a test that they agree",
       "affinity": "a",
-      "energy": 0.027,
+      "energy": 0.025,
       "claim": "Inbox merge rows and the card both derive their verb from one function, with agreement tests pinning it. Two copies of \"what to do next\" will drift.",
       "refs": [
         "p-0922-3",
@@ -2561,7 +2560,7 @@
       "source": "github",
       "title": "Hover promises only what the click delivers",
       "affinity": null,
-      "energy": 0.022,
+      "energy": 0.02,
       "claim": "Whole-card inbox clicks, hover gated on actionable rows, and a done review row opens its session because that's what its verb says.",
       "refs": [
         "p-0918-5",
@@ -2576,7 +2575,7 @@
       "source": "github",
       "title": "Follow the card once, and only if it moved",
       "affinity": null,
-      "energy": 0.016,
+      "energy": 0.015,
       "claim": "After Start/Continue the board scrolls to the card only after a reorder, only once, never on a stalled launch, and instantly under reduced motion.",
       "refs": [
         "p-0925-5"
@@ -2589,7 +2588,7 @@
       "source": "github",
       "title": "N popovers, one shared ref: scope dismiss to the DOM host",
       "affinity": null,
-      "energy": 0.029,
+      "energy": 0.027,
       "claim": "A shared autoHost ref means the last card to open wins every outside-click. Dismissal has to be scoped to the clicked host via closest(), not to a variable that every card overwrites.",
       "refs": [
         "p-0904-5",
@@ -2603,7 +2602,7 @@
       "source": "github",
       "title": "The picker's three verbs are printed, not hovered",
       "affinity": null,
-      "energy": 0.029,
+      "energy": 0.027,
       "claim": "Summary, discuss, push: the popover now says what each does in always-visible copy, capped in width. A tension with \"verbs draw on hover\" — when the choice is the whole point of the popover, the hint is not chrome.",
       "refs": [
         "p-0822-2",
@@ -2618,7 +2617,7 @@
       "source": "github",
       "title": "Busy paints before the launch runs, not after it returns",
       "affinity": null,
-      "energy": 0.031,
+      "energy": 0.029,
       "claim": "Start and Shape paint their busy pill before dispatch, with a 500ms after-paint fallback so a slow frame still lands first. The click's proof of life comes from the paint, not the call.",
       "refs": [
         "p-0925-5",
@@ -2632,7 +2631,7 @@
       "source": "github",
       "title": "One session gate for the app; launches queue behind it",
       "affinity": "a",
-      "energy": 0.031,
+      "energy": 0.029,
       "claim": "Session capacity is enforced once, app-wide, and a launch that can't start waits in a queue instead of failing or double-booking. Same shape as the merge queue: one lane, ordered.",
       "refs": [
         "p-0920-2",
@@ -2646,7 +2645,7 @@
       "source": "github",
       "title": "Landing is a state; verifying is the next ask",
       "affinity": "a",
-      "energy": 0.031,
+      "energy": 0.029,
       "claim": "Once a worktree lands, the card is done even with the agent still resting on it, and the first verb offered is re-review, not archive. Done and verified are different questions.",
       "refs": [
         "p-0923-1",
@@ -2661,7 +2660,7 @@
       "source": "github",
       "title": "A fresh merge lingers with ✕; success stopped clearing",
       "affinity": "a",
-      "energy": 0.044,
+      "energy": 0.04,
       "claim": "A card merged in this run stays in working with a merged pill and an icon-only ✕; dismiss moves it to shipped. That is a tension with \"success clears itself; only failure asks to be dismissed.\"",
       "refs": [
         "p-0926-2",
@@ -2675,7 +2674,7 @@
       "source": "github",
       "title": "A required rationale gets you a placeholder, not a reason",
       "affinity": "a",
-      "energy": 0.034,
+      "energy": 0.031,
       "claim": "The override gate demanded a rationale and got \"no rationale given\" typed to get past it. Drop the input; the issue filed on override is the record.",
       "refs": [
         "p-0827-3"
@@ -2688,7 +2687,7 @@
       "source": "github",
       "title": "Fail closed, and a blank threshold means 0.9, not 0",
       "affinity": "a",
-      "energy": 0.034,
+      "energy": 0.031,
       "claim": "The light-check decider fails closed when no env reached the MCP, and a blank threshold falls back to the default. Zero would have waved everything through.",
       "refs": [
         "p-0925-1",
@@ -2702,7 +2701,7 @@
       "source": "github",
       "title": "Score the gate on 31 known-bad diffs before it gets a vote",
       "affinity": "q",
-      "energy": 0.034,
+      "energy": 0.031,
       "claim": "The second-opinion decider ships off by default, with an eval over 152 historical diffs, 31 known bad, measuring false-light-check rate and calibration.",
       "refs": [
         "p-0913-2",
@@ -2716,7 +2715,7 @@
       "source": "github",
       "title": "A transient halt earns a retry, not an agent",
       "affinity": "a",
-      "energy": 0.034,
+      "energy": 0.031,
       "claim": "Transient declines skip the reconciling agent and show no agent verb. Only stops that need judgment go to one, briefed with the current decline.",
       "refs": [
         "p-0926-1"
@@ -2729,7 +2728,7 @@
       "source": "github",
       "title": "Steer by cutting the queue; a refusal keeps the item",
       "affinity": "a",
-      "energy": 0.034,
+      "energy": 0.031,
       "claim": "Steering a live agent front-enqueues the message and interrupts the turn. If the adapter refuses, the item stays queued, and a settled turn skips the interrupt."
     },
     {
@@ -2739,7 +2738,7 @@
       "source": "github",
       "title": "A secret rides the session that needs it, not the sidecar",
       "affinity": null,
-      "energy": 0.034,
+      "energy": 0.031,
       "claim": "The decider key is injected into the per-session MCP env at spawn, not the shared sidecar env, so only the session that needs it can read it."
     },
     {
@@ -2749,7 +2748,7 @@
       "source": "github",
       "title": "The Hub is the inbox, run across every project",
       "affinity": "a",
-      "energy": 0.052,
+      "energy": 0.048,
       "claim": "The cross-project Hub didn't get its own model: it builds rows by running the per-project inbox builder over each board, and drops finished specs because done isn't something that needs you.",
       "refs": [
         "p-0922-3",
@@ -2763,7 +2762,7 @@
       "source": "github",
       "title": "Don't offer a verb the gate would refuse",
       "affinity": null,
-      "energy": 0.044,
+      "energy": 0.04,
       "claim": "Approve is hidden when the review gate would refuse it. A button that exists only to bounce off a gate is a dead click with better styling.",
       "refs": [
         "p-0829-5",
@@ -2777,7 +2776,7 @@
       "source": "github",
       "title": "Every triage verdict stamps which model made it",
       "affinity": "a",
-      "energy": 0.044,
+      "energy": 0.04,
       "claim": "The triage classifier is swappable (haiku default, Jev stub, logged fallback), so each verdict carries its provider and confidence. A swappable judge you can't attribute is an unauditable one.",
       "refs": [
         "p-0826-1",
@@ -2792,7 +2791,7 @@
       "source": "github",
       "title": "A header that needs a sub-label picked the wrong name",
       "affinity": null,
-      "energy": 0.044,
+      "energy": 0.04,
       "claim": "\"Inbox\" needed a sub-label to explain itself; \"Needs you\" doesn't. Same pass dropped the unread badge, terminal labels, and the kind word on asks. Labels that restate the obvious are decoration.",
       "refs": [
         "p-0918-6",
@@ -2806,7 +2805,7 @@
       "source": "github",
       "title": "One done rule in three languages, held by one fixture",
       "affinity": "a",
-      "energy": 0.052,
+      "energy": 0.048,
       "claim": "The done rule lives in TS, Rust and Svelte. It stays one rule only because all three are checked against the same shared fixture.",
       "refs": [
         "p-0926-4",
@@ -2820,7 +2819,7 @@
       "source": "github",
       "title": "Accept, promote and merge all answer to the verdict",
       "affinity": "a",
-      "energy": 0.062,
+      "energy": 0.057,
       "claim": "Accept, promote and merge all pass through the same review verdict. Overriding it costs a typed reason, and a gaps-remain refusal names the unresolved ids.",
       "refs": [
         "p-0827-1",
@@ -2837,7 +2836,7 @@
       "source": "github",
       "title": "Landing a worktree doesn't stale a fresh verdict",
       "affinity": "a",
-      "energy": 0.042,
+      "energy": 0.039,
       "claim": "Merging the work that was just verified should not make its own verdict look out of date. Landing keeps a fresh verdict fresh.",
       "refs": [
         "p-0925-4",
@@ -2851,7 +2850,7 @@
       "source": "github",
       "title": "Simple is the default; the full transcript is a toggle",
       "affinity": "a",
-      "energy": 0.052,
+      "energy": 0.048,
       "claim": "The session view opens on the layperson line per turn, with the rest folded and counted. Full is one toggle away, and the user's own prompts and any ask are never folded.",
       "refs": [
         "p-0826-5",
@@ -2866,7 +2865,7 @@
       "source": "github",
       "title": "One crumb list feeds both the nav and the schema",
       "affinity": null,
-      "energy": 0.042,
+      "energy": 0.039,
       "claim": "The visible breadcrumb and the BreadcrumbList structured data read from one crumb list, so what the shopper sees and what the crawler reads cannot disagree.",
       "refs": [
         "p-0827-4",
@@ -2880,7 +2879,7 @@
       "source": "github",
       "title": "Placeholder copy can't claim what the catalog can't back",
       "affinity": null,
-      "energy": 0.042,
+      "energy": 0.039,
       "claim": "The placeholder intros said every clearance, lamp and horticulture listing has a part number. They don't. Filler copy is still a claim about the data.",
       "refs": [
         "p-0517-1",
@@ -2894,7 +2893,7 @@
       "source": "github",
       "title": "Parallel-safe is a hint on the card, not a batch launcher",
       "affinity": "a",
-      "energy": 0.067,
+      "energy": 0.062,
       "claim": "Which specs can run together is a hint on the card, computed from predicted files: safe, shares, or unknown. The batch launcher that decided for you is gone.",
       "refs": [
         "p-0918-4",
@@ -2909,7 +2908,7 @@
       "source": "github",
       "title": "A review that ends without a verdict says so",
       "affinity": "a",
-      "energy": 0.057,
+      "energy": 0.052,
       "claim": "A review that ends without a verdict is its own outcome and reads as one. It is not a pass, and it is not a review still running.",
       "refs": [
         "p-0827-1",
@@ -2924,7 +2923,7 @@
       "source": "github",
       "title": "A check that can't read its data errors; it never passes",
       "affinity": null,
-      "energy": 0.057,
+      "energy": 0.052,
       "claim": "The robots check passed when the sitemap could not be read. A check that can't read its data errors out; missing data is not a pass.",
       "refs": [
         "p-0828-1",
@@ -2939,7 +2938,7 @@
       "source": "github",
       "title": "Noindex needs the crawl; never Disallow the same path",
       "affinity": null,
-      "energy": 0.057,
+      "energy": 0.052,
       "claim": "Cart, checkout, account and search carry noindex,follow and stay out of the sitemap, but robots.txt must not Disallow them. A crawler that can't fetch the page never reads the noindex."
     },
     {
@@ -2949,7 +2948,7 @@
       "source": "github",
       "title": "An old URL gets one hop home; a chain fails the crawl",
       "affinity": null,
-      "energy": 0.046,
+      "energy": 0.042,
       "claim": "Every old category URL reaches its short home in a single 301, with case, doubled slashes, page numbers and query strings settled in that hop. The crawl fails on a 404, a wrong target or a second hop."
     },
     {
@@ -2959,7 +2958,7 @@
       "source": "github",
       "title": "A refresh keyed to your own writes is a feedback loop",
       "affinity": null,
-      "energy": 0.046,
+      "energy": 0.042,
       "claim": "Lasso refreshed on every .mm file change, and the app writes .mm itself. The refresh came off that trigger, triage reuses the state already read, and a failed triage backs off instead of retrying.",
       "refs": [
         "p-0905-4",
@@ -2973,7 +2972,7 @@
       "source": "github",
       "title": "A parser that can't find an id says so; it never mints one",
       "affinity": null,
-      "energy": 0.102,
+      "energy": 0.094,
       "claim": "Task ids are minted once, by the writer, as the next free T<n>. A reader that can't find one reports unidentified. Guessing an id from position or first word was how two things ended up with the same name.",
       "refs": [
         "p-0830-1",
@@ -2989,7 +2988,7 @@
       "source": "github",
       "title": "Not declared is not measured, never a miss",
       "affinity": "a",
-      "energy": 0.086,
+      "energy": 0.079,
       "claim": "A check that was never declared, or declared and skipped, renders as not measured. Projecting it as a miss made the summary lie in the pessimistic direction, which is still lying. One status vocabulary now, in three languages, walking one fixture.",
       "refs": [
         "p-0828-1",
@@ -3005,7 +3004,7 @@
       "source": "github",
       "title": "The verifier mints the run id; a caller's id is refused",
       "affinity": "a",
-      "energy": 0.059,
+      "energy": 0.054,
       "claim": "Verification run ids are minted server-side when the run starts. Evaluate rejects any id the caller brought along. Every SHA on the run file is checked against git before it is believed.",
       "refs": [
         "p-0827-5",
@@ -3020,7 +3019,7 @@
       "source": "github",
       "title": "A headless call with no timeout is a hang nobody owns",
       "affinity": "a",
-      "energy": 0.073,
+      "energy": 0.067,
       "claim": "The headless Claude call had no default timeout and two swallow-all wrappers nobody called. Now it has a finite default and a timeout error that says timeout. The wrappers are gone.",
       "refs": [
         "p-0906-4",
@@ -3035,7 +3034,7 @@
       "source": "github",
       "title": "Three ways to start a spec, one launch path",
       "affinity": "a",
-      "energy": 0.073,
+      "energy": 0.067,
       "claim": "Main Start, the Lasso fix wave and a per-task run all go through the same board launch entry. Three launchers had three slightly different ideas of what starting meant.",
       "refs": [
         "p-0928-4",
@@ -3050,7 +3049,7 @@
       "source": "github",
       "title": "Sign-off merges onto the roadmap it finds, never replaces it",
       "affinity": "a",
-      "energy": 0.073,
+      "energy": 0.067,
       "claim": "Onboarding sign-off merges onto an existing roadmap instead of overwriting it. An existing .mm is used as-is, and the refusal says exactly that.",
       "refs": [
         "p-0830-2",
@@ -3065,7 +3064,7 @@
       "source": "github",
       "title": "Ran is not proven; an execution fact is not a belief",
       "affinity": "a",
-      "energy": 0.121,
+      "energy": 0.111,
       "claim": "Seven belief words live in one module, and every surface routes through it. A task that merely executed renders as \"Not yet checked\" with a note. It never borrows a belief label.",
       "refs": [
         "p-0826-1",
@@ -3081,7 +3080,7 @@
       "source": "github",
       "title": "Internal spellings stay off the board; a test bans them",
       "affinity": null,
-      "energy": 0.086,
+      "energy": 0.079,
       "claim": "Run ids, T<n> task ids and enum spellings are plumbing. The board hides them, and a banned-vocabulary test fails the build if one leaks back.",
       "refs": [
         "p-0915-5",
@@ -3096,7 +3095,7 @@
       "source": "github",
       "title": "A commit names its spec in a trailer; grep is the fallback",
       "affinity": "a",
-      "energy": 0.086,
+      "energy": 0.079,
       "claim": "Spec-to-commit matching uses the exact Spec trailer. The slug grep runs only on commits that carry no trailer, so a fuzzy match can't override a declared one.",
       "refs": [
         "p-0830-1",
@@ -3111,7 +3110,7 @@
       "source": "github",
       "title": "An unresolved parent warns; it never rolls up silently",
       "affinity": "a",
-      "energy": 0.07,
+      "energy": 0.064,
       "claim": "The milestone roll-up depends on resolving each spec's parent. When a parent can't be found, evaluate surfaces that in its result, in the summary and in the report. It isn't dropped from the tally quietly.",
       "refs": [
         "p-0829-2",
@@ -3126,7 +3125,7 @@
       "source": "github",
       "title": "Two model lists drift unless a test says they agree",
       "affinity": null,
-      "energy": 0.052,
+      "energy": 0.048,
       "claim": "The picker's model list and the pinned list fell out of sync, and a model went missing. The fix was a parity test, not one generated list. That is the cheaper half of \"never keep two.\"",
       "refs": [
         "p-0920-6",
@@ -3140,7 +3139,7 @@
       "source": "github",
       "title": "Complete and unverified, a spec now calls its own verify",
       "affinity": "a",
-      "energy": 0.102,
+      "energy": 0.094,
       "claim": "When a spec session ends complete and unverified, the app now dispatches verify itself. That is a pure decision function, and it's in tension with \"dispatch drafts, never launches.\"",
       "refs": [
         "p-0902-4",
@@ -3156,7 +3155,7 @@
       "source": "github",
       "title": "Restraint is a test case, not a vibe",
       "affinity": "q",
-      "energy": 0.094,
+      "energy": 0.086,
       "claim": "The easy cases couldn't separate skills. The hard ones probe ambiguity, restraint, file safety and memory accuracy: what a skill should decline to do is as testable as what it does.",
       "refs": [
         "p-0815-2",
@@ -3170,7 +3169,7 @@
       "source": "github",
       "title": "A skill is judged on a shared suite, not its own demo",
       "affinity": "q",
-      "energy": 0.094,
+      "energy": 0.086,
       "claim": "Skill lab runs every contender through one suite and one runner, then compares. \"Better\" needs a sibling, so the first contender is just the baseline.",
       "refs": [
         "p-0815-2",
@@ -3184,7 +3183,7 @@
       "source": "github",
       "title": "A \"3\" where 3 was expected is a type slip, not a verdict",
       "affinity": "a",
-      "energy": 0.057,
+      "energy": 0.052,
       "claim": "The verify evaluator now accepts string iteration counts and file lists. A caller's formatting shouldn't fail a check on form, and the summary gets written after the evaluation either way.",
       "refs": [
         "p-1010-6"
@@ -3197,7 +3196,7 @@
       "source": "github",
       "title": "Rebuild from empty; the old repo is a reference, not a base",
       "affinity": null,
-      "energy": 0.111,
+      "energy": 0.102,
       "claim": "mmn starts as an empty repo for a ground-up rebuild, with a planning session as its first state. The prior codebase is something to read, not something to migrate.",
       "refs": [
         "p-0827-6",
@@ -3212,7 +3211,7 @@
       "source": "github",
       "title": "A phase opens by archiving the last one, not by building",
       "affinity": null,
-      "energy": 0.184,
+      "energy": 0.169,
       "claim": "Phase 2 began on both UPS sites with one move: separate current work from the Phase 1 archive. Nothing new was built that day. The archive stays reachable; it just stops being the front page.",
       "refs": [
         "p-0822-1",
@@ -3226,7 +3225,7 @@
       "source": "github",
       "title": "Once you set display, hidden is only a suggestion",
       "affinity": null,
-      "energy": 0.111,
+      "energy": 0.102,
       "claim": "The demos filter bar carried the hidden attribute and still rendered. Its own display:flex outranked the browser's display:none. The attribute never lost; the stylesheet quietly overruled it.",
       "refs": [
         "p-0924-6"
@@ -3239,7 +3238,7 @@
       "source": "github",
       "title": "Restart notes file under the phase they start, not by date",
       "affinity": null,
-      "energy": 0.111,
+      "energy": 0.102,
       "claim": "Chris's Oct 16 restart notes were written in Phase 1's timeline but they are the first document of Phase 2. They moved there and the Phase 2 page links them. Filing by what a note begins beats filing by when it was typed.",
       "refs": [
         "p-1013-1"
@@ -3252,7 +3251,7 @@
       "source": "github",
       "title": "A library shows one section; the rest is on demand",
       "affinity": null,
-      "energy": 0.217,
+      "energy": 0.2,
       "claim": "The Library got quieter: a sidebar, one section visible at a time, details only when asked for. Less on screen read as more, not less.",
       "refs": [
         "p-1004-4",
@@ -3267,7 +3266,7 @@
       "source": "github",
       "title": "Below 1000px a map label is clutter; hover carries it",
       "affinity": null,
-      "energy": 0.131,
+      "energy": 0.121,
       "claim": "Home-map hotspot labels hide under 1000px and return on hover. A label the viewport can't afford is noise, and the hotspot itself already says where to look.",
       "refs": [
         "p-0822-2",
@@ -3281,7 +3280,7 @@
       "source": "github",
       "title": "A laptop nightly fires on wake, and the wake is brief",
       "affinity": null,
-      "energy": 0.224,
+      "energy": 0.206,
       "claim": "Scheduling at 23:50 means nothing on a Mac that's asleep; launchd runs the job at the next wake, which can doze off mid-call. The job has to hold the machine awake itself."
     },
     {
@@ -3291,7 +3290,7 @@
       "source": "github",
       "title": "Retry is cheap only where re-running is safe",
       "affinity": "a",
-      "energy": 0.279,
+      "energy": 0.257,
       "claim": "One blind retry after 30s is fine for the nightly because propose dedupes and chart replaces its own suggestions. Idempotence is what buys the retry, not the failure being transient.",
       "refs": [
         "p-0929-4",
@@ -3305,7 +3304,7 @@
       "source": "github",
       "title": "A folder move made every day look quiet",
       "affinity": null,
-      "energy": 0.279,
+      "energy": 0.257,
       "claim": "After projects moved into tiers, the digest scanned a directory with no repos and skipped every night. A skip from no input reads exactly like a thin day, so nobody noticed.",
       "refs": [
         "p-0814-1",
@@ -3320,7 +3319,7 @@
       "source": "github",
       "title": "A widget's assistant talks to the agent that wrote it",
       "affinity": "a",
-      "energy": 0.46,
+      "energy": 0.423,
       "claim": "The widget talks to its author: the assistant inside a composed widget goes to the agent that wrote it.",
       "refs": [
         "p-0821-2"
@@ -3333,7 +3332,7 @@
       "source": "github",
       "title": "Decide in the conversation",
       "affinity": null,
-      "energy": 0.276,
+      "energy": 0.254,
       "claim": "Three more seams with the assistant widget: one rule ledger, decide in the conversation, the assistant knows the day.",
       "refs": [
         "p-0926-3"
@@ -3346,7 +3345,7 @@
       "source": "github",
       "title": "A bar choice opens a page, not a chat thread",
       "affinity": null,
-      "energy": 0.6,
+      "energy": 0.552,
       "claim": "Support scenarios left the chat: a bar choice opens a fresh page, the bar's cards answer in place, and the chat-thread versions were removed.",
       "refs": [
         "p-1109-2",
@@ -3360,7 +3359,7 @@
       "source": "github",
       "title": "Move in five steps; the deletion goes last",
       "affinity": null,
-      "energy": 0.4,
+      "energy": 0.368,
       "claim": "The support move shipped as five numbered commits: extract the shared form, open the new pages, answer in place, relink the guide, and only then remove the chat-thread versions.",
       "refs": [
         "p-0827-6"
@@ -3373,7 +3372,7 @@
       "source": "github",
       "title": "It reads as a button from the lift, not the arrow",
       "affinity": null,
-      "energy": 0.3,
+      "energy": 0.276,
       "claim": "New shipment got an arrow, a lift and a gold hover edge to read as a button. The arrow came back off the same day; the lift and the edge were enough.",
       "refs": [
         "p-0924-4"
@@ -3386,7 +3385,7 @@
       "source": "github",
       "title": "Review comments live on the prototype, behind one switch",
       "affinity": null,
-      "energy": 0.5,
+      "energy": 0.46,
       "claim": "Reviewer comments sit on the prototype itself behind a Feedback switch. Pinned ones keep a standing dot, and one switch shows or hides all of them."
     },
     {
@@ -3396,7 +3395,7 @@
       "source": "github",
       "title": "What the card shows, the connector says too",
       "affinity": null,
-      "energy": 0.4,
+      "energy": 0.368,
       "claim": "Tubefeed is a local YouTube front page with a digest and a Claude connector. Video length landed on the cards and in the connector in the same commit.",
       "refs": [
         "p-0926-4"
@@ -3473,12 +3472,12 @@
     }
   },
   "lastRun": {
-    "at": "2026-11-10T23:50:58-07:00",
+    "at": "2026-11-12T00:48:27-07:00",
     "decay": {
-      "cooled": 196,
+      "cooled": 200,
       "expired": 0
     },
-    "digest": "ok",
+    "digest": "skipped",
     "chart": "ok"
   },
   "accretion": []
