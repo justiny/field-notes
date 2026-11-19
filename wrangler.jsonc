@@ -10,9 +10,8 @@
   "compatibility_date": "2026-08-12",
   "assets": {
     "directory": "./site"
-  },
-  "routes": [
-    { "pattern": "justiny.co", "custom_domain": true },
-    { "pattern": "www.justiny.co", "custom_domain": true }
-  ]
+  }
+  // No routes: justiny.co belongs to the `justiny` Worker (justiny/justiny),
+  // which serves this map at justiny.co/notes/ through a service binding.
+  // Keep this Worker's name: that binding finds it by name.
 }
