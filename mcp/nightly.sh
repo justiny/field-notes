@@ -103,7 +103,17 @@ if ! git diff --quiet -- "$BRAIN_REL"; then
   git add "$BRAIN_REL"
   git commit -m "brain: nightly decay + chart $(date +%F)"
   git push
-  echo "nightly: published"
+  echo "nightly: pushed"
 else
-  echo "nightly: ledger unchanged, nothing to publish"
+  echo "nightly: ledger unchanged, nothing to push"
 fi
+
+# 4. deploy: the push alone stopped reaching Cloudflare after 2026-10-23 (the
+#    Git-connected build went quiet), so the site sat a month stale while this
+#    log said "published". Deploy straight from the repo instead. wrangler picks
+#    the personal account via the `personal` auth profile bound to this folder
+#    (`npx wrangler auth activate personal .`); without it this would deploy to
+#    the Southleft default. The map is served at justiny.co/notes/ by the
+#    justiny Worker, which finds this one by name — keep it `field-notes`.
+npx --yes wrangler deploy
+echo "nightly: deployed"
