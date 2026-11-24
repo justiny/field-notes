@@ -122,6 +122,20 @@
       "url": "https://real-time-lab.justin-93c.workers.dev/experiments/running-form/",
       "meta": "AUG 26 · EXPERIMENTATION · REAL-TIME LAB",
       "body": "The original exhibit, and the reason the lab exists. Load a side-view running clip and it tracks a single runner across the whole video, segments the footage into strides, and measures knee drive, torso lean and hip oscillation. Everything happens on the machine; the video is never uploaded.\n\nThe pose model was the easy part — it is a solved thing you can download. The actual work was deciding which frames count. A runner crossing the frame and coming back is two captures, not one, so travel direction commits with hysteresis and only flips after the opposite sign persists; runs too short to hold enough strides are dropped rather than analysed into noise. Almost all of the difficulty in measurement is segmentation, and almost none of it is the measuring.\n\nThe metrics carry a comment in the source saying they are heuristic and unvalidated, with a checklist of what validating them would take. I ran professionally. I know precisely what an unvalidated gait number is worth to an athlete, which is nothing, and what it is worth to a coach selling a program, which is unfortunately quite a lot.\n\nSo it says so, in the code, where it cannot be quietly dropped from a marketing page. A measurement you have not validated is a hypothesis with a decimal point on it."
+    },
+    {
+      "id": "p-1123-1",
+      "theme": "a",
+      "cat": "AGENTIC",
+      "title": "The app is disposable; the data and the prompt are not",
+      "date": "2026-11",
+      "stamp": "NOV 26",
+      "ageMonths": 0,
+      "teaser": "Two files and ten plain requests regrew an app I use daily. The code was the least important part.",
+      "promotedFrom": "claude",
+      "sourceDate": "2026-11-23",
+      "meta": "NOV 26 · AGENTIC · FIELD NOTE",
+      "body": "Karpathy built HackerTube in an afternoon and, rather than publish the server, published the data and told people to point their own agent at it. The server, he said, was a vibe-coded mess. I took that as a test rather than a quip.\n\nRabbit is my own algorithm-free YouTube: summaries, a tech radar, a problem index, weekly product ideas, a phone copy, a Claude connector. About 2,300 lines that only I maintain. I reduced it to a recipe — one file saying where the data lives and the two tricks needed to reach it, and a four-sentence prompt — plus the ten things I had asked for since, written as plain requests.\n\nA fresh agent got that and an empty folder, walled off from my settings, and I graded the result against a checklist it never saw. It rebuilt every feature in both runs, short of the deploys, which stay manual: 12 of 13 when I asked for everything at once, 12.5 when I asked one step at a time.\n\nThe difference was not what got built but how. Asked for everything in one breath, it designed the phone copy separately and wrote every page twice. Asked in the order I had actually wanted things, it extended what existed and shared the pages. The order of the wants is part of the recipe.\n\nMy first attempt was contaminated: the builder could read my instructions and connectors, and quietly copied my tool names. An eval that can see the answer key passes for the wrong reason.\n\nSo the thing worth keeping is not the code. It is the data, the prompt, and the history of what I wanted, in order."
     }
   ],
   "farIdeas": [],
